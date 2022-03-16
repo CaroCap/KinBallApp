@@ -4,45 +4,23 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    #[Route('/user', name: 'liste_users')]
+    public function ListeUsers(ManagerRegistry $doctrine): Response
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        $em = $doctrine->getManager();
+        $rep = $em->getRepository(User::class);
+        $users = $rep->findAll();
+        $vars = ['users' => $users];
+
+        return $this->render('user/listeUsers.html.twig', $vars);
     }
 
-    // #[Route('/user/create', name: 'afficher_form_user')]
-    // public function afficherFormUser(): Response
-    // {
-    //     // Créa du Form User
-    //     $user = new User();
-    //     $formulaireUser = $this->createForm(UserType::class, $user, ['method'=>'POST', 'action'=>$this->generateUrl('add_user')]);
-
-    //     // on envoie un objet FormView à la vue pour qu'elle puisse 
-    //     // faire le rendu, pas le formulaire en soi
-    //     $vars = ['unFormulaireUser' => $formulaireUser->createView()];
-
-    //     return $this->render('user/formUser.html.twig', $vars);
-    // }
-
-    // #[Route('/user/create', name: 'add_user')]
-    // public function traitementFormUser(): Response
-    // {
-    //     // // Créa du Form User
-    //     // $user = new User();
-    //     // $formulaireUser = $this->createForm(UserType::class, $user, ['method'=>'POST', 'action'=>$this->generateUrl('add_user')]);
-
-    //     // // on envoie un objet FormView à la vue pour qu'elle puisse 
-    //     // // faire le rendu, pas le formulaire en soi
-    //     // $vars = ['unFormulaireUser' => $formulaireUser->createView()];
-
-    //     return $this->render('user/traitementUser.html.twig');
-    // }
+    
 }

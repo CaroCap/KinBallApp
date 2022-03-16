@@ -19,14 +19,33 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, FormLoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        // créer une nouvelle entité vide
         $user = new User();
+        // créer un formulaire associé à cette entité
         $form = $this->createForm(RegistrationFormType::class, $user);
+        // gérer la requête (et hydrater l'entité)
         $form->handleRequest($request);
 
+        // vérifier que le formulaire a été envoyé (isSubmitted) et que les données sont valides
         if ($form->isSubmitted() && $form->isValid()) {
-            // // Enregistrer les données du user
-            // $user->setNom();
-            // encode the plain password
+            // Vérifier si Accord Photo est null => False
+            if($user->getAccordPhoto()===null){
+                $user->setAccordPhoto(0);
+            }
+            
+            // Enregistrer la photo
+            if($user->getPhoto()!= null){
+                // obtenir le fichier (pas un "string" mais un objet de la class UploadedFile)
+            $fichier = $user->getPhoto();
+            // obtenir un nom de fichier unique pour éviter les doublons dans le dossier
+            $nomFichierServeur = md5(uniqid()).".".$fichier->guessExtension();
+            // stocker le fichier dans le serveur (on peut indiquer un dossier)
+            $fichier->move ("dossierFichiers", $nomFichierServeur);
+            // affecter le nom du fichier de l'entité. Ça sera le nom qu'on
+            // aura dans la BD (un string, pas un objet UploadedFile cette fois)
+            $user->setPhoto($nomFichierServeur);
+            }
+
             $user->setPassword(
             $userPasswordHasher->hashPassword(
                     $user,
