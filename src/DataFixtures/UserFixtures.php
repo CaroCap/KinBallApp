@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\Adresse;
 use App\Entity\Categorie;
+use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -27,6 +28,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $categories = $manager->getRepository(Categorie::class)->findAll();
         
         $user = new User();
+        
         $user->setNom("Cap");
         $user->setPrenom("Caroline");
         $user->setEmail ("carolinecap.event@gmail.com");
@@ -34,6 +36,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
         $user->setCategorie($categories[2]);
         $user->setAdresse($adresses[2]);
+        
+        $user->setDateNaissance(new DateTime());
+        $user->setTelephone("0473300830");
+        $user->setPhoto("Caro.png");
+        $user->setAccordPhoto(1);
+        $user->setPersContactNom("Christine Deletaille");
+        $user->setPersContactTel("0478926613");
+        $user->setPersContactMail("christinedeletaille@hotmail.com");
         $manager->persist ($user);
 
          // Pour créer des faux joueurs
@@ -46,7 +56,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setPassword($this->passwordHasher->hashPassword($user,'mdp'.$i));
             $user->setCategorie($categories[array_rand($categories)]);
             $user->setAdresse($adresses[array_rand($adresses)]);
-            
+            $user->setDateNaissance(new DateTime($faker->date()));
+            $user->setTelephone($faker->phoneNumber());
+            $user->setAccordPhoto(1);   
+            $user->setPersContactNom($faker->lastName() . " " . $faker->firstName());
+            $user->setPersContactTel($faker->phoneNumber());
+            $user->setPersContactMail($faker->email());
             $manager->persist ($user);
         }
 

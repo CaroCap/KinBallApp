@@ -24,6 +24,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 200, unique: true)]
     private $email;
 
+    #[ORM\Column(type: 'string', length: 20)]
+    private $telephone;
+
+    #[ORM\Column(type: 'date')]
+    private $dateNaissance;
+
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
@@ -36,6 +42,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
     private $categorie;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $photo;
+
+    #[ORM\Column(type: 'boolean')]
+    private $accordPhoto;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $persContactNom;
+
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private $persContactTel;
+
+    #[ORM\Column(type: 'string', length: 200, nullable: true)]
+    private $persContactMail;
 
     public function getId(): ?int
     {
@@ -151,6 +172,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?\DateTimeInterface
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getAccordPhoto(): ?bool
+    {
+        return $this->accordPhoto;
+    }
+
+    public function setAccordPhoto(bool $accordPhoto): self
+    {
+        $this->accordPhoto = $accordPhoto;
+
+        return $this;
+    }
+
+    public function getPersContactNom(): ?string
+    {
+        return $this->persContactNom;
+    }
+
+    public function setPersContactNom(?string $persContactNom): self
+    {
+        $this->persContactNom = $persContactNom;
+
+        return $this;
+    }
+
+    public function getPersContactTel(): ?string
+    {
+        return $this->persContactTel;
+    }
+
+    public function setPersContactTel(?string $persContactTel): self
+    {
+        $this->persContactTel = $persContactTel;
+
+        return $this;
+    }
+
+    public function getPersContactMail(): ?string
+    {
+        return $this->persContactMail;
+    }
+
+    public function setPersContactMail(?string $persContactMail): self
+    {
+        $this->persContactMail = $persContactMail;
 
         return $this;
     }
