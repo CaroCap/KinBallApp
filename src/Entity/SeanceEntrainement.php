@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SeanceEntrainementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,11 +30,15 @@ class SeanceEntrainement
     #[ORM\ManyToOne(targetEntity: Adresse::class, inversedBy: 'seanceEntrainements')]
     private $adresse;
 
+    #[ORM\OneToMany(mappedBy: 'seance', targetEntity: ParticipationEntrainement::class)]
+    private $participationEntrainements;
+
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
     {
         $this->hydrate($init);
         $this->users = new ArrayCollection();
+        $this->participationEntrainements = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -109,6 +114,36 @@ class SeanceEntrainement
     public function setAdresse(?Adresse $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ParticipationEntrainement>
+     */
+    public function getParticipationEntrainements(): Collection
+    {
+        return $this->participationEntrainements;
+    }
+
+    public function addParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    {
+        if (!$this->participationEntrainements->contains($participationEntrainement)) {
+            $this->participationEntrainements[] = $participationEntrainement;
+            $participationEntrainement->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    {
+        if ($this->participationEntrainements->removeElement($participationEntrainement)) {
+            // set the owning side to null (unless already changed)
+            if ($participationEntrainement->getSeance() === $this) {
+                $participationEntrainement->setSeance(null);
+            }
+        }
 
         return $this;
     }

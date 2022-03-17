@@ -18,14 +18,14 @@ class Categorie
     #[ORM\Column(type: 'string', length: 150)]
     private $typeCategorie;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: User::class)]
-    private $users;
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Inscription::class)]
+    private $inscriptions;
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
     {
         $this->hydrate($init);
-        $this->users = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -57,29 +57,29 @@ class Categorie
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Inscription>
      */
-    public function getUsers(): Collection
+    public function getInscriptions(): Collection
     {
-        return $this->users;
+        return $this->inscriptions;
     }
 
-    public function addUser(User $user): self
+    public function addInscription(Inscription $inscription): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setCategorie($this);
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeInscription(Inscription $inscription): self
     {
-        if ($this->users->removeElement($user)) {
+        if ($this->inscriptions->removeElement($inscription)) {
             // set the owning side to null (unless already changed)
-            if ($user->getCategorie() === $this) {
-                $user->setCategorie(null);
+            if ($inscription->getCategorie() === $this) {
+                $inscription->setCategorie(null);
             }
         }
 

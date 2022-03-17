@@ -2,9 +2,10 @@
 
 namespace App\DataFixtures;
 
+use DateTime;
 use App\Entity\Adresse;
 use App\Entity\SeanceEntrainement;
-use DateTime;
+use App\DataFixtures\AdresseFixtures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
