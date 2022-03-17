@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\Inscription;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,9 +17,9 @@ class UserController extends AbstractController
     public function ListeUsers(ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        $rep = $em->getRepository(User::class);
-        $users = $rep->findAll();
-        $vars = ['users' => $users];
+        $rep = $em->getRepository(Inscription::class);
+        $inscriptions = $rep->findAll();
+        $vars = ['inscriptions' => $inscriptions];
 
         return $this->render('user/listeUsers.html.twig', $vars);
     }
@@ -29,9 +30,10 @@ class UserController extends AbstractController
         $em = $doctrine->getManager();
         $rep = $em->getRepository(Categorie::class);
         $cat = $rep->findOneBy(['typeCategorie'=>'Dame']);
-        $users = $cat->getUsers();
-        // dd($users);
-        $vars = ['users' => $users];
+        $inscriptions = $cat->getInscriptions();
+        // $users = $inscr->getPlayer();
+        // dd($inscr[0]);
+        $vars = ['inscriptions' => $inscriptions];
         return $this->render('user/listeUsers.html.twig', $vars);
     }
 
@@ -41,9 +43,9 @@ class UserController extends AbstractController
         $em = $doctrine->getManager();
         $rep = $em->getRepository(Categorie::class);
         $cat = $rep->findOneBy(['typeCategorie'=>'Homme']);
-        $users = $cat->getUsers();
+        $inscriptions = $cat->getInscriptions();
         // dd($users);
-        $vars = ['users' => $users];
+        $vars = ['inscriptions' => $inscriptions];
         return $this->render('user/listeUsers.html.twig', $vars);
     }
     
@@ -53,9 +55,9 @@ class UserController extends AbstractController
         $em = $doctrine->getManager();
         $rep = $em->getRepository(Categorie::class);
         $cat = $rep->findOneBy(['typeCategorie'=>'Mixte']);
-        $users = $cat->getUsers();
+        $inscriptions = $cat->getInscriptions();
         // dd($users);
-        $vars = ['users' => $users];
+        $vars = ['inscriptions' => $inscriptions];
         return $this->render('user/listeUsers.html.twig', $vars);
     }
 }

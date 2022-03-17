@@ -4,11 +4,11 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper { margin: 1em auto; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     {# .container{ display: flex; width: 800px; height: 80vh; flex-wrap: wrap;} #}
-    .container{ display: flex; flex-wrap: wrap;}
-    .menuFiltre{ text-decoration: none; display: inline; border: solid 1px black; padding: 5px;}
+    .container{ display: flex; flex-wrap: wrap; justify-content: center;}
+    .menuFiltre{ text-decoration: none; display: inline; border: solid 1px black; padding: 5px; margin-bottom:10px}
     .menuFiltre a { text-decoration: none; display: inline; padding: 5px; color:black}
     .menuFiltre a:hover { color:red}
     .cartePlayer{ border : solid black 1px; border-radius : 15px; margin : 15px; width: 250px; height: 300px; padding:15px; text-align: center;}
@@ -31,27 +31,20 @@
 
 {# Liste Joueurs #}
 <div class="container">
-    {% for user in users %}
+    {% for inscr in inscriptions %}
         <div class="cartePlayer">
-        {% if user.photo is same as (null) %}
-            <img class="photoPlayer" src="{{ asset ('dossierFichiers/joueur.png') }}" alt="photo">
-        {% else %}
-            <img class="photoPlayer" src="{{ asset ('dossierFichiers/' ~ user.photo ) }}" alt="photo">
-        {% endif %}
-            
-        {# <br>
-            <label for="nom">Nom : </label>
-            <span id="nom">{{user.nom}}</span>
-        <br>
-            <label for="prenom">Prénom : </label>
-            <span id="prenom">{{user.prenom}}</span>
-        #}
-        <br> 
-        <span id="nomPrenom">{{user.nom}} {{user.prenom}}</span>
-        <br> 
+            {% if inscr.player.photo is same as (null) %}
+                <img class="photoPlayer" src="{{ asset ('images/photoUser/joueur.png') }}" alt="photo">
+            {% else %}
+                <img class="photoPlayer" src="{{ asset ('images/photoUser/' ~ inscr.player.photo ) }}" alt="photo">
+            {% endif %}
 
-            <label for="categorie">Catégorie : </label>
-            <span id="categorie">{{user.categorie.typeCategorie}}</span>
+            <br> 
+            <span id="nomPrenom">{{inscr.player.nom}} {{inscr.player.prenom}}</span>
+            <br> 
+
+                <label for="categorie">Catégorie : </label>
+                <span id="categorie">{{inscr.categorie.typeCategorie}}</span>
         </div>
     {% endfor %}
     </div>
