@@ -33,9 +33,6 @@ class Adresse
     #[ORM\Column(type: 'string', length: 150, nullable: true)]
     private $nomLieu;
 
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: User::class)]
-    private $users;
-
     #[ORM\Column(type: 'string', length: 50)]
     private $typeAdresse;
 
@@ -43,7 +40,6 @@ class Adresse
     public function __construct(array $init = [])
     {
         $this->hydrate($init);
-        $this->users = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -130,36 +126,6 @@ class Adresse
     public function setNomLieu(?string $nomLieu): self
     {
         $this->nomLieu = $nomLieu;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setAdresse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getAdresse() === $this) {
-                $user->setAdresse(null);
-            }
-        }
 
         return $this;
     }

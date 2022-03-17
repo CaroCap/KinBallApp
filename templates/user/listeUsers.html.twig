@@ -6,26 +6,52 @@
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .container{ display: flex; width: 800px; height: 80vh; flex-wrap: wrap;}
-    .carteJoueur{ border : solid black 1px; border-radius : 15px; margin : 15px; width: 250px; height: 300px; padding : 15px;
-            text-align: center;}
-    label{font-weight:bold;}</style>
+    {# .container{ display: flex; width: 800px; height: 80vh; flex-wrap: wrap;} #}
+    .container{ display: flex; flex-wrap: wrap;}
+    .menuFiltre{ text-decoration: none; display: inline; border: solid 1px black; padding: 5px;}
+    .menuFiltre a { text-decoration: none; display: inline; padding: 5px; color:black}
+    .menuFiltre a:hover { color:red}
+    .cartePlayer{ border : solid black 1px; border-radius : 15px; margin : 15px; width: 250px; height: 300px; padding:15px; text-align: center;}
+    .photoPlayer{max-width: 230px; max-height: 230px; }
+    label{font-weight:bold;}
+</style>
 
 <div class="example-wrapper">
-    <h1>Liste Joueurs</h1>
+    <h1>Liste Players</h1>
 
+{# Filtres Catégories #}
+<div class="container">
+    <ul>
+        <li class="menuFiltre"><a href="{{ path ('liste_dames') }}">Dames</a></li>
+        <li class="menuFiltre"><a href="{{ path ('liste_hommes') }}">Hommes</a></li>
+        <li class="menuFiltre"><a href="{{ path ('liste_mixtes') }}">Mixtes</a></li>
+        <li class="menuFiltre"><a href="{{ path ('liste_users') }}">All</a></li>
+    </ul>
+</div>
+
+{# Liste Joueurs #}
 <div class="container">
     {% for user in users %}
-        <div class="carteJoueur">
-            {# <img src="/KinBallApp/assets/images/CheckNON.png" alt="photo"> #}
-            <img src="../../src/dossiersFichier/{{user.photo}}" alt="photo">
-        <br>
+        <div class="cartePlayer">
+        {% if user.photo is same as (null) %}
+            <img class="photoPlayer" src="{{ asset ('dossierFichiers/joueur.png') }}" alt="photo">
+        {% else %}
+            <img class="photoPlayer" src="{{ asset ('dossierFichiers/' ~ user.photo ) }}" alt="photo">
+        {% endif %}
+            
+        {# <br>
             <label for="nom">Nom : </label>
             <span id="nom">{{user.nom}}</span>
         <br>
             <label for="prenom">Prénom : </label>
             <span id="prenom">{{user.prenom}}</span>
+        #}
+        <br> 
+        <span id="nomPrenom">{{user.nom}} {{user.prenom}}</span>
+        <br> 
 
+            <label for="categorie">Catégorie : </label>
+            <span id="categorie">{{user.categorie.typeCategorie}}</span>
         </div>
     {% endfor %}
     </div>

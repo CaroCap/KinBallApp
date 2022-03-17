@@ -13,7 +13,7 @@ class AdresseFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $types = ['Salle Entrainement', 'Salle Championnat', 'Perso'];
+        $types = ['Salle Entrainement', 'Salle Championnat', 'Autre'];
 
         $adresse = new Adresse([
             '$nomLieu' => 'VUB - Vrije Universiteit Brussels - Salle L4',
@@ -38,7 +38,7 @@ class AdresseFixtures extends Fixture
         $manager->persist($adresse);
 
         // créer quelques objets Adresse, stocker dans la BD
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $adresse = new Adresse([
                 'rue' => $faker->streetAddress,
                 'numero' => $faker->buildingNumber,
