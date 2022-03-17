@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Adresse;
 use App\Entity\Categorie;
 use DateTime;
 use Doctrine\Persistence\ObjectManager;
@@ -23,8 +22,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        // Mettre adresses et Categ dans Array pour Faker
-        $adresses = $manager->getRepository(Adresse::class)->findAll();
+        // Mettre Categ dans Array pour Faker
         $categories = $manager->getRepository(Categorie::class)->findAll();
         
         $user = new User();
@@ -40,7 +38,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setCodePostal("1060");
         $user->setVille("Bruxelles");
         
-        $user->setDateNaissance(new DateTime());
+        $user->setDateNaissance(new DateTime('1990-01-16'));
         $user->setTelephone("0473300830");
         $user->setPhoto("Caro.png");
         $user->setAccordPhoto(1);
@@ -51,7 +49,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
          // Pour créer des faux joueurs
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 1; $i <= 20 ; $i++){
+        for ($i = 1; $i <= 7 ; $i++){
             $user = new User();
             $user->setNom($faker->lastName()); // avec ou sans () c'est la même
             $user->setPrenom($faker->firstName());

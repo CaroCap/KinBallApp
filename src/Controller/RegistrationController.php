@@ -33,14 +33,14 @@ class RegistrationController extends AbstractController
                 $user->setAccordPhoto(0);
             }
             
-            // Enregistrer la photo
+            // ENREGISTRER LA PHOTO
             if($user->getPhoto()!= null){
                 // obtenir le fichier (pas un "string" mais un objet de la class UploadedFile)
             $fichier = $user->getPhoto();
             // obtenir un nom de fichier unique pour éviter les doublons dans le dossier
             $nomFichierServeur = md5(uniqid()).".".$fichier->guessExtension();
             // stocker le fichier dans le serveur (on peut indiquer un dossier)
-            $fichier->move ("dossierFichiers", $nomFichierServeur);
+            $fichier->move ("images/photoPlayer", $nomFichierServeur);
             // affecter le nom du fichier de l'entité. Ça sera le nom qu'on
             // aura dans la BD (un string, pas un objet UploadedFile cette fois)
             $user->setPhoto($nomFichierServeur);

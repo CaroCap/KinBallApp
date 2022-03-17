@@ -13,7 +13,7 @@ class AdresseFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $types = ['Salle Entrainement', 'Salle Championnat', 'Autre'];
+        $types = ['Entrainement', 'Championnat', 'Autre'];
 
         $adresse = new Adresse([
             '$nomLieu' => 'VUB - Vrije Universiteit Brussels - Salle L4',

@@ -36,10 +36,14 @@ class Adresse
     #[ORM\Column(type: 'string', length: 50)]
     private $typeAdresse;
 
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: SeanceEntrainement::class)]
+    private $seanceEntrainements;
+
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
     {
         $this->hydrate($init);
+        $this->seanceEntrainements = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -138,6 +142,36 @@ class Adresse
     public function setTypeAdresse(string $typeAdresse): self
     {
         $this->typeAdresse = $typeAdresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SeanceEntrainement>
+     */
+    public function getSeanceEntrainements(): Collection
+    {
+        return $this->seanceEntrainements;
+    }
+
+    public function addSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
+    {
+        if (!$this->seanceEntrainements->contains($seanceEntrainement)) {
+            $this->seanceEntrainements[] = $seanceEntrainement;
+            $seanceEntrainement->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
+    {
+        if ($this->seanceEntrainements->removeElement($seanceEntrainement)) {
+            // set the owning side to null (unless already changed)
+            if ($seanceEntrainement->getAdresse() === $this) {
+                $seanceEntrainement->setAdresse(null);
+            }
+        }
 
         return $this;
     }

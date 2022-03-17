@@ -54,7 +54,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('adresse', EntityType::class)
             ->add('categorie', EntityType::class, [
                 'class'=>Categorie::class, 
                 'choice_label'=>'typeCategorie'
@@ -65,6 +64,11 @@ class RegistrationFormType extends AbstractType
             ->add('accordPhoto', CheckboxType::class, [
                 'required' => false
             ])
+            ->add('rue', TextType::class)
+            ->add('numero', TextType::class)
+            ->add('codePostal', TextType::class)
+            ->add('ville', TextType::class)
+
             ->add('persContactNom', TextType::class)
             ->add('persContactTel', TelType::class)
             ->add('persContactMail', EmailType::class)
