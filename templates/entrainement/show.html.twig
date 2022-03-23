@@ -12,12 +12,12 @@
                 <td>{{ seance_entrainement.id }}</td>
             </tr>
             <tr>
-                <th>DateEntrainement</th>
-                <td>{{ seance_entrainement.dateEntrainement ? seance_entrainement.dateEntrainement|date('Y-m-d') : '' }}</td>
+                <th>Start</th>
+                <td>{{ seance_entrainement.start ? seance_entrainement.start|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ seance_entrainement.description }}</td>
+                <td>{{ seance_entrainement.title }}</td>
             </tr>
             <tr>
                 <th>HeureDebut</th>

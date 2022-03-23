@@ -17,16 +17,15 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
         $adresses = $manager->getRepository(Adresse::class)->findBy(['typeAdresse'=>'Entrainement']);
 
         // créer quelques objets Séance, stocker dans la BD
-        $dateMercredi = ['2022-03-23', '2022-03-30', '2022-04-20', '2022-04-27', '2022-05-04'];
+        $dateMercredi = ['2022-03-23 20:00:00', '2022-03-30', '2022-04-20', '2022-04-27', '2022-05-04'];
         $dateDimanche = ['2022-03-27', '2022-04-03', '2022-04-24', '2022-05-01', '2022-05-08'];
 
         // Fixtures pour entrainement mercredi
         for ($i = 0; $i < 5; $i++) {
             $seance = new SeanceEntrainement([
-                'dateEntrainement' => new DateTime($dateMercredi[$i]),
-                'description' => "Entrainement hebdomadaire toutes catégories",
-                'heureDebut' => new DateTime('18:00:00'),
-                'heureFin' => new DateTime('20:00:00'),
+                'start' => new DateTime($dateMercredi[$i]),
+                'end' => new DateTime($dateMercredi[$i]),
+                'title' => "Entrainement hebdomadaire toutes catégories",
                 'adresse' => $adresses[0],
             ]);
             $manager->persist($seance);
@@ -35,10 +34,8 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
         // Fixtures pour entrainement dimanche
         for ($i = 0; $i < 5; $i++) {
             $seance = new SeanceEntrainement([
-                'dateEntrainement' => new DateTime($dateDimanche[$i]),
-                'description' => "Entrainement hebdomadaire toutes catégories",
-                'heureDebut' => new DateTime('18:00:00'),
-                'heureFin' => new DateTime('20:30:00'),
+                'start' => new DateTime($dateDimanche[$i]),
+                'title' => "Entrainement hebdomadaire toutes catégories",
                 'adresse' => $adresses[1],
             ]);
             $manager->persist($seance);

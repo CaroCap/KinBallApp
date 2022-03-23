@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var calendar = new Calendar(calendarEl, {
         events: evenementsJSONJSArray,
 
-        displayEventTime: false, // cacher l'heure
+        displayEventTime: true, // cacher l'heure
         initialView: "dayGridMonth",
         initialDate: new Date(), // aujourd'hui
         headerToolbar: {

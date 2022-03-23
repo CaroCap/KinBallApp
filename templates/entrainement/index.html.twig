@@ -23,7 +23,7 @@ TEST JSON
         <thead>
             <tr>
                 <th>Id</th>
-                <th>DateEntrainement</th>
+                <th>Start</th>
                 <th>Description</th>
                 <th>HeureDebut</th>
                 <th>HeureFin</th>
@@ -34,10 +34,8 @@ TEST JSON
         {% for seance_entrainement in seance_entrainements %}
             <tr>
                 <td>{{ seance_entrainement.id }}</td>
-                <td>{{ seance_entrainement.dateEntrainement ? seance_entrainement.dateEntrainement|date('Y-m-d') : '' }}</td>
-                <td>{{ seance_entrainement.description }}</td>
-                <td>{{ seance_entrainement.heureDebut ? seance_entrainement.heureDebut|date('H:i:s') : '' }}</td>
-                <td>{{ seance_entrainement.heureFin ? seance_entrainement.heureFin|date('H:i:s') : '' }}</td>
+                <td>{{ seance_entrainement.start ? seance_entrainement.start|date('Y-m-d') : '' }}</td>
+                <td>{{ seance_entrainement.title }}</td>
                 <td>
                     <a href="{{ path('app_entrainement_show', {'id': seance_entrainement.id}) }}">show</a>
                     <a href="{{ path('app_entrainement_edit', {'id': seance_entrainement.id}) }}">edit</a>

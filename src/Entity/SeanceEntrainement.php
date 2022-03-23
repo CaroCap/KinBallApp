@@ -15,17 +15,11 @@ class SeanceEntrainement
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'date')]
-    private $dateEntrainement;
+    #[ORM\Column(type: 'datetime')]
+    private $start;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $description;
-
-    #[ORM\Column(type: 'time', nullable: true)]
-    private $heureDebut;
-
-    #[ORM\Column(type: 'time', nullable: true)]
-    private $heureFin;
+    private $title;
 
     #[ORM\ManyToOne(targetEntity: Adresse::class, inversedBy: 'seanceEntrainements')]
     private $adresse;
@@ -58,53 +52,32 @@ class SeanceEntrainement
         return $this->id;
     }
 
-    public function getDateEntrainement(): ?\DateTimeInterface
+    public function getStart(): ?\DateTimeInterface
     {
-        return $this->dateEntrainement;
+        return $this->start;
     }
 
-    public function setDateEntrainement(\DateTimeInterface $dateEntrainement): self
+    public function setStart(\DateTimeInterface $start): self
     {
-        $this->dateEntrainement = $dateEntrainement;
+        $this->start = $start;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getTitle(): ?string
     {
-        return $this->description;
+        return $this->title;
     }
 
-    public function setDescription(?string $description): self
+    public function setTitle(?string $title): self
     {
-        $this->description = $description;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getHeureDebut(): ?\DateTimeInterface
-    {
-        return $this->heureDebut;
-    }
 
-    public function setHeureDebut(?\DateTimeInterface $heureDebut): self
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    public function getHeureFin(): ?\DateTimeInterface
-    {
-        return $this->heureFin;
-    }
-
-    public function setHeureFin(?\DateTimeInterface $heureFin): self
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
+ 
 
     public function getAdresse(): ?Adresse
     {
