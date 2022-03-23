@@ -12,7 +12,9 @@ class SeanceEntrainement1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('title')
             ->add('start')
+            ->add('end')
             ->add('description')
             ->add('adresse')
         ;

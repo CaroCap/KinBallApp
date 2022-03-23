@@ -15,9 +15,12 @@ class SeanceEntrainement
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $title;
     
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $description;
+
     #[ORM\Column(type: 'datetime')]
     private $start;
 
@@ -80,9 +83,6 @@ class SeanceEntrainement
         return $this;
     }
 
-
- 
-
     public function getAdresse(): ?Adresse
     {
         return $this->adresse;
@@ -133,6 +133,18 @@ class SeanceEntrainement
     public function setEnd(\DateTimeInterface $end): self
     {
         $this->end = $end;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
