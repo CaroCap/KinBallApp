@@ -34,9 +34,9 @@
     {% for inscr in inscriptions %}
         <div class="cartePlayer">
             {% if inscr.player.photo is same as (null) %}
-                <img class="photoPlayer" src="{{ asset ('images/photoUser/joueur.png') }}" alt="photo">
+                <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
             {% else %}
-                <img class="photoPlayer" src="{{ asset ('images/photoUser/' ~ inscr.player.photo ) }}" alt="photo">
+                <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ inscr.player.photo ) }}" alt="photo">
             {% endif %}
 
             <br> 

@@ -54,10 +54,10 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('categorie', EntityType::class, [
-                'class'=>Categorie::class, 
-                'choice_label'=>'typeCategorie'
-                ])
+            // ->add('categorie', EntityType::class, [
+            //     'class'=>Categorie::class, 
+            //     'choice_label'=>'typeCategorie'
+            //     ])
             ->add('telephone', TelType::class)
             ->add('dateNaissance', BirthdayType::class)
             ->add('photo', FileType::class)

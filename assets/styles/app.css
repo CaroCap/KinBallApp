@@ -1,11 +1,272 @@
-main{
-    margin-top:150px;
-}    
-
-body {
-    background-color: lightgray;
+/* CHARTE GRAPHIQUE */
+:root{
+    --brun_color: #5B4F41;
+    --gris_color: #707070;
+    --beige_color: #ECE5E1;
+    --beige_color-transparent:#ece5e1ea;
+    --font_titre: 'impact';
+    --font_corps: 'SourceCodePro';
+    --font_sousTitre:'mvboli';
 }
 
-nav{
-    margin-bottom:150px;
-}    
+/* INITIALISER LA BASE */
+*{
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color: var(--gris_color);
+    font-family: var(--font_corps);
+}
+body{
+    width: 100%;
+    text-align: center;
+}
+
+/* GENERAL */
+html {
+    scroll-behavior: smooth !important;
+}
+/* COULEURS */
+.beige-color{
+    color: var(--beige_color);
+}
+.gris-color{
+    color: var(--gris_color);
+}
+.brun-color{
+    color: var(--brun_color);
+}
+
+/* Flex */
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.justifyAround{
+    justify-content: space-around;
+}
+.justifyCenter{
+    justify-content: center;
+}
+/* .alignItemsEnd{
+    align-items: flex-end;
+} */
+.alignItemsStart{
+    align-items: flex-start;
+}
+.colonne{
+    flex-direction: column;
+}
+
+/* alignement */
+.center{
+    text-align: center;
+    margin: auto;
+}
+.droite{
+    text-align: end;
+}
+.justifie{
+    text-align: justify;
+}
+
+/* Position */
+.positionRel{
+    position: relative;
+}
+.positionAbs{
+    position: absolute;
+}
+
+/* Séparations */
+.separationBlanc{
+width: 100%;
+height: 10vw;
+}
+.separation-ligne{
+    width: 90%;
+    margin: 20px auto;
+    border-top: solid var(--gris_color) 2px;
+}
+
+/* Stylisation */
+.upper{
+    text-transform: uppercase;
+}
+.souligne{
+    text-decoration: underline;
+}
+
+
+/* Tabulations */
+.tab-05{
+    margin-left: -5%;
+}
+.tab-10{
+    margin-left: -10%;
+}
+.tab-20{
+    margin-left: -20%;
+}
+.tab-30{
+    margin-left: -30%;
+}
+.tab-40{
+    margin-left: -40%;
+}
+.tab30{
+    margin-left: 30%;
+}
+.tab50{
+    margin-left: 50%;
+}
+
+/* Titres */
+h2{
+    font-size: 4.5vw;
+    font-weight: lighter;
+    margin-bottom: 2vw;
+}
+h3{
+    font-size: 4vw;
+    font-weight: lighter;
+}
+h4{
+    font-size: 3vw;
+    font-weight: lighter;
+}
+h5{
+    font-size: 2vw;
+    font-weight: lighter;
+}
+
+/* Width */
+.taille15{
+    width: 20%;
+}
+.taille25{
+    width: 25%;
+}
+.taille30{
+    width: 30%;
+}
+.taille35{
+    width: 35%;
+}
+.taille40{
+    width: 40%;
+}
+.taille50{
+    width: 50%;
+}
+.taille65{
+    width: 65%;
+}
+.taille80{
+    width: 80%;
+}
+.taille90{
+    width: 90%;
+}
+.taille95{
+    width: 95%;
+}
+.taille100{
+    width: 100%;
+}
+
+/* Hauteur */
+.haut20{
+    height: 20%;
+}
+.haut70{
+    height: 70%;
+}
+.haut100{
+    height: 100%;
+}
+
+/* NAVIGATION */
+.barre-navigation{
+    background-color: var(--brun_color);
+    z-index: 10; /*pour que ça reste au premier plan*/
+    width: 100vw;
+    height: 10vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    box-shadow: rgb(12,43,39,0.2) 0 4px 14px;
+    /* margin-bottom: 5vh; */
+}
+
+/* Logos dans nav*/
+.logo-container{
+    position: fixed;
+}
+.nav-logo {
+    height: 7vw;
+    width: auto;
+}
+
+/* disposition menu */
+.nav-list{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-left: 7vw;
+    justify-content: space-around;
+}
+.nav-link{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.nav-item{
+    font-size: 1.6vw;
+}
+.nav-item a:hover{
+    color: var(--gris_color);
+    transition:.3s;
+}
+
+main{
+    margin-top: 15vh;
+}
+
+#container1 {
+    height: 80%;
+    width: 60%;
+    float: left;
+    padding:10px;
+    vertical-align: middle;
+}
+#container2 {
+    height: 80%;
+    width: 40%;
+    float: right;
+    padding:10px;
+}
+
+/* css Profil user */
+/* .container{ display: flex; flex-wrap: wrap; justify-content: center;} */
+.menuFiltre{ text-decoration: none; display: inline; border: solid 1px black; padding: 5px; margin-bottom:10px}
+.menuFiltre a { text-decoration: none; display: inline; padding: 5px; color:black}
+.menuFiltre a:hover { color:red}
+.cartePlayer{ border : solid black 1px; border-radius : 15px; margin : 15px; width: 250px; height: 300px; padding:15px; text-align: center;}
+.photoPlayer{max-width: 230px; max-height: 230px; }
+label{font-weight:bold;}
+
+.styleBtn{
+    border: solid 1px black;
+    border-radius: 15px;
+    background-color: blue;
+    color: white;
+}

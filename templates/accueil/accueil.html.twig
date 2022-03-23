@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block body %}
+<div class="">
+    {# CALENDRIER #}
+    <div id='container1'>
+        {#on incruste l'action du controller ici#}
+        {{ render (controller ('App\\Controller\\EntrainementController::index')) }}  
+    </div>
+
+    {# CONTAINER 2 #}
+    <div id='container2'>
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.prenom }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% else %}
+        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_login') }}">Se Connecter</a></div>
+    {% endif %}
+    </div>
+
+</div>
+{% endblock %}

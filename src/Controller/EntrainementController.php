@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+// SELECT
 #[Route('/entrainement')]
 class EntrainementController extends AbstractController
 {
@@ -31,6 +32,7 @@ class EntrainementController extends AbstractController
         return $this->render('entrainement/index.html.twig', $vars);
     }
 
+// CREATE
     #[Route('/new', name: 'app_entrainement_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SeanceEntrainementRepository $seanceEntrainementRepository): Response
     {
@@ -49,6 +51,7 @@ class EntrainementController extends AbstractController
         ]);
     }
 
+// SELECT BY ID
     #[Route('/{id}', name: 'app_entrainement_show', methods: ['GET'])]
     public function show(SeanceEntrainement $seanceEntrainement): Response
     {
@@ -57,6 +60,7 @@ class EntrainementController extends AbstractController
         ]);
     }
 
+//EDIT
     #[Route('/{id}/edit', name: 'app_entrainement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SeanceEntrainement $seanceEntrainement, SeanceEntrainementRepository $seanceEntrainementRepository): Response
     {
@@ -74,6 +78,7 @@ class EntrainementController extends AbstractController
         ]);
     }
 
+// DELETE
     #[Route('/{id}', name: 'app_entrainement_delete', methods: ['POST'])]
     public function delete(Request $request, SeanceEntrainement $seanceEntrainement, SeanceEntrainementRepository $seanceEntrainementRepository): Response
     {

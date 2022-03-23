@@ -119,24 +119,24 @@ class Inscription
         return $this;
     }
 
-    public function getFicheMedicale(): ?string
+    public function getFicheMedicale()
     {
         return $this->ficheMedicale;
     }
 
-    public function setFicheMedicale(?string $ficheMedicale): self
+    public function setFicheMedicale($ficheMedicale)
     {
         $this->ficheMedicale = $ficheMedicale;
 
         return $this;
     }
 
-    public function getCertifMedical(): ?string
+    public function getCertifMedical()
     {
         return $this->certifMedical;
     }
 
-    public function setCertifMedical(?string $certifMedical): self
+    public function setCertifMedical($certifMedical)
     {
         $this->certifMedical = $certifMedical;
 

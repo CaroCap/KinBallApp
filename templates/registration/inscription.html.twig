@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <h1>Inscription Saison 2023</h1>
+
+    {{ form_start(inscription) }}
+        {{form_widget (inscription) }}
+
+        <button type="submit" class="btn">S'inscrire</button>
+    {{ form_end(inscription) }}
+{% endblock %}
