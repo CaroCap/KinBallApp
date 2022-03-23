@@ -15,17 +15,21 @@ class SeanceEntrainement
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $title;
+    
     #[ORM\Column(type: 'datetime')]
     private $start;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $title;
+    #[ORM\Column(type: 'datetime')]
+    private $end;
 
     #[ORM\ManyToOne(targetEntity: Adresse::class, inversedBy: 'seanceEntrainements')]
     private $adresse;
 
     #[ORM\OneToMany(mappedBy: 'seance', targetEntity: ParticipationEntrainement::class)]
     private $participationEntrainements;
+
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
@@ -117,6 +121,18 @@ class SeanceEntrainement
                 $participationEntrainement->setSeance(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTimeInterface $end): self
+    {
+        $this->end = $end;
 
         return $this;
     }
