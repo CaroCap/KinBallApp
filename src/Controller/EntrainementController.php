@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\SeanceEntrainement;
-use App\Form\SeanceEntrainement1Type;
+use App\Form\SeanceEntrainementType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +14,11 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-// SELECT
+// SELECT ALL
 #[Route('/entrainement')]
 class EntrainementController extends AbstractController
 {
+//Calendrier de tous les entrainements
     #[Route('/', name: 'app_entrainement_index', methods: ['GET'])]
     public function index(SeanceEntrainementRepository $seanceEntrainementRepository, SerializerInterface $serializer): Response
     {
@@ -29,7 +30,16 @@ class EntrainementController extends AbstractController
         // return $this->render('entrainement/index.html.twig', [
         //     'seance_entrainements' => $seanceEntrainementRepository->findAll(),
         // ]);
-        return $this->render('entrainement/index.html.twig', $vars);
+        return $this->render('entrainement/calendrier.html.twig', $vars);
+    }
+
+// SELECT BY ID
+    #[Route('/{id}', name: 'app_entrainement_show', methods: ['GET'])]
+    public function show(SeanceEntrainement $seanceEntrainement): Response
+    {
+        return $this->render('entrainement/show.html.twig', [
+            'seance_entrainement' => $seanceEntrainement,
+        ]);
     }
 
 // CREATE
@@ -37,7 +47,7 @@ class EntrainementController extends AbstractController
     public function new(Request $request, SeanceEntrainementRepository $seanceEntrainementRepository): Response
     {
         $seanceEntrainement = new SeanceEntrainement();
-        $form = $this->createForm(SeanceEntrainement1Type::class, $seanceEntrainement);
+        $form = $this->createForm(SeanceEntrainementType::class, $seanceEntrainement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,20 +61,11 @@ class EntrainementController extends AbstractController
         ]);
     }
 
-// SELECT BY ID
-    #[Route('/{id}', name: 'app_entrainement_show', methods: ['GET'])]
-    public function show(SeanceEntrainement $seanceEntrainement): Response
-    {
-        return $this->render('entrainement/show.html.twig', [
-            'seance_entrainement' => $seanceEntrainement,
-        ]);
-    }
-
 //EDIT
     #[Route('/{id}/edit', name: 'app_entrainement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SeanceEntrainement $seanceEntrainement, SeanceEntrainementRepository $seanceEntrainementRepository): Response
     {
-        $form = $this->createForm(SeanceEntrainement1Type::class, $seanceEntrainement);
+        $form = $this->createForm(SeanceEntrainementType::class, $seanceEntrainement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

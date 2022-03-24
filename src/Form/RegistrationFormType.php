@@ -54,13 +54,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('categorie', EntityType::class, [
-            //     'class'=>Categorie::class, 
-            //     'choice_label'=>'typeCategorie'
-            //     ])
+
             ->add('telephone', TelType::class)
             ->add('dateNaissance', BirthdayType::class)
-            ->add('photo', FileType::class)
+            ->add('photo', FileType::class, [
+                'required' => false
+            ])
             ->add('accordPhoto', CheckboxType::class, [
                 'required' => false
             ])
@@ -69,9 +68,15 @@ class RegistrationFormType extends AbstractType
             ->add('codePostal', TextType::class)
             ->add('ville', TextType::class)
 
-            ->add('persContactNom', TextType::class)
-            ->add('persContactTel', TelType::class)
-            ->add('persContactMail', EmailType::class)
+            ->add('persContactNom', TextType::class, [
+                'required' => false
+            ])
+            ->add('persContactTel', TelType::class, [
+                'required' => false
+            ])
+            ->add('persContactMail', EmailType::class, [
+                'required' => false
+            ])
         ;
     }
 

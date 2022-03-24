@@ -3,8 +3,12 @@
 {% block title %}Bienvenue{% endblock %}
 
 {% block body %}
-<div class="">
-TEST C
+<div class="container">
+<h2 class="container">{{app.user.prenom}}</h2>
+Bonjour
+ <pre>
+    {{ dump(app.user) }}
+</pre>
     {# <div id='container1'>
         {{ render (controller ('App\\Controller\\EntrainementController::index')) }}  
     </div>

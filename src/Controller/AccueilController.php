@@ -14,6 +14,7 @@ class AccueilController extends AbstractController
         return $this->render('accueil/accueil.html.twig');
     }
 
+    // Profil Joueur
     #[Route('/joueur', name: 'app_joueur')]
     public function joueur(): Response
     {
