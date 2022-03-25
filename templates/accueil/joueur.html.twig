@@ -3,17 +3,98 @@
 {% block title %}Bienvenue{% endblock %}
 
 {% block body %}
-<div class="container">
-<h2 class="container">{{app.user.prenom}}</h2>
-Bonjour
- <pre>
-    {{ dump(app.user) }}
-</pre>
-    {# <div id='container1'>
-        {{ render (controller ('App\\Controller\\EntrainementController::index')) }}  
+<div class="container colonne">
+    <h2 class="">Bonjour {{app.user.prenom}}</h2>
+    <div class="container">
+        {# PHOTO #}
+        {# <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ? app.user.photo : 'joueur.png' ) }}" alt="photo"> #}
+        {# INFOS #}
+        <div class="infoUser container colonne">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ app.user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Téléphone</th>
+                        <td>{{ app.user.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de naissance</th>
+                        <td>{{ app.user.dateNaissance|date("d / m / Y") }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ app.user.numero }} {{ app.user.rue }} {{ app.user.codePostal }} {{ app.user.ville }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        {# Personne Contact #}
+        <div class="infoPersContact container colonne">
+            <table class="table">
+                <caption>Personne de Contact</caption>
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ app.user.persContactNom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Téléphone</th>
+                        <td>{{ app.user.persContactTel }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ app.user.persContactMail }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div id='container2'>
-        {{ render (controller ('App\\Controller\\UserController::profilUser')) }}  
-    </div> #}
+    
+    {# ACCORD PHOTO #}
+    <div>
+        {% if app.user.accordPhoto == true %}
+            <span>Oui, j'autorise le Kin-Ball K-ribou à utiliser des photos de moi prises lors d’entrainements ou de matchs dans le cadre de diverses publications.</span>
+        {% else %}
+            <span>Non, je n'autorise pas le Kin-Ball K-ribou à utiliser des photos de moi prises lors d’entrainements ou de matchs dans le cadre de diverses publications.</span>
+        {% endif %}
+    </div>
+
+    {# INSCRIPTION #}
+    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></div>
+    <div class="infoInscription container colonne">
+        <table class="table">
+            <caption>Inscriptions</caption>
+            <thead>
+                <tr>
+                    <th>Saison</th>
+                    <th>Jour Entrainement</th>
+                    <th>Catégorie Championnat</th>
+                    <th>Paiement</th>
+                    <th>Fiche Médical</th>
+                    <th>Certificat Médical</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></tr>
+            {% for inscr in app.user.inscriptions %}
+                <tr>
+                    <td>{{ inscr.ficheMedicale }}</td>
+                    <td>{{ inscr.ficheMedicale }}</td>
+                    <td>{{ inscr.ficheMedicale }}</td>
+                    <td>{{ inscr.ficheMedicale }}</td>
+                    <td>{{ inscr.ficheMedicale }}</td>
+                    <td>{{ inscr.ficheMedicale }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <pre>
+            {{ dump(app.user.inscriptions) }}
+        </pre>
 </div>
 {% endblock %}
