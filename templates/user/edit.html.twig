@@ -37,7 +37,9 @@
         {{ form_row(registrationForm.persContactNom) }}
         {{ form_row(registrationForm.persContactTel) }}
         {{ form_row(registrationForm.persContactMail) }}
-        {{ form_row(registrationForm._token) }}
+
+{# IMPORTANT POUR FORM car {'render_rest': false}#}
+{{ form_row(registrationForm._token) }}
 
         <button type="submit" class="btn">Enregistrer</button>
     {{ form_end(registrationForm, {'render_rest': false}) }}

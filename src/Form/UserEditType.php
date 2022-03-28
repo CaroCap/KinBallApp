@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
