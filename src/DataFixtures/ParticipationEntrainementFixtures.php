@@ -29,7 +29,7 @@ class ParticipationEntrainementFixtures extends Fixture implements DependentFixt
         $manager->flush();
     }
 
-    // Pour préciser qu'il faut d'abord faire les Fixtures de Catégories et Adresse avant User
+    // Pour préciser qu'il faut d'abord faire d'autres Fixtures avant
     // implements DependentFixtureInterface en haut pour la classe et ajouter ici dépendances.
     public function getDependencies()
     {
