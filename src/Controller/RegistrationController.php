@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\InscriptionType;
 use App\Form\RegistrationFormType;
 use App\Security\FormLoginAuthenticator;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Polyfill\Intl\Icu\DateFormat\YearTransformer;
 
 class RegistrationController extends AbstractController
 {
@@ -48,6 +50,9 @@ class RegistrationController extends AbstractController
             $user->setPhoto($nomFichierServeur);
             }
 
+            // DATE UPDATE
+            $user->setDateUpdate(new DateTime());
+
             $user->setPassword(
             $userPasswordHasher->hashPassword(
                     $user,
@@ -71,7 +76,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-// INSCRIPTION A UNE SAISON
+// INSCRIPTION À UNE SAISON
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -111,6 +116,18 @@ class RegistrationController extends AbstractController
                 // aura dans la BD (un string, pas un objet UploadedFile cette fois)
                 $inscription->getCertifMedical($nomFichierServeur);
                 }
+
+            // DATE INSCRIPTION
+            $inscription->setDateInscription(new DateTime());
+            
+            // DATE SAISON
+            // $ajd = new DateTime();
+            // $anneeSaison = $ajd->format("y") ;
+            // if
+            $inscription->setSaison("21-22");
+
+            // PAIEMENT
+            $inscription->setPaiement(0);
 
             $entityManager->persist($inscription);
             $entityManager->flush();

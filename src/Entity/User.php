@@ -70,6 +70,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: Inscription::class, orphanRemoval: true)]
     private $inscriptions;
 
+    #[ORM\Column(type: 'datetime')]
+    private $dateUpdate;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -327,6 +330,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $inscription->setPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateUpdate(): ?\DateTimeInterface
+    {
+        return $this->dateUpdate;
+    }
+
+    public function setDateUpdate(\DateTimeInterface $dateUpdate): self
+    {
+        $this->dateUpdate = $dateUpdate;
 
         return $this;
     }

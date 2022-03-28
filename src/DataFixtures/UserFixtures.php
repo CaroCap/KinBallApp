@@ -36,6 +36,8 @@ class UserFixtures extends Fixture
         $user->setTelephone("0473300830");
         $user->setPhoto("Caro.png");
         $user->setAccordPhoto(1);
+        $user->setDateUpdate(new DateTime());   
+
         $user->setPersContactNom("Christine Deletaille");
         $user->setPersContactTel("0478926613");
         $user->setPersContactMail("christinedeletaille@hotmail.com");
@@ -56,6 +58,7 @@ class UserFixtures extends Fixture
             $user->setDateNaissance(new DateTime($faker->date()));
             $user->setTelephone($faker->phoneNumber());
             $user->setAccordPhoto(rand(0,1));   
+            $user->setDateUpdate(new DateTime($faker->date()));   
             $user->setPersContactNom($faker->lastName() . " " . $faker->firstName());
             $user->setPersContactTel($faker->phoneNumber());
             $user->setPersContactMail($faker->email());
