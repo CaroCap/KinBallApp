@@ -18,6 +18,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $jourSeance = ['Mercredi', 'Dimanche', 'Mercredi & Dimanche'];
+        $AnneeSaison = ['20-21', '21-22', '22-23'];
         
         // Pour créer des faux
         $faker = Faker\Factory::create('fr_FR');
@@ -27,6 +28,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         
         for ($i = 1; $i <= 10 ; $i++){
             $inscription = new Inscription();
+            $inscription->setSaison($AnneeSaison[array_rand($AnneeSaison)]);
             $inscription->setJourEntrainement($jourSeance[array_rand($jourSeance)]);
             $inscription->setDateInscription(new DateTime($faker->date()));
             $inscription->setPaiement(rand(0,1));

@@ -18,6 +18,9 @@ class Inscription
     private $id;
 
     #[ORM\Column(type: 'string', length: 30)]
+    private $saison;
+
+    #[ORM\Column(type: 'string', length: 30)]
     private $jourEntrainement;
 
     #[ORM\Column(type: 'datetime')]
@@ -193,6 +196,18 @@ class Inscription
                 $participationEntrainement->setInscription(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSaison(): ?string
+    {
+        return $this->saison;
+    }
+
+    public function setSaison(?string $saison): self
+    {
+        $this->saison = $saison;
 
         return $this;
     }
