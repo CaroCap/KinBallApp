@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
             // obtenir un nom de fichier unique pour éviter les doublons dans le dossier
             $nomFichierServeur = md5(uniqid()).".".$fichier->guessExtension();
             // stocker le fichier dans le serveur (on peut indiquer un dossier)
-            $fichier->move ("upload/photoPlayer", $nomFichierServeur);
+            $fichier->move ("upload/photoUser", $nomFichierServeur);
             // affecter le nom du fichier de l'entité. Ça sera le nom qu'on
             // aura dans la BD (un string, pas un objet UploadedFile cette fois)
             $user->setPhoto($nomFichierServeur);

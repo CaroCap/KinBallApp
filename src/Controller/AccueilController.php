@@ -14,10 +14,12 @@ class AccueilController extends AbstractController
         return $this->render('accueil/accueil.html.twig');
     }
 
+    //  ! Afficher la page Joueur uniquement si connecté !!!
     // Profil Joueur
     #[Route('/joueur', name: 'app_joueur')]
     public function joueur(): Response
     {
+
         return $this->render('accueil/joueur.html.twig');
     }
 }

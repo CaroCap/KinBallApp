@@ -1,18 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
+    <h1>Edit User</h1>
     {{ form_start(registrationForm) }}
-        {# {{form_widget (registrationForm) }} #}
 <h3>Coordonnées du Joueur</h3>
         {{ form_row(registrationForm.nom) }}
         {{ form_row(registrationForm.prenom) }}
         {{ form_row(registrationForm.telephone) }}
         {{ form_row(registrationForm.dateNaissance) }}
-        {# {{ form_row(registrationForm.categorie.typeCategorie) }} #}
+        
+        {% if app.user.photo is same as (null) %}
+            <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
+        {% else %}
+            <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
+        {% endif %}
         {{ form_row(registrationForm.photo) }}
         {{ form_row(registrationForm.accordPhoto) }}
 <h4>Adresse</h4>
@@ -21,19 +24,26 @@
         {{ form_row(registrationForm.codePostal) }}
         {{ form_row(registrationForm.ville) }}
 
-
-<h3>Info de Login</h3>
+ 
+{# <h3>Info de Login</h3>
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
-        }) }}
-        {# {{ form_row(registrationForm.agreeTerms) }} #}
+        }) }}  #}
+        {# {{ form_row(registrationForm.agreeTerms) }}  #}
+
 
 <h3>Personne de Contact</h3>
         {{ form_row(registrationForm.persContactNom) }}
         {{ form_row(registrationForm.persContactTel) }}
         {{ form_row(registrationForm.persContactMail) }}
+        {{ form_row(registrationForm._token) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        <button type="submit" class="btn">Enregistrer</button>
+    {{ form_end(registrationForm, {'render_rest': false}) }}
+
+    <a href="{{ path('app_joueur') }}">Retour au profil</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+
 {% endblock %}

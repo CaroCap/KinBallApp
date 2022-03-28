@@ -4,10 +4,16 @@
 
 {% block body %}
 <div class="container colonne">
-    <h2 class="">Bonjour {{app.user.prenom}}</h2>
+    <h2 class="">Bonjour {{app.user.prenom}} {{app.user.nom}}</h2>
     <div class="container">
         {# PHOTO #}
         {# <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ? app.user.photo : 'joueur.png' ) }}" alt="photo"> #}
+        {% if app.user.photo is same as (null) %}
+            <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
+        {% else %}
+            <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
+        {% endif %}
+
         {# INFOS #}
         <div class="infoUser container colonne">
             <table class="table">
@@ -63,10 +69,13 @@
         {% endif %}
     </div>
 
-    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_user_edit') }}">Éditer</a></div>
+    {# EDITER #}
+    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Éditer</a></div>
 
     {# INSCRIPTION #}
     <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></div>
+
+    {% if app.user.inscriptions|length > 0 %}
     <div class="infoInscription container colonne">
         <table class="table">
             <caption>Inscriptions</caption>
@@ -81,22 +90,35 @@
                 </tr>
             </thead>
             <tbody>
-            <tr><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></tr>
+            {# <tr><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></tr> #}
             {% for inscr in app.user.inscriptions %}
                 <tr>
-                    <td>{{ inscr.ficheMedicale }}</td>
-                    <td>{{ inscr.ficheMedicale }}</td>
-                    <td>{{ inscr.ficheMedicale }}</td>
-                    <td>{{ inscr.ficheMedicale }}</td>
-                    <td>{{ inscr.ficheMedicale }}</td>
-                    <td>{{ inscr.ficheMedicale }}</td>
+                    <td>{{ inscr.saison }}</td>
+                    <td>{{ inscr.jourEntrainement }}</td>
+                    <td>{{ inscr.categorie.typeCategorie }}</td>
+                    {% if inscr.paiement %}
+                        <td>OK</td>
+                    {% else %}
+                        <td>en attente</td>
+                    {% endif %}
+                    {% if inscr.ficheMedicale is same as(null) %}
+                        <td>en attente</td>
+                    {% else %}
+                        <td>OK</td>
+                    {% endif %}
+                    {% if inscr.certifMedical is same as(null) %}
+                        <td>en attente</td>
+                    {% else %}
+                        <td>OK</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-        <pre>
+    {% endif %}
+        {# <pre>
             {{ dump(app.user.inscriptions) }}
-        </pre>
+        </pre> #}
 </div>
 {% endblock %}
