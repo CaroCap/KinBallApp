@@ -51,6 +51,7 @@ class UserFixtures extends Fixture
             $user->setPrenom($faker->firstName());
             $user->setEmail ("joueur".$i."@kb.be");
             $user->setPassword($this->passwordHasher->hashPassword($user,'mdp'.$i));
+            // ! $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
             $user->setRue($faker->streetAddress());
             $user->setNumero(rand(1,1204));
             $user->setCodePostal($faker->postcode);

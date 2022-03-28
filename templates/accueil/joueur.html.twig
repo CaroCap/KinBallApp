@@ -73,7 +73,7 @@
     <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Éditer</a></div>
 
     {# INSCRIPTION #}
-    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></div>
+    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></div>
 
     {% if app.user.inscriptions|length > 0 %}
     <div class="infoInscription container colonne">
@@ -116,6 +116,8 @@
             </tbody>
         </table>
     </div>
+    {% else %}
+        <div>Tu n'es pas encore inscrit...</div>
     {% endif %}
         {# <pre>
             {{ dump(app.user.inscriptions) }}

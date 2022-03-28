@@ -90,7 +90,19 @@ class RegistrationController extends AbstractController
         // vérifier que le formulaire a été envoyé (isSubmitted) et que les données sont valides
         if ($form->isSubmitted() && $form->isValid()) {
             
-            // ENREGISTRER LES UPLOAD
+        // DATE SAISON
+            // $ajd = new DateTime();
+            // $anneeSaison = $ajd->format("y") ;
+            // if
+            $inscription->setSaison("21-22");
+            
+        // DATE INSCRIPTION
+            $inscription->setDateInscription(new DateTime());
+            
+        // PAIEMENT
+            $inscription->setPaiement(0);
+
+        // ENREGISTRER LES UPLOAD
             // FICHE MEDICALE
             if($inscription->getFicheMedicale()!= null){
             // obtenir le fichier (pas un "string" mais un objet de la class UploadedFile)
@@ -117,17 +129,7 @@ class RegistrationController extends AbstractController
                 $inscription->getCertifMedical($nomFichierServeur);
                 }
 
-            // DATE INSCRIPTION
-            $inscription->setDateInscription(new DateTime());
-            
-            // DATE SAISON
-            // $ajd = new DateTime();
-            // $anneeSaison = $ajd->format("y") ;
-            // if
-            $inscription->setSaison("21-22");
-
-            // PAIEMENT
-            $inscription->setPaiement(0);
+            $inscription->setPlayer($this->getUser());
 
             $entityManager->persist($inscription);
             $entityManager->flush();

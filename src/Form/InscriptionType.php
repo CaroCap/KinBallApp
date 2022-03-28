@@ -31,8 +31,12 @@ class InscriptionType extends AbstractType
             // ->add('dateInscription')
             // ->add('paiement')
             // ->add('datePaiement')
-            ->add('ficheMedicale', FileType::class)
-            ->add('certifMedical', FileType::class)
+            ->add('ficheMedicale', FileType::class, [
+                'required' => false
+            ])
+            ->add('certifMedical', FileType::class, [
+                'required' => false
+            ])
         ;
     }
 
