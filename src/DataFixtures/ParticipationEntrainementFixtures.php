@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Inscription;
-use App\Entity\SeanceEntrainement;
+use App\Entity\Seance;
 use App\DataFixtures\SeanceFixtures;
 use Doctrine\Persistence\ObjectManager;
 use App\DataFixtures\InscriptionFixtures;
@@ -17,7 +17,7 @@ class ParticipationEntrainementFixtures extends Fixture implements DependentFixt
     {
         $typePresence = ['Présent', 'Absent', 'Indécis'];
         $inscriptions = $manager->getRepository(Inscription::class)->findAll();
-        $seances = $manager->getRepository(SeanceEntrainement::class)->findAll();
+        $seances = $manager->getRepository(Seance::class)->findAll();
 
         for ($i = 1; $i <= 10 ; $i++){
             $participation = new ParticipationEntrainement();

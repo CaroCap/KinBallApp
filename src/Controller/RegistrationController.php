@@ -13,7 +13,7 @@ use App\Entity\ParticipationEntrainement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\SeanceEntrainementRepository;
+use App\Repository\SeanceRepository;
 use App\Repository\ParticipationEntrainementRepository;
 use Symfony\Polyfill\Intl\Icu\DateFormat\YearTransformer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -81,7 +81,7 @@ class RegistrationController extends AbstractController
 
 // INSCRIPTION À UNE SAISON
     #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(ParticipationEntrainementRepository $participationEntrainementRepository, SeanceEntrainementRepository $seanceEntrainementRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function inscription(ParticipationEntrainementRepository $participationEntrainementRepository, SeanceRepository $seanceRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // créer une nouvelle entité vide
         $inscription = new Inscription();
@@ -140,7 +140,7 @@ class RegistrationController extends AbstractController
 
             
             // CRÉER Toutes les participations de la saison
-            $seances = $seanceEntrainementRepository->findAll();
+            $seances = $seanceRepository->findAll();
             $dateAJD = new DateTime();
 
             foreach ($seances as $seance) {

@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use DateTime;
 use App\Entity\Adresse;
-use App\Entity\SeanceEntrainement;
+use App\Entity\Seance;
 use App\DataFixtures\AdresseFixtures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -21,7 +21,7 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
         $dateDimanche = ['2022-03-27', '2022-04-03', '2022-04-24', '2022-05-01', '2022-05-08'];
         // Fixtures pour entrainement mercredi
         for ($i = 0; $i < 5; $i++) {
-            $seance = new SeanceEntrainement([
+            $seance = new Seance([
                 'title' => "Entrainement VUB",
                 'description' => "Entrainement hebdomadaire toutes catégories",
                 'start' => new DateTime($dateMercredi[$i] . ' 18:00:00'),
@@ -33,7 +33,7 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
 
         // Fixtures pour entrainement dimanche
         for ($i = 0; $i < 5; $i++) {
-            $seance = new SeanceEntrainement([
+            $seance = new Seance([
                 'title' => "Entrainement ULB",
                 'description' => "Entrainement hebdomadaire toutes catégories",
                 'start' => new DateTime($dateDimanche[$i] . ' 18:00:00'),

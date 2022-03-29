@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\SeanceEntrainement;
+use App\Entity\Seance;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method SeanceEntrainement|null find($id, $lockMode = null, $lockVersion = null)
- * @method SeanceEntrainement|null findOneBy(array $criteria, array $orderBy = null)
- * @method SeanceEntrainement[]    findAll()
- * @method SeanceEntrainement[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Seance|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Seance|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Seance[]    findAll()
+ * @method Seance[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SeanceEntrainementRepository extends ServiceEntityRepository
+class SeanceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SeanceEntrainement::class);
+        parent::__construct($registry, Seance::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(SeanceEntrainement $entity, bool $flush = true): void
+    public function add(Seance $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class SeanceEntrainementRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(SeanceEntrainement $entity, bool $flush = true): void
+    public function remove(Seance $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class SeanceEntrainementRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return SeanceEntrainement[] Returns an array of SeanceEntrainement objects
+    //  * @return Seance[] Returns an array of Seance objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class SeanceEntrainementRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?SeanceEntrainement
+    public function findOneBySomeField($value): ?Seance
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

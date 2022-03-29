@@ -24,13 +24,13 @@ class Saison
     #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Inscription::class, orphanRemoval: true)]
     private $inscriptions;
 
-    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: SeanceEntrainement::class, orphanRemoval: true)]
-    private $seanceEntrainements;
+    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Seance::class, orphanRemoval: true)]
+    private $seances;
 
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
-        $this->seanceEntrainements = new ArrayCollection();
+        $this->seances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,29 +93,29 @@ class Saison
     }
 
     /**
-     * @return Collection<int, SeanceEntrainement>
+     * @return Collection<int, Seance>
      */
-    public function getSeanceEntrainements(): Collection
+    public function getSeances(): Collection
     {
-        return $this->seanceEntrainements;
+        return $this->seances;
     }
 
-    public function addSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
+    public function addSeance(Seance $seance): self
     {
-        if (!$this->seanceEntrainements->contains($seanceEntrainement)) {
-            $this->seanceEntrainements[] = $seanceEntrainement;
-            $seanceEntrainement->setSaison($this);
+        if (!$this->seances->contains($seance)) {
+            $this->seances[] = $seance;
+            $seance->setSaison($this);
         }
 
         return $this;
     }
 
-    public function removeSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
+    public function removeSeance(Seance $seance): self
     {
-        if ($this->seanceEntrainements->removeElement($seanceEntrainement)) {
+        if ($this->seances->removeElement($seance)) {
             // set the owning side to null (unless already changed)
-            if ($seanceEntrainement->getSaison() === $this) {
-                $seanceEntrainement->setSaison(null);
+            if ($seance->getSaison() === $this) {
+                $seance->setSaison(null);
             }
         }
 

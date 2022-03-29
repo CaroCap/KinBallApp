@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Inscription;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\SeanceEntrainement;
+use App\Entity\Seance;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\ParticipationEntrainementRepository;
 
@@ -19,7 +19,7 @@ class ParticipationEntrainement
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $typePresence;
 
-    #[ORM\ManyToOne(targetEntity: SeanceEntrainement::class, inversedBy: 'participationEntrainements')]
+    #[ORM\ManyToOne(targetEntity: Seance::class, inversedBy: 'participationEntrainements')]
     private $seance;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -64,12 +64,12 @@ class ParticipationEntrainement
         return $this;
     }
 
-    public function getSeance(): ?SeanceEntrainement
+    public function getSeance(): ?Seance
     {
         return $this->seance;
     }
 
-    public function setSeance(?SeanceEntrainement $seance): self
+    public function setSeance(?Seance $seance): self
     {
         $this->seance = $seance;
 

@@ -4,11 +4,11 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\SeanceEntrainementRepository;
+use App\Repository\SeanceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 
-#[ORM\Entity(repositoryClass: SeanceEntrainementRepository::class)]
-class SeanceEntrainement
+#[ORM\Entity(repositoryClass: SeanceRepository::class)]
+class Seance
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

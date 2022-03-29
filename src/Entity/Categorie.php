@@ -21,15 +21,15 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Inscription::class)]
     private $inscriptions;
 
-    #[ORM\ManyToMany(targetEntity: SeanceEntrainement::class, mappedBy: 'categorie')]
-    private $seanceEntrainements;
+    #[ORM\ManyToMany(targetEntity: Seance::class, mappedBy: 'categorie')]
+    private $seances;
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
     {
         $this->hydrate($init);
         $this->inscriptions = new ArrayCollection();
-        $this->seanceEntrainements = new ArrayCollection();
+        $this->seances = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -91,27 +91,27 @@ class Categorie
     }
 
     /**
-     * @return Collection<int, SeanceEntrainement>
+     * @return Collection<int, Seance>
      */
-    public function getSeanceEntrainements(): Collection
+    public function getSeances(): Collection
     {
-        return $this->seanceEntrainements;
+        return $this->seances;
     }
 
-    public function addSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
+    public function addSeance(Seance $seance): self
     {
-        if (!$this->seanceEntrainements->contains($seanceEntrainement)) {
-            $this->seanceEntrainements[] = $seanceEntrainement;
-            $seanceEntrainement->addCategorie($this);
+        if (!$this->seances->contains($seance)) {
+            $this->seances[] = $seance;
+            $seance->addCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
+    public function removeSeance(Seance $seance): self
     {
-        if ($this->seanceEntrainements->removeElement($seanceEntrainement)) {
-            $seanceEntrainement->removeCategorie($this);
+        if ($this->seances->removeElement($seance)) {
+            $seance->removeCategorie($this);
         }
 
         return $this;
