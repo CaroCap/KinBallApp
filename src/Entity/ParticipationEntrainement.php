@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ParticipationEntrainementRepository;
+use App\Entity\Inscription;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\SeanceEntrainement;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\ParticipationEntrainementRepository;
 
 #[ORM\Entity(repositoryClass: ParticipationEntrainementRepository::class)]
 class ParticipationEntrainement
@@ -22,6 +25,24 @@ class ParticipationEntrainement
 
     #[ORM\ManyToOne(targetEntity: SeanceEntrainement::class, inversedBy: 'participationEntrainements')]
     private $seance;
+
+    //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
+    public function __construct(array $init = [])
+    {
+        $this->hydrate($init);
+        $this->users = new ArrayCollection();
+        $this->participationEntrainements = new ArrayCollection();
+    }
+    // HYDRATE pour mettre à jour les attributs des entités
+    public function hydrate(array $vals)
+    {
+        foreach ($vals as $key => $value) {
+            $method = "set" . ucfirst($key);
+            if (method_exists($this,$method)){
+                $this->$method($value);
+            }
+        }
+    }
 
     public function getId(): ?int
     {

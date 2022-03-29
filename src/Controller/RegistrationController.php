@@ -2,20 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Inscription;
+use DateTime;
 use App\Entity\User;
+use App\Entity\Inscription;
 use App\Form\InscriptionType;
 use App\Form\RegistrationFormType;
 use App\Security\FormLoginAuthenticator;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\ParticipationEntrainement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use App\Repository\SeanceEntrainementRepository;
+use App\Repository\ParticipationEntrainementRepository;
 use Symfony\Polyfill\Intl\Icu\DateFormat\YearTransformer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -78,7 +81,7 @@ class RegistrationController extends AbstractController
 
 // INSCRIPTION À UNE SAISON
     #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(Request $request, EntityManagerInterface $entityManager): Response
+    public function inscription(ParticipationEntrainementRepository $participationEntrainementRepository, SeanceEntrainementRepository $seanceEntrainementRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // créer une nouvelle entité vide
         $inscription = new Inscription();
@@ -135,7 +138,24 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_entrainement_index');
+            
+            // CRÉER Toutes les participations de la saison
+            $seances = $seanceEntrainementRepository->findAll();
+            $dateAJD = new DateTime();
+
+            foreach ($seances as $seance) {
+                if ($seance >= $dateAJD) {
+                    # code...
+                    $participationEntrainement = new ParticipationEntrainement([
+                        "typePresence" => 'Présent',
+                        "inscription" => $inscription,
+                        "seance" => $seance
+                    ]);
+                    $participationEntrainementRepository->add($participationEntrainement);
+                }
+            }
+
+            return $this->redirectToRoute('app_participations_joueur');
         }
 
         return $this->render('registration/inscription.html.twig', [

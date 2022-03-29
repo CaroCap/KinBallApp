@@ -94,6 +94,7 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
     // 'method'=>'POST']);
     
     // dd($objetRequest);
+
     // 3. Analyse de l'objet Request du navigateur, remplissage de l'entité
     $form->handleRequest($objetRequest);
     
@@ -118,7 +119,7 @@ public function delete(Request $request, User $user, UserRepository $userReposit
 {
     if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
         $userRepository->remove($user);
-        //
+        // Pour casser la session et revenir à l'écran d'accueil sans bug
         $session = new Session();
         $session->invalidate();
         }
