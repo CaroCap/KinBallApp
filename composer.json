@@ -45,7 +45,13 @@
         "symfony/webpack-encore-bundle": "^1.12",
         "symfony/yaml": "6.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "symfony/debug-bundle": "6.0.*",
+        "symfony/maker-bundle": "^1.38",
+        "symfony/stopwatch": "6.0.*",
+        "symfony/web-profiler-bundle": "6.0.*"
     },
     "config": {
         "allow-plugins": {
@@ -99,10 +105,6 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "symfony/debug-bundle": "6.0.*",
-        "symfony/maker-bundle": "^1.38",
-        "symfony/stopwatch": "6.0.*",
-        "symfony/web-profiler-bundle": "6.0.*"
+        
     }
 }

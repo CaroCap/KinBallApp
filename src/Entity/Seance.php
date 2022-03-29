@@ -26,12 +26,12 @@ class Seance
 
     #[ORM\Column(type: 'datetime')]
     private $end;
+    
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private $numero;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $rue;
-
-    #[ORM\Column(type: 'string', length: 20, nullable: true)]
-    private $numero;
 
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $codePostal;
@@ -40,7 +40,7 @@ class Seance
     private $ville;
 
     #[ORM\OneToMany(mappedBy: 'seance', targetEntity: Participation::class)]
-    private $participationEntrainements;
+    private $participations;
 
     #[ORM\ManyToOne(targetEntity: Saison::class, inversedBy: 'seances')]
     #[ORM\JoinColumn(nullable: false)]
@@ -55,7 +55,7 @@ class Seance
     {
         $this->hydrate($init);
         $this->users = new ArrayCollection();
-        $this->participationEntrainements = new ArrayCollection();
+        $this->participations = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
 
@@ -105,13 +105,13 @@ class Seance
      */
     public function getParticipations(): Collection
     {
-        return $this->participationEntrainements;
+        return $this->participations;
     }
 
     public function addParticipation(Participation $participation): self
     {
-        if (!$this->participationEntrainements->contains($participation)) {
-            $this->participationEntrainements[] = $participation;
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
             $participation->setSeance($this);
         }
 
@@ -120,7 +120,7 @@ class Seance
 
     public function removeParticipation(Participation $participation): self
     {
-        if ($this->participationEntrainements->removeElement($participation)) {
+        if ($this->participations->removeElement($participation)) {
             // set the owning side to null (unless already changed)
             if ($participation->getSeance() === $this) {
                 $participation->setSeance(null);

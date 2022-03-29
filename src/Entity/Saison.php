@@ -15,6 +15,9 @@ class Saison
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(type: 'string', length: 50)]
+    private $titre;
+
     #[ORM\Column(type: 'datetime')]
     private $debut;
 
@@ -27,10 +30,23 @@ class Saison
     #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Inscription::class, orphanRemoval: true)]
     private $inscriptions;
 
-    public function __construct()
+    //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
+    public function __construct(array $init = [])
     {
+        $this->hydrate($init);
         $this->inscriptions = new ArrayCollection();
-        $this->seances = new ArrayCollection();
+            $this->seances = new ArrayCollection();
+    }
+
+    // HYDRATE pour mettre à jour les attributs des entités
+    public function hydrate(array $vals)
+    {
+        foreach ($vals as $key => $value) {
+            $method = "set" . ucfirst($key);
+            if (method_exists($this,$method)){
+                $this->$method($value);
+            }
+        }
     }
 
     public function getId(): ?int
@@ -118,6 +134,18 @@ class Saison
                 $inscription->setSaison(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
 
         return $this;
     }

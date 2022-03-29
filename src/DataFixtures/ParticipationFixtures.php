@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Inscription;
+use App\Entity\User;
 use App\Entity\Seance;
+use App\Entity\Participation;
+use App\DataFixtures\UserFixtures;
 use App\DataFixtures\SeanceFixtures;
 use Doctrine\Persistence\ObjectManager;
-use App\DataFixtures\InscriptionFixtures;
-use App\Entity\Participation;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
@@ -16,13 +16,13 @@ class ParticipationFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $typePresence = ['Présent', 'Absent', 'Indécis'];
-        $inscriptions = $manager->getRepository(Inscription::class)->findAll();
+        $users = $manager->getRepository(User::class)->findAll();
         $seances = $manager->getRepository(Seance::class)->findAll();
 
         for ($i = 1; $i <= 10 ; $i++){
             $participation = new Participation();
             $participation->setTypePresence($typePresence[array_rand($typePresence)]);
-            $participation->setInscription($inscriptions[array_rand($inscriptions)]);
+            $participation->setUser($users[array_rand($users)]);
             $participation->setSeance($seances[array_rand($seances)]);
             $manager->persist($participation);
         }
@@ -34,8 +34,8 @@ class ParticipationFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return([
-            InscriptionFixtures::class,
-            SeanceFixtures::class
+            UserFixtures::class,
+            SeanceFixtures::class,
         ]);
     }
 }

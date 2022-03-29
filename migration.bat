@@ -14,7 +14,7 @@
     symfony console doctrine:migration:migrate --no-interaction
 
 @REM supprime et recrée les données dans la DB
-    @REM symfony console doctrine:fixtures:load --no-interaction
+    symfony console doctrine:fixtures:load --no-interaction
 
 @REM ajoute données dans la DB après donc risque doublons
     @REM symfony console doctrine:fixtures:load --append

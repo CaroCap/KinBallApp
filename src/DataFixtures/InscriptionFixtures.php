@@ -9,6 +9,7 @@ use App\Entity\Categorie;
 use App\Entity\Inscription;
 use App\DataFixtures\UserFixtures;
 use App\DataFixtures\CategorieFixtures;
+use App\Entity\Saison;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -18,25 +19,26 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $jourSeance = ['Mercredi', 'Dimanche', 'Mercredi & Dimanche'];
-        $AnneeSaison = ['20-21', '21-22', '22-23'];
         
         // Pour créer des faux
         $faker = Faker\Factory::create('fr_FR');
         
         $players = $manager->getRepository(User::class)->findAll();
         $categories = $manager->getRepository(Categorie::class)->findAll();
+        $saisons = $manager->getRepository(Saison::class)->findAll();
         
         for ($i = 1; $i <= 10 ; $i++){
             $inscription = new Inscription();
-            $inscription->setSaison($AnneeSaison[array_rand($AnneeSaison)]);
             $inscription->setJourEntrainement($jourSeance[array_rand($jourSeance)]);
             $inscription->setDateInscription(new DateTime($faker->date()));
             $inscription->setPaiement(rand(0,1));
-            // $inscription->setDatePaiement();
             $inscription->setFicheMedicale("fiche".$i.".png");
             $inscription->setCertifMedical("certif".$i.".png");
+            
             $inscription->setCategorie($categories[array_rand($categories)]);
             $inscription->setPlayer($players[array_rand($players)]);
+            $inscription->setSaison($saisons[array_rand($saisons)]);
+            
             $manager->persist($inscription);
         }
         $manager->flush();
@@ -48,7 +50,8 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
     {
         return([
             CategorieFixtures::class,
-            UserFixtures::class
+            UserFixtures::class,
+            SaisonFixtures::class
         ]);
     }
 }
