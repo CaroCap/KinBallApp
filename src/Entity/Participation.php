@@ -6,10 +6,10 @@ use App\Entity\Inscription;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Seance;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Repository\ParticipationEntrainementRepository;
+use App\Repository\ParticipationRepository;
 
-#[ORM\Entity(repositoryClass: ParticipationEntrainementRepository::class)]
-class ParticipationEntrainement
+#[ORM\Entity(repositoryClass: ParticipationRepository::class)]
+class Participation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,13 +19,13 @@ class ParticipationEntrainement
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $typePresence;
 
-    #[ORM\ManyToOne(targetEntity: Seance::class, inversedBy: 'participationEntrainements')]
+    #[ORM\ManyToOne(targetEntity: Seance::class, inversedBy: 'participations')]
     private $seance;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $commentaire;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'participationEntrainements')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'participations')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
@@ -34,7 +34,7 @@ class ParticipationEntrainement
     {
         $this->hydrate($init);
         $this->users = new ArrayCollection();
-        $this->participationEntrainements = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
     // HYDRATE pour mettre à jour les attributs des entités
     public function hydrate(array $vals)

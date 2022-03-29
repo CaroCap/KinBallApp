@@ -9,12 +9,12 @@ use App\Form\InscriptionType;
 use App\Form\RegistrationFormType;
 use App\Security\FormLoginAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\ParticipationEntrainement;
+use App\Entity\Participation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SeanceRepository;
-use App\Repository\ParticipationEntrainementRepository;
+use App\Repository\ParticipationRepository;
 use Symfony\Polyfill\Intl\Icu\DateFormat\YearTransformer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -81,7 +81,7 @@ class RegistrationController extends AbstractController
 
 // INSCRIPTION À UNE SAISON
     #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(ParticipationEntrainementRepository $participationEntrainementRepository, SeanceRepository $seanceRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function inscription(ParticipationRepository $participationRepository, SeanceRepository $seanceRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // créer une nouvelle entité vide
         $inscription = new Inscription();
@@ -146,12 +146,12 @@ class RegistrationController extends AbstractController
             foreach ($seances as $seance) {
                 if ($seance >= $dateAJD) {
                     # code...
-                    $participationEntrainement = new ParticipationEntrainement([
+                    $participation = new Participation([
                         "typePresence" => 'Présent',
                         "inscription" => $inscription,
                         "seance" => $seance
                     ]);
-                    $participationEntrainementRepository->add($participationEntrainement);
+                    $participationRepository->add($participation);
                 }
             }
 

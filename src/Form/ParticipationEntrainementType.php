@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\ParticipationEntrainement;
+use App\Entity\Participation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ParticipationEntrainementType extends AbstractType
+class ParticipationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -21,7 +21,7 @@ class ParticipationEntrainementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ParticipationEntrainement::class,
+            'data_class' => Participation::class,
         ]);
     }
 }

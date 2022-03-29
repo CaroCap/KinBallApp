@@ -7,11 +7,11 @@ use App\Entity\Seance;
 use App\DataFixtures\SeanceFixtures;
 use Doctrine\Persistence\ObjectManager;
 use App\DataFixtures\InscriptionFixtures;
-use App\Entity\ParticipationEntrainement;
+use App\Entity\Participation;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class ParticipationEntrainementFixtures extends Fixture implements DependentFixtureInterface
+class ParticipationFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -20,7 +20,7 @@ class ParticipationEntrainementFixtures extends Fixture implements DependentFixt
         $seances = $manager->getRepository(Seance::class)->findAll();
 
         for ($i = 1; $i <= 10 ; $i++){
-            $participation = new ParticipationEntrainement();
+            $participation = new Participation();
             $participation->setTypePresence($typePresence[array_rand($typePresence)]);
             $participation->setInscription($inscriptions[array_rand($inscriptions)]);
             $participation->setSeance($seances[array_rand($seances)]);

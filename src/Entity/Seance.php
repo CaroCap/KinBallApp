@@ -39,8 +39,8 @@ class Seance
     #[ORM\Column(type: 'string', length: 150, nullable: true)]
     private $ville;
 
-    #[ORM\OneToMany(mappedBy: 'seance', targetEntity: ParticipationEntrainement::class)]
-    private $participationEntrainements;
+    #[ORM\OneToMany(mappedBy: 'seance', targetEntity: Participation::class)]
+    private $participations;
 
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
@@ -48,7 +48,7 @@ class Seance
     {
         $this->hydrate($init);
         $this->users = new ArrayCollection();
-        $this->participationEntrainements = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -93,29 +93,29 @@ class Seance
     }
 
     /**
-     * @return Collection<int, ParticipationEntrainement>
+     * @return Collection<int, Participation>
      */
-    public function getParticipationEntrainements(): Collection
+    public function getParticipations(): Collection
     {
-        return $this->participationEntrainements;
+        return $this->participations;
     }
 
-    public function addParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    public function addParticipation(Participation $participation): self
     {
-        if (!$this->participationEntrainements->contains($participationEntrainement)) {
-            $this->participationEntrainements[] = $participationEntrainement;
-            $participationEntrainement->setSeance($this);
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setSeance($this);
         }
 
         return $this;
     }
 
-    public function removeParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    public function removeParticipation(Participation $participation): self
     {
-        if ($this->participationEntrainements->removeElement($participationEntrainement)) {
+        if ($this->participations->removeElement($participation)) {
             // set the owning side to null (unless already changed)
-            if ($participationEntrainement->getSeance() === $this) {
-                $participationEntrainement->setSeance(null);
+            if ($participation->getSeance() === $this) {
+                $participation->setSeance(null);
             }
         }
 

@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\ParticipationEntrainement;
+use App\Entity\Participation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method ParticipationEntrainement|null find($id, $lockMode = null, $lockVersion = null)
- * @method ParticipationEntrainement|null findOneBy(array $criteria, array $orderBy = null)
- * @method ParticipationEntrainement[]    findAll()
- * @method ParticipationEntrainement[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Participation|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Participation|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Participation[]    findAll()
+ * @method Participation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipationEntrainementRepository extends ServiceEntityRepository
+class ParticipationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ParticipationEntrainement::class);
+        parent::__construct($registry, Participation::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(ParticipationEntrainement $entity, bool $flush = true): void
+    public function add(Participation $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class ParticipationEntrainementRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(ParticipationEntrainement $entity, bool $flush = true): void
+    public function remove(Participation $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class ParticipationEntrainementRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return ParticipationEntrainement[] Returns an array of ParticipationEntrainement objects
+    //  * @return Participation[] Returns an array of Participation objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class ParticipationEntrainementRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ParticipationEntrainement
+    public function findOneBySomeField($value): ?Participation
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

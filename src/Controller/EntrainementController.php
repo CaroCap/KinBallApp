@@ -24,7 +24,7 @@ class EntrainementController extends AbstractController
     {
         $evenements = $seanceRepository->findAll();
 
-        $evenementsJSON = $serializer->serialize($evenements, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['adresse', 'participationEntrainements']]);
+        $evenementsJSON = $serializer->serialize($evenements, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['adresse', 'participations']]);
         $vars = ['evenementsJSON' => $evenementsJSON];
 
         // return $this->render('entrainement/index.html.twig', [

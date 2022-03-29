@@ -73,13 +73,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime')]
     private $dateUpdate;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ParticipationEntrainement::class, orphanRemoval: true)]
-    private $participationEntrainements;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participation::class, orphanRemoval: true)]
+    private $participations;
 
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
-        $this->participationEntrainements = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -351,29 +351,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, ParticipationEntrainement>
+     * @return Collection<int, Participation>
      */
-    public function getParticipationEntrainements(): Collection
+    public function getParticipations(): Collection
     {
-        return $this->participationEntrainements;
+        return $this->participations;
     }
 
-    public function addParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    public function addParticipation(Participation $participation): self
     {
-        if (!$this->participationEntrainements->contains($participationEntrainement)) {
-            $this->participationEntrainements[] = $participationEntrainement;
-            $participationEntrainement->setUser($this);
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    public function removeParticipation(Participation $participation): self
     {
-        if ($this->participationEntrainements->removeElement($participationEntrainement)) {
+        if ($this->participations->removeElement($participation)) {
             // set the owning side to null (unless already changed)
-            if ($participationEntrainement->getUser() === $this) {
-                $participationEntrainement->setUser(null);
+            if ($participation->getUser() === $this) {
+                $participation->setUser(null);
             }
         }
 
