@@ -40,7 +40,14 @@ class Seance
     private $ville;
 
     #[ORM\OneToMany(mappedBy: 'seance', targetEntity: Participation::class)]
-    private $participations;
+    private $participationEntrainements;
+
+    #[ORM\ManyToOne(targetEntity: Saison::class, inversedBy: 'seances')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $saison;
+
+    #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'seances')]
+    private $categories;
 
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
@@ -48,7 +55,8 @@ class Seance
     {
         $this->hydrate($init);
         $this->users = new ArrayCollection();
-        $this->participations = new ArrayCollection();
+        $this->participationEntrainements = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -97,13 +105,13 @@ class Seance
      */
     public function getParticipations(): Collection
     {
-        return $this->participations;
+        return $this->participationEntrainements;
     }
 
     public function addParticipation(Participation $participation): self
     {
-        if (!$this->participations->contains($participation)) {
-            $this->participations[] = $participation;
+        if (!$this->participationEntrainements->contains($participation)) {
+            $this->participationEntrainements[] = $participation;
             $participation->setSeance($this);
         }
 
@@ -112,7 +120,7 @@ class Seance
 
     public function removeParticipation(Participation $participation): self
     {
-        if ($this->participations->removeElement($participation)) {
+        if ($this->participationEntrainements->removeElement($participation)) {
             // set the owning side to null (unless already changed)
             if ($participation->getSeance() === $this) {
                 $participation->setSeance(null);
@@ -191,6 +199,45 @@ class Seance
     public function setVille(?string $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getSaison(): ?Saison
+    {
+        return $this->saison;
+    }
+
+    public function setSaison(?Saison $saison): self
+    {
+        $this->saison = $saison;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Categorie $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categorie $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeSeance($this);
+        }
 
         return $this;
     }

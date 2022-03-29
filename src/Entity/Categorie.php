@@ -21,7 +21,7 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Inscription::class)]
     private $inscriptions;
 
-    #[ORM\ManyToMany(targetEntity: Seance::class, mappedBy: 'categorie')]
+    #[ORM\ManyToMany(targetEntity: Seance::class, inversedBy: 'categories')]
     private $seances;
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
@@ -102,7 +102,6 @@ class Categorie
     {
         if (!$this->seances->contains($seance)) {
             $this->seances[] = $seance;
-            $seance->addCategorie($this);
         }
 
         return $this;
@@ -110,10 +109,9 @@ class Categorie
 
     public function removeSeance(Seance $seance): self
     {
-        if ($this->seances->removeElement($seance)) {
-            $seance->removeCategorie($this);
-        }
+        $this->seances->removeElement($seance);
 
         return $this;
     }
+
 }

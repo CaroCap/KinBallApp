@@ -21,11 +21,11 @@ class Saison
     #[ORM\Column(type: 'datetime')]
     private $fin;
 
-    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Inscription::class, orphanRemoval: true)]
-    private $inscriptions;
-
     #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Seance::class, orphanRemoval: true)]
     private $seances;
+
+    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Inscription::class, orphanRemoval: true)]
+    private $inscriptions;
 
     public function __construct()
     {
@@ -63,36 +63,6 @@ class Saison
     }
 
     /**
-     * @return Collection<int, Inscription>
-     */
-    public function getInscriptions(): Collection
-    {
-        return $this->inscriptions;
-    }
-
-    public function addInscription(Inscription $inscription): self
-    {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions[] = $inscription;
-            $inscription->setSaison($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInscription(Inscription $inscription): self
-    {
-        if ($this->inscriptions->removeElement($inscription)) {
-            // set the owning side to null (unless already changed)
-            if ($inscription->getSaison() === $this) {
-                $inscription->setSaison(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Seance>
      */
     public function getSeances(): Collection
@@ -116,6 +86,36 @@ class Saison
             // set the owning side to null (unless already changed)
             if ($seance->getSaison() === $this) {
                 $seance->setSaison(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setSaison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getSaison() === $this) {
+                $inscription->setSaison(null);
             }
         }
 
