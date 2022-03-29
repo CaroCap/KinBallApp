@@ -14,13 +14,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for participation_entrainement in participation_entrainements %}
+        {% for participation in participations %}
             <tr>
-                <td>{{ participation_entrainement.id }}</td>
-                <td>{{ participation_entrainement.typePresence }}</td>
+                <td>{{ participation.id }}</td>
+                <td>{{ participation.typePresence }}</td>
                 <td>
-                    <a href="{{ path('app_participation_show', {'id': participation_entrainement.id}) }}">show</a>
-                    <a href="{{ path('app_participation_edit', {'id': participation_entrainement.id}) }}">edit</a>
+                    <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a>
+                    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}">edit</a>
 
                     {# <div><label for="inscription_jourEntrainement" class="required">Jour entrainement</label><select id="inscription_jourEntrainement" name="inscription[jourEntrainement]"><option value="Mercredi">Mercredi</option><option value="Dimanche">Dimanche</option><option value="Mercredi &amp; Dimanche">Mercredi &amp; Dimanche</option></select></div> #}
 

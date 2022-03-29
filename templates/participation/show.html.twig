@@ -9,18 +9,18 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ participation_entrainement.id }}</td>
+                <td>{{ participation.id }}</td>
             </tr>
             <tr>
                 <th>TypePresence</th>
-                <td>{{ participation_entrainement.typePresence }}</td>
+                <td>{{ participation.typePresence }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_participation_index') }}">back to list</a>
 
-    <a href="{{ path('app_participation_edit', {'id': participation_entrainement.id}) }}">edit</a>
+    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}">edit</a>
 
     {{ include('participation/_delete_form.html.twig') }}
 {% endblock %}

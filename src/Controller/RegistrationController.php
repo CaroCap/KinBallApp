@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SeanceRepository;
 use App\Repository\ParticipationRepository;
+use App\Repository\SaisonRepository;
 use Symfony\Polyfill\Intl\Icu\DateFormat\YearTransformer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -81,10 +82,16 @@ class RegistrationController extends AbstractController
 
 // INSCRIPTION À UNE SAISON
     #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(ParticipationRepository $participationRepository, SeanceRepository $seanceRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function inscription(SaisonRepository $saisonRepository, ParticipationRepository $participationRepository, SeanceRepository $seanceRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // créer une nouvelle entité vide
         $inscription = new Inscription();
+        
+        // DATE SAISON
+            // $lastSaison = $saisonRepository->findLast();
+            // $lastSaison = $saisonRepository->find(0);
+            $inscription->setSaison($saisonRepository->findLast());
+
         // créer un formulaire associé à cette entité
         $form = $this->createForm(InscriptionType::class, $inscription);
         // gérer la requête (et hydrater l'entité)
@@ -92,13 +99,7 @@ class RegistrationController extends AbstractController
 
         // vérifier que le formulaire a été envoyé (isSubmitted) et que les données sont valides
         if ($form->isSubmitted() && $form->isValid()) {
-            
-        // DATE SAISON
-            // $ajd = new DateTime();
-            // $anneeSaison = $ajd->format("y") ;
-            // if
-            // $inscription->setSaison("21-22");
-            
+
         // DATE INSCRIPTION
             $inscription->setDateInscription(new DateTime());
             
@@ -143,17 +144,31 @@ class RegistrationController extends AbstractController
             $seances = $seanceRepository->findAll();
             $dateAJD = new DateTime();
 
+            // DATE SAISON
+            // $lastSaison = $saisonRepository->findLast();
+            // $lastSaison = $saisonRepository->find(0);
+            $inscription->setSaison($saisonRepository->findLast());
+
             foreach ($seances as $seance) {
-                if ($seance >= $dateAJD) {
-                    # code...
                     $participation = new Participation([
                         "typePresence" => 'Présent',
                         "inscription" => $inscription,
                         "seance" => $seance
                     ]);
                     $participationRepository->add($participation);
-                }
             }
+
+            // foreach ($seances as $seance) {
+            //     if ($seance >= $dateAJD) {
+            //         # code...
+            //         $participation = new Participation([
+            //             "typePresence" => 'Présent',
+            //             "inscription" => $inscription,
+            //             "seance" => $seance
+            //         ]);
+            //         $participationRepository->add($participation);
+            //     }
+            // }
 
             return $this->redirectToRoute('app_participations_joueur');
         }

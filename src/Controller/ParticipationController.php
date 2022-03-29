@@ -19,7 +19,7 @@ class ParticipationController extends AbstractController
     public function index(ParticipationRepository $participationRepository): Response
     {
         return $this->render('participation/index.html.twig', [
-            'participation_entrainements' => $participationRepository->findAll(),
+            'participations' => $participationRepository->findAll(),
         ]);
     }
 
@@ -28,7 +28,7 @@ class ParticipationController extends AbstractController
     public function participationsJoueur(ParticipationRepository $participationRepository): Response
     {
         return $this->render('participation/index.html.twig', [
-            'participation_entrainements' => $participationRepository->findAll(),
+            'participations' => $participationRepository->findAll(),
         ]);
     }
 
@@ -46,7 +46,7 @@ class ParticipationController extends AbstractController
         }
 
         return $this->renderForm('participation/new.html.twig', [
-            'participation_entrainement' => $participation,
+            'participation' => $participation,
             'form' => $form,
         ]);
     }
@@ -56,7 +56,7 @@ class ParticipationController extends AbstractController
     public function show(Participation $participation): Response
     {
         return $this->render('participation/show.html.twig', [
-            'participation_entrainement' => $participation,
+            'participation' => $participation,
         ]);
     }
 
@@ -73,7 +73,7 @@ class ParticipationController extends AbstractController
         }
 
         return $this->renderForm('participation/edit.html.twig', [
-            'participation_entrainement' => $participation,
+            'participation' => $participation,
             'form' => $form,
         ]);
     }

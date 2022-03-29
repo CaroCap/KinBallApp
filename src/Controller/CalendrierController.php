@@ -15,11 +15,10 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 // SELECT ALL
-#[Route('/entrainement')]
-class EntrainementController extends AbstractController
+class CalendrierController extends AbstractController
 {
-//Calendrier de tous les entrainements
-    #[Route('/', name: 'app_entrainement_index', methods: ['GET'])]
+//Calendrier de toutes les seances (entrainements+matchs)
+    #[Route('/calendrier', name: 'app_seance_index', methods: ['GET'])]
     public function index(SeanceRepository $seanceRepository, SerializerInterface $serializer): Response
     {
         $evenements = $seanceRepository->findAll();
@@ -27,23 +26,23 @@ class EntrainementController extends AbstractController
         $evenementsJSON = $serializer->serialize($evenements, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['categories', 'participations', 'saison']]);
         $vars = ['evenementsJSON' => $evenementsJSON];
 
-        // return $this->render('entrainement/index.html.twig', [
-        //     'seance_entrainements' => $seanceRepository->findAll(),
+        // return $this->render('seance/index.html.twig', [
+        //     'seances' => $seanceRepository->findAll(),
         // ]);
-        return $this->render('entrainement/calendrier.html.twig', $vars);
+        return $this->render('seance/calendrier.html.twig', $vars);
     }
 
 // SELECT BY ID
-    #[Route('/{id}', name: 'app_entrainement_show', methods: ['GET'])]
+    #[Route('/seance/{id}', name: 'app_seance_show', methods: ['GET'])]
     public function show(Seance $seance): Response
     {
-        return $this->render('entrainement/show.html.twig', [
-            'seance_entrainement' => $seance,
+        return $this->render('seance/show.html.twig', [
+            'seance' => $seance,
         ]);
     }
 
 // CREATE
-    #[Route('/new', name: 'app_entrainement_new', methods: ['GET', 'POST'])]
+    #[Route('/seance/new', name: 'app_seance_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SeanceRepository $seanceRepository): Response
     {
         $seance = new Seance();
@@ -52,17 +51,17 @@ class EntrainementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $seanceRepository->add($seance);
-            return $this->redirectToRoute('app_entrainement_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('entrainement/new.html.twig', [
-            'seance_entrainement' => $seance,
+        return $this->renderForm('seance/new.html.twig', [
+            'seance' => $seance,
             'form' => $form,
         ]);
     }
 
 //EDIT
-    #[Route('/{id}/edit', name: 'app_entrainement_edit', methods: ['GET', 'POST'])]
+    #[Route('/seance/{id}/edit', name: 'app_seance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Seance $seance, SeanceRepository $seanceRepository): Response
     {
         $form = $this->createForm(SeanceType::class, $seance);
@@ -70,23 +69,23 @@ class EntrainementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $seanceRepository->add($seance);
-            return $this->redirectToRoute('app_entrainement_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('entrainement/edit.html.twig', [
-            'seance_entrainement' => $seance,
+        return $this->renderForm('seance/edit.html.twig', [
+            'seance' => $seance,
             'form' => $form,
         ]);
     }
 
 // DELETE
-    #[Route('/{id}', name: 'app_entrainement_delete', methods: ['POST'])]
+    #[Route('/seance/{id}', name: 'app_seance_delete', methods: ['POST'])]
     public function delete(Request $request, Seance $seance, SeanceRepository $seanceRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$seance->getId(), $request->request->get('_token'))) {
             $seanceRepository->remove($seance);
         }
 
-        return $this->redirectToRoute('app_entrainement_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
     }
 }

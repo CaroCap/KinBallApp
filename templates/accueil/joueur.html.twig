@@ -93,6 +93,9 @@
             {# <tr><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></tr> #}
             {% for inscr in app.user.inscriptions %}
                 <tr>
+                <pre>
+                    {{ dump(inscr) }}
+                </pre>
                     <td>{{ inscr.saison }}</td>
                     <td>{{ inscr.jourEntrainement }}</td>
                     <td>{{ inscr.categorie.typeCategorie }}</td>
@@ -121,7 +124,7 @@
     <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_participations_joueur') }}">Voir mes présences</a></div>
 
     {% else %}
-        <div>Tu n'es pas encore inscrit...</div>
+        <div>Tu n'es pas encore inscrit à une saison de Kin-Ball au K-ribou...</div>
     {% endif %}
         {# <pre>
             {{ dump(app.user.inscriptions) }}

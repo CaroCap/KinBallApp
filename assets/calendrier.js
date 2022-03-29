@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //     console.log (info.event.id);
         //     let idEvenementColor = info.event.id;
         //     // on doit effacer de la BD aussi!
-        //     axios.post("/entrainement/presence", 
+        //     axios.post("/calendrier/presence", 
         //     { id: idEvenementColor })
         //     .then (function (response){
         //         // si success dans l'insertion dans la BD
