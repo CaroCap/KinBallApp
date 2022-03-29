@@ -73,9 +73,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime')]
     private $dateUpdate;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ParticipationEntrainement::class, orphanRemoval: true)]
+    private $participationEntrainements;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
+        $this->participationEntrainements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -342,6 +346,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateUpdate(\DateTimeInterface $dateUpdate): self
     {
         $this->dateUpdate = $dateUpdate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ParticipationEntrainement>
+     */
+    public function getParticipationEntrainements(): Collection
+    {
+        return $this->participationEntrainements;
+    }
+
+    public function addParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    {
+        if (!$this->participationEntrainements->contains($participationEntrainement)) {
+            $this->participationEntrainements[] = $participationEntrainement;
+            $participationEntrainement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
+    {
+        if ($this->participationEntrainements->removeElement($participationEntrainement)) {
+            // set the owning side to null (unless already changed)
+            if ($participationEntrainement->getUser() === $this) {
+                $participationEntrainement->setUser(null);
+            }
+        }
 
         return $this;
     }

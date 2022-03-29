@@ -19,12 +19,15 @@ class ParticipationEntrainement
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $typePresence;
 
-    #[ORM\ManyToOne(targetEntity: Inscription::class, inversedBy: 'participationEntrainements')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $inscription;
-
     #[ORM\ManyToOne(targetEntity: SeanceEntrainement::class, inversedBy: 'participationEntrainements')]
     private $seance;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $commentaire;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'participationEntrainements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $user;
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
@@ -61,18 +64,6 @@ class ParticipationEntrainement
         return $this;
     }
 
-    public function getInscription(): ?Inscription
-    {
-        return $this->inscription;
-    }
-
-    public function setInscription(?Inscription $inscription): self
-    {
-        $this->inscription = $inscription;
-
-        return $this;
-    }
-
     public function getSeance(): ?SeanceEntrainement
     {
         return $this->seance;
@@ -81,6 +72,30 @@ class ParticipationEntrainement
     public function setSeance(?SeanceEntrainement $seance): self
     {
         $this->seance = $seance;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

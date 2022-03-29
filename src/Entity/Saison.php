@@ -2,45 +2,35 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorieRepository;
+use App\Repository\SaisonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategorieRepository::class)]
-class Categorie
+#[ORM\Entity(repositoryClass: SaisonRepository::class)]
+class Saison
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 150)]
-    private $typeCategorie;
+    #[ORM\Column(type: 'datetime')]
+    private $debut;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Inscription::class)]
+    #[ORM\Column(type: 'datetime')]
+    private $fin;
+
+    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Inscription::class, orphanRemoval: true)]
     private $inscriptions;
 
-    #[ORM\ManyToMany(targetEntity: SeanceEntrainement::class, mappedBy: 'categorie')]
+    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: SeanceEntrainement::class, orphanRemoval: true)]
     private $seanceEntrainements;
 
-    //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
-    public function __construct(array $init = [])
+    public function __construct()
     {
-        $this->hydrate($init);
         $this->inscriptions = new ArrayCollection();
         $this->seanceEntrainements = new ArrayCollection();
-    }
-
-    // HYDRATE pour mettre à jour les attributs des entités
-    public function hydrate(array $vals)
-    {
-        foreach ($vals as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this,$method)){
-                $this->$method($value);
-            }
-        }
     }
 
     public function getId(): ?int
@@ -48,14 +38,26 @@ class Categorie
         return $this->id;
     }
 
-    public function getTypeCategorie(): ?string
+    public function getDebut(): ?\DateTimeInterface
     {
-        return $this->typeCategorie;
+        return $this->debut;
     }
 
-    public function setTypeCategorie(string $typeCategorie): self
+    public function setDebut(\DateTimeInterface $debut): self
     {
-        $this->typeCategorie = $typeCategorie;
+        $this->debut = $debut;
+
+        return $this;
+    }
+
+    public function getFin(): ?\DateTimeInterface
+    {
+        return $this->fin;
+    }
+
+    public function setFin(\DateTimeInterface $fin): self
+    {
+        $this->fin = $fin;
 
         return $this;
     }
@@ -72,7 +74,7 @@ class Categorie
     {
         if (!$this->inscriptions->contains($inscription)) {
             $this->inscriptions[] = $inscription;
-            $inscription->setCategorie($this);
+            $inscription->setSaison($this);
         }
 
         return $this;
@@ -82,8 +84,8 @@ class Categorie
     {
         if ($this->inscriptions->removeElement($inscription)) {
             // set the owning side to null (unless already changed)
-            if ($inscription->getCategorie() === $this) {
-                $inscription->setCategorie(null);
+            if ($inscription->getSaison() === $this) {
+                $inscription->setSaison(null);
             }
         }
 
@@ -102,7 +104,7 @@ class Categorie
     {
         if (!$this->seanceEntrainements->contains($seanceEntrainement)) {
             $this->seanceEntrainements[] = $seanceEntrainement;
-            $seanceEntrainement->addCategorie($this);
+            $seanceEntrainement->setSaison($this);
         }
 
         return $this;
@@ -111,7 +113,10 @@ class Categorie
     public function removeSeanceEntrainement(SeanceEntrainement $seanceEntrainement): self
     {
         if ($this->seanceEntrainements->removeElement($seanceEntrainement)) {
-            $seanceEntrainement->removeCategorie($this);
+            // set the owning side to null (unless already changed)
+            if ($seanceEntrainement->getSaison() === $this) {
+                $seanceEntrainement->setSaison(null);
+            }
         }
 
         return $this;

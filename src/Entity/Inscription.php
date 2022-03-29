@@ -18,9 +18,6 @@ class Inscription
     private $id;
 
     #[ORM\Column(type: 'string', length: 30)]
-    private $saison;
-
-    #[ORM\Column(type: 'string', length: 30)]
     private $jourEntrainement;
 
     #[ORM\Column(type: 'datetime')]
@@ -46,8 +43,9 @@ class Inscription
     #[ORM\JoinColumn(nullable: false)]
     private $player;
 
-    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: ParticipationEntrainement::class, orphanRemoval: true)]
-    private $participationEntrainements;
+    #[ORM\ManyToOne(targetEntity: Saison::class, inversedBy: 'inscriptions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $saison;
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
@@ -55,7 +53,6 @@ class Inscription
         $this->hydrate($init);
         $this->users = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
-        $this->participationEntrainements = new ArrayCollection();
     }
 
     // HYDRATE pour mettre à jour les attributs des entités
@@ -170,45 +167,16 @@ class Inscription
         return $this;
     }
 
-    /**
-     * @return Collection<int, ParticipationEntrainement>
-     */
-    public function getParticipationEntrainements(): Collection
-    {
-        return $this->participationEntrainements;
-    }
-
-    public function addParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
-    {
-        if (!$this->participationEntrainements->contains($participationEntrainement)) {
-            $this->participationEntrainements[] = $participationEntrainement;
-            $participationEntrainement->setInscription($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipationEntrainement(ParticipationEntrainement $participationEntrainement): self
-    {
-        if ($this->participationEntrainements->removeElement($participationEntrainement)) {
-            // set the owning side to null (unless already changed)
-            if ($participationEntrainement->getInscription() === $this) {
-                $participationEntrainement->setInscription(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getSaison(): ?string
+    public function getSaison(): ?Saison
     {
         return $this->saison;
     }
 
-    public function setSaison(?string $saison): self
+    public function setSaison(?Saison $saison): self
     {
         $this->saison = $saison;
 
         return $this;
     }
+
 }

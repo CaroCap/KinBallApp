@@ -97,7 +97,7 @@ class RegistrationController extends AbstractController
             // $ajd = new DateTime();
             // $anneeSaison = $ajd->format("y") ;
             // if
-            $inscription->setSaison("21-22");
+            // $inscription->setSaison("21-22");
             
         // DATE INSCRIPTION
             $inscription->setDateInscription(new DateTime());

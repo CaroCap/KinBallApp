@@ -27,8 +27,17 @@ class SeanceEntrainement
     #[ORM\Column(type: 'datetime')]
     private $end;
 
-    #[ORM\ManyToOne(targetEntity: Adresse::class, inversedBy: 'seanceEntrainements')]
-    private $adresse;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $rue;
+
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private $numero;
+
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private $codePostal;
+
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    private $ville;
 
     #[ORM\OneToMany(mappedBy: 'seance', targetEntity: ParticipationEntrainement::class)]
     private $participationEntrainements;
@@ -79,18 +88,6 @@ class SeanceEntrainement
     public function setTitle(?string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?Adresse
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?Adresse $adresse): self
-    {
-        $this->adresse = $adresse;
 
         return $this;
     }
@@ -148,4 +145,54 @@ class SeanceEntrainement
 
         return $this;
     }
+
+    
+    public function getRue(): ?string
+    {
+        return $this->rue;
+    }
+
+    public function setRue(?string $rue): self
+    {
+        $this->rue = $rue;
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(?string $numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
 }
