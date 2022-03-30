@@ -19,11 +19,11 @@ class Participation
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $typePresence;
 
-    #[ORM\ManyToOne(targetEntity: Seance::class, inversedBy: 'participations')]
-    private $seance;
-
     #[ORM\Column(type: 'text', nullable: true)]
     private $commentaire;
+
+    #[ORM\ManyToOne(targetEntity: Seance::class, inversedBy: 'participations')]
+    private $seance;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'participations')]
     #[ORM\JoinColumn(nullable: false)]

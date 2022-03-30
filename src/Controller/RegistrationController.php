@@ -29,6 +29,7 @@ class RegistrationController extends AbstractController
     {
         // créer une nouvelle entité vide
         $user = new User();
+        $user->setDateNaissance(new DateTime('1990-01-16'));
         // créer un formulaire associé à cette entité
         $form = $this->createForm(RegistrationFormType::class, $user);
         // gérer la requête (et hydrater l'entité)
@@ -134,13 +135,14 @@ class RegistrationController extends AbstractController
                 }
 
             $inscription->setPlayer($this->getUser());
+            $inscription->setSaison($saisonRepository->findLast());
 
             $entityManager->persist($inscription);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
             
-            // CRÉER Toutes les participations de la saison
+        // CRÉER Toutes les participations de la saison
             $seances = $seanceRepository->findAll();
             $dateAJD = new DateTime();
 
@@ -153,9 +155,9 @@ class RegistrationController extends AbstractController
                     $participation = new Participation([
                         "typePresence" => 'Présent',
                         "inscription" => $inscription,
-                        "seance" => $seance
+                        "seance" => $seance,
+                        "user" => $this->getUser()
                     ]);
-                    $participationRepository->add($participation);
             }
 
             // foreach ($seances as $seance) {
@@ -174,7 +176,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/inscription.html.twig', [
-            'inscription' => $form->createView(),
+            'inscription' => $form->createView(), 'inscr' => $inscription
         ]);
     }
 }

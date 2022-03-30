@@ -3,7 +3,7 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Inscription Saison </h1>
+    <h1>Inscription {{inscr.saison.titre}} </h1>
 
     {{ form_start(inscription) }}
         {{form_widget (inscription) }}
