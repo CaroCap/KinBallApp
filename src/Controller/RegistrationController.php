@@ -137,8 +137,10 @@ class RegistrationController extends AbstractController
             $inscription->setPlayer($this->getUser());
             $inscription->setSaison($saisonRepository->findLast());
 
+            
             $entityManager->persist($inscription);
             $entityManager->flush();
+            // dd($inscription);
             // do anything else you need here, like send an email
 
             
@@ -146,8 +148,8 @@ class RegistrationController extends AbstractController
             $seances = $seanceRepository->findAll();
             $dateAJD = new DateTime();
 
-            // DATE SAISON
-            $inscription->setSaison($saisonRepository->findLast());
+            // ! DATE SAISON Est-ce que c'est sa place ?
+            // $inscription->setSaison($saisonRepository->findLast());
 
             foreach ($seances as $seance) {
                     $participation = new Participation([
@@ -156,6 +158,7 @@ class RegistrationController extends AbstractController
                         "seance" => $seance,
                         "user" => $this->getUser()
                     ]);
+                    // Pour persister et flusher la participation
                     $participationRepository->add($participation);
             }
 

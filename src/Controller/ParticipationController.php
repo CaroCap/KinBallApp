@@ -4,33 +4,50 @@ namespace App\Controller;
 
 use App\Entity\Participation;
 use App\Form\ParticipationType;
+use App\Repository\UserRepository;
+use App\Repository\SeanceRepository;
+use App\Repository\ParticipationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\SeanceRepository;
-use App\Repository\ParticipationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry; //LEQUEL EST LE BON ? Celui ci vient de UserController
 
 #[Route('/participation')]
 class ParticipationController extends AbstractController
 {
-    // SELECT ALL
-    #[Route('/', name: 'app_participation_index', methods: ['GET'])]
-    public function index(ParticipationRepository $participationRepository): Response
+
+    // SELECT ALL BY USER
+    #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]
+    public function participationsJoueur(UserRepository $userRepository, ParticipationRepository $participationRepository): Response
     {
-        return $this->render('participation/index.html.twig', [
-            'participations' => $participationRepository->findAll(),
-        ]);
+        // getParticipations est souligné car il ne comprend pas que $this->getUser est un User qui possède cette méthode
+        $participations = $this->getUser()->getParticipations();
+
+        $vars = ['participations' => $participations];
+
+        return $this->render('participation/joueur.html.twig', $vars);
     }
 
-    // SELECT ALL BY INSCRIPTION
-    #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]
-    public function participationsJoueur(ParticipationRepository $participationRepository): Response
-    {
-        return $this->render('participation/index.html.twig', [
-            'participations' => $participationRepository->findAll(),
-        ]);
-    }
+    // SELECT ALL BY USER + Edit participation
+    // #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]
+    // public function participationsJoueur(Request $request, ParticipationRepository $participationRepository): Response
+    // {
+    //     // getParticipations est souligné car il ne comprend pas que $this->getUser est un User qui possède cette méthode
+    //     $participations = $this->getUser()->getParticipations();
+    //     $vars = ['participations' => $participations];
+
+    //     $form = $this->createForm(ParticipationType::class, $vars);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         foreach ($participations as $participation) {
+    //             $participationRepository->add($participation);
+    //         }
+    //         return $this->redirectToRoute('app_participations_joueur', [], Response::HTTP_SEE_OTHER);
+    //     }
+    //     return $this->render('participation/joueur.html.twig', $vars);
+    // }
 
     // CREATE
     #[Route('/new', name: 'app_participation_new', methods: ['GET', 'POST'])]
@@ -48,6 +65,15 @@ class ParticipationController extends AbstractController
         return $this->renderForm('participation/new.html.twig', [
             'participation' => $participation,
             'form' => $form,
+        ]);
+    }
+
+    // SELECT ALL
+    #[Route('/', name: 'app_participation_index', methods: ['GET'])]
+    public function index(ParticipationRepository $participationRepository): Response
+    {
+        return $this->render('participation/index.html.twig', [
+            'participations' => $participationRepository->findAll(),
         ]);
     }
 
@@ -69,7 +95,7 @@ class ParticipationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $participationRepository->add($participation);
-            return $this->redirectToRoute('app_participation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_participations_joueur', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('participation/edit.html.twig', [

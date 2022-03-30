@@ -90,13 +90,9 @@
                 </tr>
             </thead>
             <tbody>
-            {# <tr><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire</a></tr> #}
             {% for inscr in app.user.inscriptions %}
                 <tr>
-                <pre>
-                    {{ dump(inscr) }}
-                </pre>
-                    <td>{{ inscr.saison }}</td>
+                    <td>{{ inscr.saison.titre }}</td>
                     <td>{{ inscr.jourEntrainement }}</td>
                     <td>{{ inscr.categorie.typeCategorie }}</td>
                     {% if inscr.paiement %}

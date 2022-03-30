@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Participation</h1>
 
-    {{ include('participation/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('participation/_form.html.twig', {'button_label': 'Envoyer'}) }}
 
-    <a href="{{ path('app_participation_index') }}">back to list</a>
+    <a href="{{ path('app_participations_joueur') }}">back to list</a>
 
-    {{ include('participation/_delete_form.html.twig') }}
+    {# {{ include('participation/_delete_form.html.twig') }} #}
 {% endblock %}

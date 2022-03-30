@@ -38,7 +38,9 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
             $inscription->setCategorie($categories[array_rand($categories)]);
             $inscription->setPlayer($players[array_rand($players)]);
             $inscription->setSaison($saisons[array_rand($saisons)]);
-            
+
+            // dd($inscription);
+
             $manager->persist($inscription);
         }
         $manager->flush();
