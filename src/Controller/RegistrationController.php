@@ -147,8 +147,6 @@ class RegistrationController extends AbstractController
             $dateAJD = new DateTime();
 
             // DATE SAISON
-            // $lastSaison = $saisonRepository->findLast();
-            // $lastSaison = $saisonRepository->find(0);
             $inscription->setSaison($saisonRepository->findLast());
 
             foreach ($seances as $seance) {
@@ -158,6 +156,7 @@ class RegistrationController extends AbstractController
                         "seance" => $seance,
                         "user" => $this->getUser()
                     ]);
+                    $participationRepository->add($participation);
             }
 
             // foreach ($seances as $seance) {
