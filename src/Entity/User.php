@@ -25,13 +25,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 50)]
     private $prenom;
 
+    // BOOLEAN => 0 = false = homme // 1 = true = femme // null = X
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $genre;
+
     #[ORM\Column(type: 'string', length: 200, unique: true)]
     private $email;
 
     #[ORM\Column(type: 'string', length: 20)]
     private $telephone;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'date', nullable: true)]
     private $dateNaissance;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -75,6 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participation::class, orphanRemoval: true)]
     private $participations;
+
 
     public function __construct()
     {
@@ -376,6 +381,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $participation->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGenre(): ?bool
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?bool $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }

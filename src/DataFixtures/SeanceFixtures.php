@@ -35,7 +35,10 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
                 'codePostal' => '1050',
                 'ville' => 'Ixelles',
             ]);
-            $seance->addCategory($categories[array_rand($categories)]);
+            foreach ($categories as $categ) {
+                $seance->addCategory($categ);
+            }
+            // $seance->addCategory($categories[array_rand($categories)]);
             $seance->setSaison($saisons[array_rand($saisons)]);
 
             $manager->persist($seance);

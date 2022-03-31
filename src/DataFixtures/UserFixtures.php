@@ -24,6 +24,7 @@ class UserFixtures extends Fixture
         
         $user->setNom("Cap");
         $user->setPrenom("Caroline");
+        $user->setGenre(1);
         $user->setEmail ("carolinecap.event@gmail.com");
         $user->setPassword($this->passwordHasher->hashPassword($user,'test1234'));
         $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
@@ -43,12 +44,25 @@ class UserFixtures extends Fixture
         $user->setPersContactMail("christinedeletaille@hotmail.com");
         $manager->persist ($user);
 
+        // ADMIN
+        $user->setNom("Admin");
+        $user->setPrenom("Administrator");
+        $user->setEmail ("admin@gmail.com");
+        $user->setPassword($this->passwordHasher->hashPassword($user,'admin'));
+        $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
+        $user->setTelephone("0473300830");
+        $user->setPhoto("kinball.png");
+        $user->setAccordPhoto(1);
+        $user->setDateUpdate(new DateTime());   
+        $manager->persist ($user);
+
          // Pour créer des faux joueurs
         $faker = Faker\Factory::create('fr_FR');
         for ($i = 1; $i <= 7 ; $i++){
             $user = new User();
             $user->setNom($faker->lastName()); // avec ou sans () c'est la même
             $user->setPrenom($faker->firstName());
+            $user->setGenre(rand(0,1));
             $user->setEmail ("joueur".$i."@kb.be");
             $user->setPassword($this->passwordHasher->hashPassword($user,'mdp'.$i));
             // ! $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
@@ -58,6 +72,15 @@ class UserFixtures extends Fixture
             $user->setVille($faker->city);            
             $user->setDateNaissance(new DateTime($faker->date()));
             $user->setTelephone($faker->phoneNumber());
+            if ($user->getGenre()==1) {
+                $user->setPhoto('joueuse.png');
+            }
+            elseif ($user->getGenre()==0){
+                $user->setPhoto('joueur.png');
+            }
+            else{
+                $user->setPhoto("kinball.png");
+            }
             $user->setAccordPhoto(rand(0,1));   
             $user->setDateUpdate(new DateTime($faker->date()));   
             $user->setPersContactNom($faker->lastName() . " " . $faker->firstName());

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Categorie;
 use App\Form\UserEditType;
@@ -102,6 +103,7 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
     // dd($form->getErrors());
     if ($form->isSubmitted() && $form->isValid()) 
     {
+        $user->setDateUpdate(new DateTime());
         $userRepository->add($user);
         
         return $this->redirectToRoute('app_joueur', [], Response::HTTP_SEE_OTHER);

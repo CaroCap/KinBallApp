@@ -11,6 +11,8 @@
             <tr>
                 <th>Date</th>
                 <th>Titre</th>
+                <th>Description</th>
+                <th>Catégorie</th>
                 <th>Participation</th>
                 <th>Commentaire</th>
                 {# <th>actions</th> #}
@@ -21,6 +23,12 @@
             <tr>
                 <td>{{ participation.seance.start|date("d / m / Y") }}</td>
                 <td>{{ participation.seance.title }}</td>
+                <td>{{ participation.seance.description }}</td>
+                <td>
+                    {% for categ in participation.seance.categories %}
+                        <div>{{categ.typeCategorie}}</div>
+                    {% endfor %}
+                </td>
                 <td>
                 {% if participation.typePresence == 'Présent'  %}
                     <div class="btnParticipation presentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>

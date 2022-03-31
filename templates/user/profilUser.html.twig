@@ -10,11 +10,12 @@
 {# Info Joueur #}
 <div class="container">
         <div class="cartePlayer">
-            {% if inscr.player.photo is same as (null) %}
+            {# {% if inscr.player.photo is same as (null) %}
                 <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
             {% else %}
                 <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ inscr.player.photo ) }}" alt="photo">
-            {% endif %}
+            {% endif %} #}
+            <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ inscr.player.photo ) }}" alt="photo">
 
             <br> 
             {# ! Si Catégorie Null ??? #}

@@ -54,6 +54,17 @@ class RegistrationController extends AbstractController
             // aura dans la BD (un string, pas un objet UploadedFile cette fois)
             $user->setPhoto($nomFichierServeur);
             }
+            else{
+                if ($user->getGenre()==1) {
+                    $user->setPhoto('joueuse.png');
+                }
+                elseif ($user->getGenre()==0){
+                    $user->setPhoto('joueur.png');
+                }
+                else{
+                    $user->setPhoto('kinball.png');
+                }
+            }
 
             // DATE UPDATE
             $user->setDateUpdate(new DateTime());

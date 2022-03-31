@@ -7,12 +7,12 @@
     <h2 class="">Bonjour {{app.user.prenom}} {{app.user.nom}}</h2>
     <div class="container">
         {# PHOTO #}
-        {# <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ? app.user.photo : 'joueur.png' ) }}" alt="photo"> #}
-        {% if app.user.photo is same as (null) %}
+        {# {% if app.user.photo is same as (null) %}
             <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
         {% else %}
             <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
-        {% endif %}
+        {% endif %} #}
+        <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
 
         {# INFOS #}
         <div class="infoUser container colonne">
