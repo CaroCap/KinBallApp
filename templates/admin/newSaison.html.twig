@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+{# Bouton de navigation #}
+<div>
+<ul>
+    <li>
+        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison') }}">Ajouter une nouvelle Saison</a></div> #}
+    </li>
+    <li>
+        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance') }}">Ajouter une nouvelle Saison</a></div> #}
+    </li>
+</ul>
+</div>
+
+{# Liste Users #}
+<h3>Liste des Utilisateurs</h3>
+{# Filtres Saison #}
+<div class="container">
+    <ul>
+    {% for saison in saisons %}
+        coucou
+        <li class="menuFiltre"><a href="{{ path ('liste_saison') }}">{{saison.titre}}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+{# <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TypePresence</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.id }}</td>
+                <td>{{ participation.typePresence }}</td>
+                <td>
+                    <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a>
+                    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+
+{% endblock %}

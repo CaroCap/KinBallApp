@@ -30,12 +30,20 @@
                 <li class="nav-item">
                     <a class="nav-link beige-color font-titre" href="{{ path ('liste_users') }}">Joueurs</a>
                 </li>
+
+{# ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV' #}
+                {# {% if is_granted('ROLE_ENTRAINEUR') %}
                 <li class="nav-item">
-                    <a class="nav-link beige-color font-titre" href="#skillsSection">Skills</a>
+                    <a class="nav-link beige-color font-titre" href="{{ path ('app_entraineur') }}">Entraineur</a>
                 </li>
+                {% endif %} #}
+                
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link beige-color font-titre" href="#portfolioSection">Portfolio</a>
+                    <a class="nav-link beige-color font-titre" href="{{ path ('app_admin') }}">Admin</a>
                 </li>
+                {% endif %}
+                
                 <li>
                     {% if app.user %}
                         <div class="nav-link beige-color font-titre">

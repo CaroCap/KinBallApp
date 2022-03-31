@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+{# Bouton de navigation #}
+<div>
+<ul>
+    <li>
+        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison') }}">Ajouter une nouvelle Saison</a></div> #}
+    </li>
+    <li>
+        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance') }}">Ajouter une nouvelle Saison</a></div> #}
+    </li>
+</ul>
+</div>
+
+{# Liste Users #}
+<div>
+    <h3>Liste des Utilisateurs</h3>
+    {# Filtres Saison #}
+    <div class="container">
+        <ul>
+            <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
+        {% for saison in saisons %}
+            <li class="menuFiltre"><a href="{{ path ('app_admin', {id: saison.id}) }}">{{saison.titre}}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Genre</th>
+                    <th>Date de Naissance</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Adresse</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                <td><img class="photoListing" src="{{ asset ('upload/photoUser/' ~ user.photo ) }}" alt="photo"></td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+              {#      <td>{{ participation.id }}</td>
+                    <td>{{ participation.typePresence }}</td>
+                    <td>
+                        <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a>
+                        <a href="{{ path('app_participation_edit', {'id': participation.id}) }}">edit</a>
+                    </td>
+                </tr>#}
+            {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

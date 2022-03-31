@@ -45,11 +45,12 @@ class UserFixtures extends Fixture
         $manager->persist ($user);
 
         // ADMIN
+        $user = new User();
         $user->setNom("Admin");
         $user->setPrenom("Administrator");
         $user->setEmail ("admin@gmail.com");
         $user->setPassword($this->passwordHasher->hashPassword($user,'admin'));
-        $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
+        $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN']);
         $user->setTelephone("0473300830");
         $user->setPhoto("kinball.png");
         $user->setAccordPhoto(1);
@@ -72,15 +73,16 @@ class UserFixtures extends Fixture
             $user->setVille($faker->city);            
             $user->setDateNaissance(new DateTime($faker->date()));
             $user->setTelephone($faker->phoneNumber());
-            if ($user->getGenre()==1) {
+            if (($user->getGenre()) === true ) {
                 $user->setPhoto('joueuse.png');
             }
-            elseif ($user->getGenre()==0){
+            if ($user->getGenre() === false){
                 $user->setPhoto('joueur.png');
             }
-            else{
+            if ($user->getGenre() === null) {
                 $user->setPhoto("kinball.png");
             }
+
             $user->setAccordPhoto(rand(0,1));   
             $user->setDateUpdate(new DateTime($faker->date()));   
             $user->setPersContactNom($faker->lastName() . " " . $faker->firstName());
