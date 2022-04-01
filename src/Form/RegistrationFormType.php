@@ -62,7 +62,7 @@ class RegistrationFormType extends AbstractType
             ])
 
             ->add('telephone', TelType::class)
-            ->add('dateNaissance', BirthdayType::class)
+            ->add('dateNaissance', BirthdayType::class, ['format' => 'dd MM yyyy'])
             ->add('photo', FileType::class, [
                 'required' => false
             ])

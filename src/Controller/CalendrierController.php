@@ -42,9 +42,13 @@ class CalendrierController extends AbstractController
     }
 
 // CREATE
-    #[Route('/seance/new', name: 'app_seance_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SeanceRepository $seanceRepository): Response
+// ! Prob avec create Seance
+// ! Probe avec Edit User
+    #[Route('/seance/new2', name: 'app_seance_new2')]
+    public function newSeance(Request $request, SeanceRepository $seanceRepository): Response
     {
+        dd('coucou seance');
+
         $seance = new Seance();
         $form = $this->createForm(SeanceType::class, $seance);
         $form->handleRequest($request);
@@ -54,7 +58,7 @@ class CalendrierController extends AbstractController
             return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('seance/new.html.twig', [
+        return $this->renderForm('seance/newSeance.html.twig', [
             'seance' => $seance,
             'form' => $form,
         ]);

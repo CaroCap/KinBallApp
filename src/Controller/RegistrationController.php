@@ -92,6 +92,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    // ! Éviter doublons inscription du même user à la même saison !!!
 // INSCRIPTION À UNE SAISON
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(SaisonRepository $saisonRepository, ParticipationRepository $participationRepository, SeanceRepository $seanceRepository, Request $request, EntityManagerInterface $entityManager): Response

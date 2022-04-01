@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+{# Bouton de navigation #}
+<div>
+<ul>
+    <li>
+        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison') }}">Ajouter une nouvelle Saison</a></div> #}
+    </li>
+    <li>
+        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance') }}">Ajouter une nouvelle Saison</a></div> #}
+    </li>
+</ul>
+</div>
+
+{# Liste Users #}
+<div>
+    <h3>Inscriptions {{inscriptions[0].saison.titre}}</h3>
+    
+    {# Filtres Saison #}
+    <div class="container">
+        <ul>
+            <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
+        {% for saison in saisons %}
+            <li class="menuFiltre"><a href="{{ path ('liste_inscriptions_saison', {id: saison.id}) }}">{{saison.titre}}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nom Prénom</th>
+                    {# <th>Genre</th>
+                    <th>Date de Naissance</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Adresse</th> #}
+                    <th>Catégorie</th>
+                    <th>Jour entrainement</th>
+                    <th>Paiement</th>
+                    <th>Fiche Médicale</th>
+                    <th>Certificat Médical</th>
+
+                    <th>
+                        {# actions edit / show #}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for inscr in inscriptions %}
+                <tr>
+                <td><img class="photoListing" src="{{ asset ('upload/photoUser/' ~ inscr.player.photo ) }}" alt="photo"></td>
+                <td>{{ inscr.player.nom }} {{ inscr.player.prenom }}</td>
+                {# <td>{{ inscr.player.genre ? 'F' : 'H' }}</td>
+                <td>{{ inscr.player.dateNaissance|date("d / m / Y") }}</td>
+                <td>{{ inscr.player.email }}</td>
+                <td>{{ inscr.player.telephone }}</td>
+                <td>{{ inscr.player.numero }} {{ inscr.player.rue }} {{ inscr.player.codePostal }} {{ inscr.player.ville }}</td>
+                #}
+                <td>{{ inscr.categorie.typeCategorie }}</td>
+                <td>{{ inscr.jourEntrainement }}</td>
+                {% if inscr.paiement %}
+                    <td>
+                        OK
+                        {% if inscr.datePaiement %}
+                        - {{inscr.datePaiement|date("d / m / Y") }}
+                        {% endif %}
+                    </td>
+                {% else %}
+                    <td>en attente</td>
+                {% endif %}
+                {% if inscr.ficheMedicale is same as(null) %}
+                    <td>en attente</td>
+                {% else %}
+                    <td>OK</td>
+                {% endif %}
+                {% if inscr.certifMedical is same as(null) %}
+                    <td>en attente</td>
+                {% else %}
+                    <td>OK</td>
+                {% endif %}
+
+                <td> 
+                    <a href="{{ path('app_user_show', {'id': inscr.player.id}) }}">show</a>
+                    <a href="{{ path('app_user_edit', {'id': inscr.player.id}) }}">edit</a>
+                </td>
+                </tr>
+            {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

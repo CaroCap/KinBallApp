@@ -17,6 +17,7 @@ use Doctrine\Persistence\ManagerRegistry; //LEQUEL EST LE BON ? Celui ci vient d
 class ParticipationController extends AbstractController
 {
 
+    // ! Probe afficher participation User déjà inscrit
     // SELECT ALL BY USER
     #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]
     public function participationsJoueur(UserRepository $userRepository, ParticipationRepository $participationRepository): Response

@@ -5,13 +5,13 @@
 {% block body %}
 
 {# Bouton de navigation #}
-<div>
+<div class="container">
 <ul>
     <li>
-        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison') }}">Ajouter une nouvelle Saison</a></div> #}
+        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison_new') }}">New Saison</a></div>
     </li>
     <li>
-        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance') }}">Ajouter une nouvelle Saison</a></div> #}
+        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance_new2') }}">New Séance</a></div>
     </li>
 </ul>
 </div>
@@ -24,7 +24,7 @@
         <ul>
             <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
         {% for saison in saisons %}
-            <li class="menuFiltre"><a href="{{ path ('app_admin', {id: saison.id}) }}">{{saison.titre}}</a></li>
+            <li class="menuFiltre"><a href="{{ path ('liste_inscriptions_saison', {id: saison.id}) }}">{{saison.titre}}</a></li>
         {% endfor %}
         </ul>
     </div>
@@ -32,7 +32,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Photo</th>
+                    <th></th> {# Photo #}
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Genre</th>
@@ -40,8 +40,11 @@
                     <th>Email</th>
                     <th>Téléphone</th>
                     <th>Adresse</th>
-
-                    <th></th>
+                    <th>Accord Photo</th>
+                    <th>Rôles</th>
+                    <th>
+                        {# actions edit / show #}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -50,13 +53,28 @@
                 <td><img class="photoListing" src="{{ asset ('upload/photoUser/' ~ user.photo ) }}" alt="photo"></td>
                 <td>{{ user.nom }}</td>
                 <td>{{ user.prenom }}</td>
-              {#      <td>{{ participation.id }}</td>
-                    <td>{{ participation.typePresence }}</td>
-                    <td>
-                        <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a>
-                        <a href="{{ path('app_participation_edit', {'id': participation.id}) }}">edit</a>
-                    </td>
-                </tr>#}
+                <td>{{ user.genre ? 'F' : 'H' }}</td>
+                <td>{{ user.dateNaissance|date("d / m / Y") }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.numero }} {{ user.rue }} {{ user.codePostal }} {{ user.ville }}</td>
+                <td>
+                    {% if user.accordPhoto %}
+                        Ok
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
+                <td>
+                    {% for role in user.roles %}
+                        {{ role }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+                </tr>
             {% endfor %} 
             </tbody>
         </table>

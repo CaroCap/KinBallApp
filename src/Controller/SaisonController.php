@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Saison;
 use App\Form\SaisonType;
 use App\Repository\SaisonRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[Route('/saison')]
 class SaisonController extends AbstractController
@@ -24,16 +26,23 @@ class SaisonController extends AbstractController
     #[Route('/new', name: 'app_saison_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SaisonRepository $saisonRepository): Response
     {
+        $yearNow = (int)date("Y");
+        $yearPlus1 = $yearNow + 1 ;
         $saison = new Saison();
+        $saison->setTitre('Saison '. $yearNow . ' - ' . $yearPlus1);
+        $saison->setDebut(new DateTime($yearNow.'-08-01'));
+        $saison->setFin(new DateTime($yearPlus1.'-07-31'));
         $form = $this->createForm(SaisonType::class, $saison);
         $form->handleRequest($request);
 
+        // ! Si Saison Existe déjà !
         if ($form->isSubmitted() && $form->isValid()) {
             $saisonRepository->add($saison);
-            return $this->redirectToRoute('app_saison_index', [], Response::HTTP_SEE_OTHER);
+            // ! Renvoyer vers app_seance_new
+            return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('saison/new.html.twig', [
+        return $this->renderForm('saison/newSaison.html.twig', [
             'saison' => $saison,
             'form' => $form,
         ]);
