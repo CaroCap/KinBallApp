@@ -13,7 +13,6 @@
         {{ form_row(registrationForm.genre) }}
         {{ form_row(registrationForm.telephone) }}
         {{ form_row(registrationForm.dateNaissance) }}
-        {# {{ form_row(registrationForm.categorie.typeCategorie) }} #}
         {{ form_row(registrationForm.photo) }}
         {{ form_row(registrationForm.accordPhoto) }}
 <h4>Adresse</h4>
@@ -33,6 +32,8 @@
         {{ form_row(registrationForm.persContactTel) }}
         {{ form_row(registrationForm.persContactMail) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">Enregistrer</button>
+        <a href="{{ path('app_accueil') }}">Accueil</a>
+
     {{ form_end(registrationForm) }}
 {% endblock %}

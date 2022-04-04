@@ -8,6 +8,7 @@
     {{ form_start(inscription) }}
         {{form_widget (inscription) }}
 
+        <a href="{{ path('app_accueil') }}">Accueil</a>
         <button type="submit" class="btn">S'inscrire</button>
     {{ form_end(inscription) }}
 {% endblock %}

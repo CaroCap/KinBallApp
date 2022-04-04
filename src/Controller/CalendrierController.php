@@ -19,11 +19,11 @@ class CalendrierController extends AbstractController
 {
 //Calendrier de toutes les seances (entrainements+matchs)
     #[Route('/calendrier', name: 'app_calendrier', methods: ['GET'])]
-    public function index(SeanceRepository $seanceRepository, SerializerInterface $serializer): Response
+    public function calendrier(SeanceRepository $seanceRepository, SerializerInterface $serializer): Response
     {
         $evenements = $seanceRepository->findAll();
 
-        $evenementsJSON = $serializer->serialize($evenements, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['categories', 'participations', 'saison']]);
+        $evenementsJSON = $serializer->serialize($evenements, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['categorie', 'participations', 'saison']]);
         $vars = ['evenementsJSON' => $evenementsJSON];
 
         // return $this->render('seance/index.html.twig', [

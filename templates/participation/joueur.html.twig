@@ -4,7 +4,8 @@
 
 {% block body %}
 
-    <h1>Participations de {{participations[0].user.prenom}}</h1>
+{# ! POUR LA DERNIERE SAISON #}
+    <h1>Participations de {{participations[0].user.prenom}} à la {{ participations[0].seance.saison.titre }}</h1>
 
     <table class="table">
         <thead>
@@ -24,11 +25,12 @@
                 <td>{{ participation.seance.start|date("d / m / Y") }}</td>
                 <td>{{ participation.seance.title }}</td>
                 <td>{{ participation.seance.description }}</td>
-                <td>
+                <td>{{ participation.seance.categorie.typeCategorie }}</td>
+                {# <td>
                     {% for categ in participation.seance.categories %}
                         <div>{{categ.typeCategorie}}</div>
                     {% endfor %}
-                </td>
+                </td> #}
                 <td>
                 {% if participation.typePresence == 'Présent'  %}
                     <div class="btnParticipation presentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
