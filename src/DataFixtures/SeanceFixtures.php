@@ -35,10 +35,11 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
                 'codePostal' => '1050',
                 'ville' => 'Ixelles',
             ]);
-            foreach ($categories as $categ) {
-                $seance->addCategory($categ);
-            }
+            // foreach ($categories as $categ) {
+            //     $seance->setCategorie($categ);
+            // }
             // $seance->addCategory($categories[array_rand($categories)]);
+            $seance->setCategorie($categories[array_rand($categories)]);
             $seance->setSaison($saisons[array_rand($saisons)]);
 
             $manager->persist($seance);
@@ -56,7 +57,7 @@ class SeanceFixtures extends Fixture implements DependentFixtureInterface
                 'codePostal' => '1050',
                 'ville' => 'Ixelles',
             ]);
-            $seance->addCategory($categories[array_rand($categories)]);
+            $seance->setCategorie($categories[array_rand($categories)]);
             $seance->setSaison($saisons[array_rand($saisons)]);
 
             $manager->persist($seance);

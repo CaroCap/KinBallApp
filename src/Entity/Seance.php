@@ -46,9 +46,8 @@ class Seance
     #[ORM\JoinColumn(nullable: false)]
     private $saison;
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'seances')]
-    private $categories;
-
+    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'seances')]
+    private $categorie;
 
     //HYDRATE CONSTRUCT + ArrayCollection ManyToOne
     public function __construct(array $init = [])
@@ -215,29 +214,14 @@ class Seance
         return $this;
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
-    public function getCategories(): Collection
+    public function getCategorie(): ?Categorie
     {
-        return $this->categories;
+        return $this->categorie;
     }
 
-    public function addCategory(Categorie $category): self
+    public function setCategorie(?Categorie $categorie): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addSeance($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeSeance($this);
-        }
+        $this->categorie = $categorie;
 
         return $this;
     }
