@@ -1,0 +1,22 @@
+
+    {# Bouton de navigation #}
+    <div class="container">
+        <ul>
+            <li>
+                <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison_new') }}">New Saison</a></div>
+            </li>
+            <li>
+                <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance_new') }}">New Séance</a></div>
+            </li>
+        </ul>
+    </div>
+
+    {# Filtres Saison #}
+    <div class="container">
+        <ul>
+            <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
+        {% for saison in saisons %}
+            <li class="menuFiltre"><a href="{{ path ('liste_inscriptions_saison', {id: saison.id}) }}">{{saison.titre}}</a></li>
+        {% endfor %}
+        </ul>
+    </div>

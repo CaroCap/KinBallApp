@@ -1,33 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Admin{% endblock %}
+
+{% block filtre %}
+    {{ include('admin/_baseAdmin.html.twig') }}
+{% endblock %}
 
 {% block body %}
 
-{# Bouton de navigation #}
-<div class="container">
-<ul>
-    <li>
-        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison_new') }}">New Saison</a></div>
-    </li>
-    <li>
-        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance_new2') }}">New Séance</a></div>
-    </li>
-</ul>
-</div>
-
 {# Liste Users #}
 <div>
-    <h3>Liste des Utilisateurs</h3>
-    {# Filtres Saison #}
-    <div class="container">
-        <ul>
-            <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
-        {% for saison in saisons %}
-            <li class="menuFiltre"><a href="{{ path ('liste_inscriptions_saison', {id: saison.id}) }}">{{saison.titre}}</a></li>
-        {% endfor %}
-        </ul>
-    </div>
+    <h3>Liste de tous les membres</h3>
+    
     <div>
         <table class="table">
             <thead>
@@ -53,7 +37,7 @@
                 <td><img class="photoListing" src="{{ asset ('upload/photoUser/' ~ user.photo ) }}" alt="photo"></td>
                 <td>{{ user.nom }}</td>
                 <td>{{ user.prenom }}</td>
-                <td>{{ user.genre ? 'F' : 'H' }}</td>
+                <td>{{ user.genre is same as(null) ? 'X' : user.genre ? 'F' : 'H' }}</td>
                 <td>{{ user.dateNaissance|date("d / m / Y") }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.telephone }}</td>

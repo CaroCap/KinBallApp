@@ -1,34 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Admin{% endblock %}
+
+{% block filtre %}
+    {{ include('admin/_baseAdmin.html.twig') }}
+{% endblock %}
 
 {% block body %}
-
-{# Bouton de navigation #}
-<div>
-<ul>
-    <li>
-        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison') }}">Ajouter une nouvelle Saison</a></div> #}
-    </li>
-    <li>
-        {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance') }}">Ajouter une nouvelle Saison</a></div> #}
-    </li>
-</ul>
-</div>
 
 {# Liste Users #}
 <div>
     <h3>Inscriptions {{inscriptions[0].saison.titre}}</h3>
-    
-    {# Filtres Saison #}
-    <div class="container">
-        <ul>
-            <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
-        {% for saison in saisons %}
-            <li class="menuFiltre"><a href="{{ path ('liste_inscriptions_saison', {id: saison.id}) }}">{{saison.titre}}</a></li>
-        {% endfor %}
-        </ul>
-    </div>
 
     <div>
         <table class="table">

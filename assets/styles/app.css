@@ -194,6 +194,10 @@ h5{
 }
 
 /* NAVIGATION */
+nav{
+    margin-bottom: 15vh;
+}
+
 .barre-navigation{
     background-color: var(--brun_color);
     z-index: 10; /*pour que ça reste au premier plan*/
@@ -238,7 +242,7 @@ h5{
 }
 
 main{
-    margin-top: 15vh;
+    /* margin-top: 15vh; */
 }
 
 #container1 {
