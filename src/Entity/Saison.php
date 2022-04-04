@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\SaisonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SaisonRepository::class)]
+#[UniqueEntity(fields: ['titre'], message: 'Cette saison existe déjà')]
 class Saison
 {
     #[ORM\Id]

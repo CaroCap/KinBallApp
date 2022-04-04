@@ -35,7 +35,6 @@ class SaisonController extends AbstractController
         $form = $this->createForm(SaisonType::class, $saison);
         $form->handleRequest($request);
 
-        // ! Si Saison Existe déjà !
         if ($form->isSubmitted() && $form->isValid()) {
             $saisonRepository->add($saison);
             // ! Renvoyer vers app_seance_new

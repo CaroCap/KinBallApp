@@ -9,5 +9,9 @@
 
     <a href="{{ path('app_saison_index') }}">back to list</a>
 
-    {{ include('saison/_delete_form.html.twig') }}
+    {# ! ajout séance en lien avec la saison ? #}
+    {# <a href="{{ path('') }}">Ajouter des séances</a> #}
+
+{# Delete ne fonctionne pas -> cascade pour éviter orphelin ? #}
+    {# {{ include('saison/_delete_form.html.twig') }} #}
 {% endblock %}

@@ -17,11 +17,11 @@
             </tr>
             <tr>
                 <th>Debut</th>
-                <td>{{ saison.debut ? saison.debut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ saison.debut ? saison.debut|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Fin</th>
-                <td>{{ saison.fin ? saison.fin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ saison.fin ? saison.fin|date('d-m-Y') : '' }}</td>
             </tr>
         </tbody>
     </table>
@@ -29,6 +29,10 @@
     <a href="{{ path('app_saison_index') }}">back to list</a>
 
     <a href="{{ path('app_saison_edit', {'id': saison.id}) }}">edit</a>
+    
+    {# ! Ajouter des séances #}
+    {# <a href="{{ path('app_seance_new', {'id': saison.id}) }}">New Séances</a> #}
 
-    {{ include('saison/_delete_form.html.twig') }}
+{# Delete ne fonctionne pas #}
+    {# {{ include('saison/_delete_form.html.twig') }} #}
 {% endblock %}

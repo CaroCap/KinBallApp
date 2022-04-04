@@ -80,7 +80,6 @@ class UserController extends AbstractController
     }
 
 //EDIT
-// ! PROB EDIT depuis 01/04/2022
 #[Route('/edit/{id}', name: 'app_user_edit')]
 public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepository $userRepository): Response
 {
@@ -125,7 +124,7 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
                 $user->setPhoto('kinball.png');
             }
         }
-        
+
         $user->setDateUpdate(new DateTime());
         $userRepository->add($user);
         
