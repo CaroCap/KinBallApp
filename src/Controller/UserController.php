@@ -94,8 +94,6 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
     $form = $this->createForm(UserEditType::class, $user);
     // , ['action'=> $this->generateUrl ('app_user_edit', ['id' => $idUser]),
     // 'method'=>'POST']);
-    
-    // dd($objetRequest);
 
     // 3. Analyse de l'objet Request du navigateur, remplissage de l'entité
     $form->handleRequest($objetRequest);
@@ -104,6 +102,30 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
     // dd($form->getErrors());
     if ($form->isSubmitted() && $form->isValid()) 
     {
+        // ENREGISTRER LA PHOTO
+        if($user->getPhoto()!= null){
+            // obtenir le fichier (pas un "string" mais un objet de la class UploadedFile)
+        $fichier = $user->getPhoto();
+        // obtenir un nom de fichier unique pour éviter les doublons dans le dossier
+        $nomFichierServeur = md5(uniqid()).".".$fichier->guessExtension();
+        // stocker le fichier dans le serveur (on peut indiquer un dossier)
+        $fichier->move ("upload/photoUser", $nomFichierServeur);
+        // affecter le nom du fichier de l'entité. Ça sera le nom qu'on
+        // aura dans la BD (un string, pas un objet UploadedFile cette fois)
+        $user->setPhoto($nomFichierServeur);
+        }
+        else{
+            if ($user->getGenre()==1) {
+                $user->setPhoto('joueuse.png');
+            }
+            elseif ($user->getGenre()==0){
+                $user->setPhoto('joueur.png');
+            }
+            else{
+                $user->setPhoto('kinball.png');
+            }
+        }
+        
         $user->setDateUpdate(new DateTime());
         $userRepository->add($user);
         

@@ -33,8 +33,9 @@ class UserEditType extends AbstractType
         ])
         ->add('telephone', TelType::class)
         ->add('dateNaissance', BirthdayType::class, ['format' => 'dd MM yyyy'])
+        // Pour éviter prob fichier stocké sous format string ---> array('data_class' => null) 
         ->add('photo', FileType::class, [
-            'required' => false
+            'required' => false, 'data_class' => null
         ])
         ->add('accordPhoto', CheckboxType::class, [
             'required' => false
