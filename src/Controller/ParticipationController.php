@@ -24,34 +24,20 @@ class ParticipationController extends AbstractController
         // Trouver la saison qu'on recherche
         $idSaison = (int)$objetRequest->get('idSaison');
         $saison = $saisonRepository->find($idSaison);
-        // Trouver toutes les séances liées à la saison
-        $seances = $seanceRepository->findBy(['saison' => $saison]);
         // Trouver le Joueur concerné
         $idJoueur = $objetRequest->get('idJoueur');
         $user = $userRepository->findOneBy(['id'=>$idJoueur]);
         // Trouver les participations du joueur
         $participations = $user->getParticipations();
-
-            //dd($participations[0]);
-
+        // Mettre dans un Array les participations du joueur pour la Saison sélectionnée
         $participationsSaison = [];
-
         foreach ($participations as $participation) {
             if ($participation->getSeance()->getSaison()->getId() === $idSaison) {
                 $participationsSaison[]=$participation;
             }
-            // $participationsSaison[]='nop';
         }
-        // dd($participationsSaison);
 
-        // foreach ($seances as $seance) {
-        //     dd($seance->getParticipations()[0]);
-        //     if($seance->getParticipations()->getUser()->getId()===){
-        //         $participationArray[] = $seance->getParticipations();
-
-        //     }
-        // }
-        
+        // Envoyer à la vue les participations, le user et la saison.
         $vars = ['participations' => $participationsSaison, 'user'=>$user, 'saison'=>$saison];
 
         return $this->render('participation/joueur.html.twig', $vars);
@@ -137,7 +123,7 @@ class ParticipationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $participationRepository->add($participation);
-            return $this->redirectToRoute('app_participations_joueur', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_participations_joueur', ['idJoueur' => $participation->getUser()->getId(), 'idSaison'=> $participation->getSeance()->getSaison()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('participation/edit.html.twig', [
