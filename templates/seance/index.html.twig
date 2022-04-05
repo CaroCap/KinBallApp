@@ -8,30 +8,20 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Numero</th>
-                <th>Rue</th>
-                <th>CodePostal</th>
-                <th>Ville</th>
-                <th>actions</th>
+                <th>Date</th>
+                <th>Adresse</th>
+                <th></th> {#actions#}
             </tr>
         </thead>
         <tbody>
         {% for seance in seances %}
             <tr>
-                <td>{{ seance.id }}</td>
                 <td>{{ seance.title }}</td>
                 <td>{{ seance.description }}</td>
-                <td>{{ seance.start ? seance.start|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ seance.end ? seance.end|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ seance.numero }}</td>
-                <td>{{ seance.rue }}</td>
-                <td>{{ seance.codePostal }}</td>
-                <td>{{ seance.ville }}</td>
+                <td>{{ seance.start|date('d-m-Y H:i')}} - {{ seance.end|date('H:i') }}</td>
+                <td>{{ seance.numero }} {{ seance.rue }} {{ seance.codePostal }} {{ seance.ville }}</td>
                 <td>
                     <a href="{{ path('app_seance_show', {'id': seance.id}) }}">show</a>
                     <a href="{{ path('app_seance_edit', {'id': seance.id}) }}">edit</a>
