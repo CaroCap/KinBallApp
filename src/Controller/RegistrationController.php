@@ -160,9 +160,6 @@ class RegistrationController extends AbstractController
             $seances = $seanceRepository->findAll();
             $dateAJD = new DateTime();
 
-            // ! DATE SAISON Est-ce que c'est sa place ?
-            // $inscription->setSaison($saisonRepository->findLast());
-
             foreach ($seances as $seance) {
                     $participation = new Participation([
                         "typePresence" => 'Présent',
@@ -173,20 +170,8 @@ class RegistrationController extends AbstractController
                     // Pour persister et flusher la participation
                     $participationRepository->add($participation);
             }
-
-            // foreach ($seances as $seance) {
-            //     if ($seance >= $dateAJD) {
-            //         # code...
-            //         $participation = new Participation([
-            //             "typePresence" => 'Présent',
-            //             "inscription" => $inscription,
-            //             "seance" => $seance
-            //         ]);
-            //         $participationRepository->add($participation);
-            //     }
-            // }
-
-            return $this->redirectToRoute('app_participations_joueur');
+            
+            return $this->redirectToRoute('app_participations_joueur', ['idJoueur' => $participation->getUser()->getId(), 'idSaison'=> $participation->getSeance()->getSaison()->getId()]);
         }
 
         return $this->render('registration/inscription.html.twig', [

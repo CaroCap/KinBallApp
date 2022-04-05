@@ -19,7 +19,7 @@ class ParticipationController extends AbstractController
 
     // SELECT ALL PARTICIPATIONS BY USER PAR SAISON
     #[Route('/joueur/{idJoueur}/{idSaison}', name: 'app_participations_joueur', methods: ['GET'])]
-    public function participationsJoueurSaison(SaisonRepository $saisonRepository, SeanceRepository $seanceRepository, Request $objetRequest, UserRepository $userRepository, ParticipationRepository $participationRepository): Response
+    public function participationsJoueurSaison(SaisonRepository $saisonRepository, Request $objetRequest, UserRepository $userRepository, SeanceRepository $seanceRepository): Response
     {
         // Trouver la saison qu'on recherche
         $idSaison = (int)$objetRequest->get('idSaison');
@@ -32,10 +32,48 @@ class ParticipationController extends AbstractController
         // Mettre dans un Array les participations du joueur pour la Saison sélectionnée
         $participationsSaison = [];
         foreach ($participations as $participation) {
+            $presents = 0;
+            $indecis = 0;
+            $absent = 0;
             if ($participation->getSeance()->getSaison()->getId() === $idSaison) {
-                $participationsSaison[]=$participation;
+                // Compter nombre présence par séance
+                $participationsSeance = $participation->getSeance()->getParticipations();
+                // dd($participationsSeance[0]);
+                    foreach ($participationsSeance as $participationSeance) {
+                        if ($participationSeance->getTypePresence() === 'Présent') {
+                            $presents += 1;
+                        }
+                        elseif ($participationSeance->getTypePresence() === 'Absent') {
+                            $absent += 1;
+                        }
+                        else{
+                            $indecis += 1;
+                        }
+                    }
+                    $participationsSaison[]=['participation' => $participation, 'min' => $presents, 'max'=> $presents+$indecis];
+                }
             }
-        }
+        
+
+        // Compter nombre présence par séance
+        // $presents = 0;
+        // $indecis = 0;
+        // $absent = 0;
+        // $seances = $seanceRepository->findBy(['saison'=>$saison]);
+        // foreach ($seances as $seance) {
+        //     $participationsSeance = $seance->getParticipations();
+        //     foreach ($participationsSeance as $participationSeance) {
+        //         if ($participationSeance->getTypePresence() === 'Présent') {
+        //             $presents += 1;
+        //         }
+        //         elseif ($participationSeance->getTypePresence() === 'Absent') {
+        //             $absent += 1;
+        //         }
+        //         else{
+        //             $indecis += 1;
+        //         }
+        //     }
+        // }
 
         // Envoyer à la vue les participations, le user et la saison.
         $vars = ['participations' => $participationsSaison, 'user'=>$user, 'saison'=>$saison];
@@ -43,7 +81,7 @@ class ParticipationController extends AbstractController
         return $this->render('participation/joueur.html.twig', $vars);
     }
 
-    // ! Prob lors de création participation... Id Seance ok mais reste = null
+    // TODO Prob lors de création participation... Id Seance ok mais reste = null
 
     // SELECT ALL BY USER
     // #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]

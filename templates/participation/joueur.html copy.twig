@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participations {% endblock %}
+
+{% block body %}
+
+    <h1>Participations de {{user.prenom}} à la {{ saison.titre }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Participation</th>
+                <th>Commentaire</th>
+                {# <th>actions</th> #}
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.seance.start|date("d / m / Y") }}</td>
+                <td>{{ participation.seance.title }}</td>
+                <td>{{ participation.seance.description }}</td>
+                <td>{{ participation.seance.categorie.typeCategorie }}</td>
+                {# <td>
+                    {% for categ in participation.seance.categories %}
+                        <div>{{categ.typeCategorie}}</div>
+                    {% endfor %}
+                </td> #}
+                <td>
+                {% if participation.typePresence == 'Présent'  %}
+                    <div class="btnParticipation presentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
+                {% endif %}
+                {% if participation.typePresence == 'Absent' %}
+                    <div class="btnParticipation absentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
+                {% endif %}
+                {% if participation.typePresence == 'Indécis'  %}
+                    <div class="btnParticipation indecisColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
+                {% endif %}
+                </td>
+                <td>
+                    <a  href="{{ path('app_participation_edit', {'id': participation.id}) }}"><div class="inputParticipation">{{ participation.commentaire }}</div></a>
+                </td>
+                {# <td> #}
+                    {# <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a> #}
+                    {# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">Modifier</a></div> #}
+                    {# <div><label for="inscription_jourEntrainement" class="required">Jour entrainement</label><select id="inscription_jourEntrainement" name="inscription[jourEntrainement]"><option value="Mercredi">Mercredi</option><option value="Dimanche">Dimanche</option><option value="Mercredi &amp; Dimanche">Mercredi &amp; Dimanche</option></select></div> #}
+                {# </td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
