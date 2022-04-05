@@ -28,6 +28,7 @@ class UserFixtures extends Fixture
         $user->setEmail ("admin@gmail.com");
         $user->setPassword($this->passwordHasher->hashPassword($user,'admin'));
         $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN']);
+        $user->setDateNaissance(new DateTime('1990-01-16'));
         $user->setTelephone("0473300830");
         $user->setPhoto("kinball.png");
         $user->setAccordPhoto(1);
