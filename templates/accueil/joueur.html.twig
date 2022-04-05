@@ -73,7 +73,14 @@
     <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Éditer</a></div>
 
     {# INSCRIPTION #}
-    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></div>
+    {# Faire apparaitre bouton Inscription que si pas encore inscrit à la last Saison #}
+    {% for inscr in app.user.inscriptions %}
+        {% if inscr.saison is same as(lastSaison) %}
+            {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">Dernière Saison</a></div> #}
+        {% else %}
+            <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></div>
+        {% endif %}
+    {% endfor %}
 
     {% if app.user.inscriptions|length > 0 %}
     <div class="infoInscription container colonne">

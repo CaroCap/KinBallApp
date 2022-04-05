@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\SaisonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +19,13 @@ class AccueilController extends AbstractController
 
     // Profil Joueur
     #[Route('/joueur', name: 'app_joueur')]
-    public function joueur(): Response
+    public function joueur(SaisonRepository $saisonRepository): Response
     {
+        $lastSaison = $saisonRepository->findLast();
+        // dd($lastSaison);
         // Afficher la page Joueur uniquement si connecté !!! -> getUser = true >< sinon redirect vers login
         if ($this->getUser()) {
-            return $this->render('accueil/joueur.html.twig');
+            return $this->render('accueil/joueur.html.twig', ['lastSaison' => $lastSaison ]);
         }
         
         return $this->redirectToRoute('app_login');

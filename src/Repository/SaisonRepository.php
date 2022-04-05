@@ -47,7 +47,7 @@ class SaisonRepository extends ServiceEntityRepository
 
     public function findLast( ): ?Saison
     {
-        $lastSaison = $this->findBy([], array('fin' => 'ASC'), 1);
+        $lastSaison = $this->findBy([], array('titre' => 'DESC'), 1);
         return $lastSaison[0];    
     }
 
