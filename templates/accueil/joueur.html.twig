@@ -39,25 +39,28 @@
         </div>
 
         {# Personne Contact #}
-        <div class="infoPersContact container colonne">
-            <table class="table">
-                <caption>Personne de Contact</caption>
-                <tbody>
-                    <tr>
-                        <th>Nom</th>
-                        <td>{{ app.user.persContactNom }}</td>
-                    </tr>
-                    <tr>
-                        <th>Téléphone</th>
-                        <td>{{ app.user.persContactTel }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ app.user.persContactMail }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        {% if app.user.persContactNom or app.user.persContactTel or app.user.persContactMail %}
+            <div class="infoPersContact container colonne">
+                <table class="table">
+                    <caption>Personne de Contact</caption>
+                    <tbody>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ app.user.persContactNom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone</th>
+                            <td>{{ app.user.persContactTel }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ app.user.persContactMail }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        
     </div>
     
     {# ACCORD PHOTO #}

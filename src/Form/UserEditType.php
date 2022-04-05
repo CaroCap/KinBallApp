@@ -40,10 +40,18 @@ class UserEditType extends AbstractType
         ->add('accordPhoto', CheckboxType::class, [
             'required' => false
         ])
-        ->add('rue', TextType::class)
-        ->add('numero', TextType::class)
-        ->add('codePostal', TextType::class)
-        ->add('ville', TextType::class)
+        ->add('rue', TextType::class, [
+            'required' => false
+        ])
+        ->add('numero', TextType::class, [
+            'required' => false
+        ])
+        ->add('codePostal', TextType::class, [
+            'required' => false
+        ])
+        ->add('ville', TextType::class, [
+            'required' => false
+        ])
 
         ->add('persContactNom', TextType::class, [
             'required' => false

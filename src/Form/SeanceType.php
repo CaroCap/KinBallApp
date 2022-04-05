@@ -30,37 +30,44 @@ class SeanceType extends AbstractType
                 ],
             ])
             ->add('description', TextType::class)
+            // ->add('start', DateTimeType::class, [
+            //         'widget' => 'single_text',
+            //         'format' => 'dd-MM-yyyy',
+            //         'html5' => false,
+            //         'attr' => ['class' => 'js-datepicker'],
+            //     ]
+            // )
             ->add('start', DateTimeType::class, [
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                     'hour' => 'Heure', 'minute' => 'Minute', 'second' => 'Seconde',
                 ],
-                ])    
+                ])
             ->add('end', DateTimeType::class, [
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                     'hour' => 'Heure', 'minute' => 'Minute', 'seconde' => 'Seconde',
                 ],
-                ])   
+                ])
             ->add('numero', TextType::class)
             ->add('rue', TextType::class)
             ->add('codePostal', TextType::class)
             ->add('ville', TextType::class)
             ->add('saison', EntityType::class, [
-                'class'=>Saison::class, 
+                'class'=>Saison::class,
                 // Pour trier mes choix par ordre
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.titre', 'DESC');
                 },
                 'choice_label'=>'titre'
-            ])   
+            ])
             ->add('categorie', EntityType::class, [
-                'class'=>Categorie::class, 
+                'class'=>Categorie::class,
                 'choice_label'=>'typeCategorie'
-            ])    
+            ])
             // ->add('categorie', EntityType::class, [
-            //     'class'=>Categorie::class, 
+            //     'class'=>Categorie::class,
             //     'choice_label'=>'typeCategorie',
             //     'multiple'=>true
             // ])
