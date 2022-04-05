@@ -10,11 +10,11 @@
         {{ form_row(registrationForm.prenom) }}
         {{ form_row(registrationForm.telephone) }}
         {{ form_row(registrationForm.dateNaissance) }}
-        
-        {% if app.user.photo is same as (null) %}
+
+        {% if user.photo is same as (null) %}
             <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
         {% else %}
-            <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
+            <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ user.photo ) }}" alt="photo">
         {% endif %}
         {{ form_row(registrationForm.photo) }}
         {{ form_row(registrationForm.accordPhoto) }}
@@ -46,6 +46,9 @@
 
     <a href="{{ path('app_joueur') }}">Retour au profil</a>
 
+{% if is_granted('ROLE_ADMIN') %}
+
     {{ include('user/_delete_form.html.twig') }}
+{% endif %}
 
 {% endblock %}

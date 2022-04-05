@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Seance;
 use App\Entity\Categorie;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\InscriptionRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: InscriptionRepository::class)]

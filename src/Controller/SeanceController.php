@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Seance;
-use App\Form\Seance1Type;
+use App\Form\SeanceType;
+use App\Entity\Participation;
 use App\Repository\SeanceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\InscriptionRepository;
+use App\Repository\ParticipationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/seance')]
 class SeanceController extends AbstractController
@@ -22,14 +26,40 @@ class SeanceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_seance_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SeanceRepository $seanceRepository): Response
+    public function new(ParticipationRepository $participationRepository, Request $request, SeanceRepository $seanceRepository, InscriptionRepository $inscriptionRepository): Response
     {
-        $seance = new Seance();
-        $form = $this->createForm(Seance1Type::class, $seance);
+        // Créer une nouvelle séance avec des infos de bases
+        $yearNow = (int)date("Y");
+        $yearPlus1 = $yearNow + 1 ;
+
+        $seance = new Seance([
+            'title' => "Entrainement VUB",
+            'description' => "Entrainement hebdomadaire toutes catégories",
+            'start' => new DateTime($yearNow.'-08-01 18:00:00'),
+            'end' => new DateTime($yearPlus1.'-07-31 20:00:00'),
+            'numero' => '2',
+            'rue' => 'Boulevard de la Plaine',
+            'codePostal' => '1050',
+            'ville' => 'Ixelles',
+        ]);
+        
+        $form = $this->createForm(SeanceType::class, $seance);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $seanceRepository->add($seance);
+
+            // Créer une participation pour chaque joueur déjà inscrit à la saison
+            $inscriptionsSaison = $inscriptionRepository->findBy(['saison'=>$seance->getSaison()]);
+            foreach ($inscriptionsSaison as $inscription) {
+                $participation = new Participation([
+                    'typePresence'=>'Indécis',
+                    'seance'=> $seance,
+                    'user' => $inscription->getPlayer()
+                ]);
+                $participationRepository->add($participation);
+            }
+
             return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -51,7 +81,7 @@ class SeanceController extends AbstractController
     #[Route('/{id}/edit', name: 'app_seance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Seance $seance, SeanceRepository $seanceRepository): Response
     {
-        $form = $this->createForm(Seance1Type::class, $seance);
+        $form = $this->createForm(SeanceType::class, $seance);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
