@@ -18,7 +18,7 @@ class AdminController extends AbstractController
     {
         // Création d'une entité Saison pour les filtres
         // les 5 dernières Saison triées par ordre décroissant
-        $saisons = $saisonRepository->findBy(array(), array('fin' => 'ASC'), 5);
+        $saisons = $saisonRepository->findBy(array(), array('titre' => 'DESC'), 5);
         
         $users = $userRepository->findBy(array(), array('nom' => 'ASC'));
         $vars = ['saisons' => $saisons, 'users' => $users];
@@ -31,16 +31,25 @@ class AdminController extends AbstractController
         // Création d'une entité Saison
         $idSaison = $objetRequest->get('id');
         // les 5 dernières Saison triées par ordre décroissant
-        $saisons = $saisonRepository->findBy(array(), array('fin' => 'ASC'), 5);
+        $saisons = $saisonRepository->findBy(array(), array('titre' => 'DESC'), 5);
         
         if ($idSaison === null) {
             return $this->render('admin/admin.html.twig');
         }
         
         // $users = $userRepository->findBy(['id'=>$idSaison], array('nom' => 'ASC'));
-        $inscriptions = $saisonRepository->findOneBy(['id'=>$idSaison])->getInscriptions();
-        $vars = ['saisons' => $saisons, 'inscriptions' => $inscriptions];
+        // $inscriptions = $saisonRepository->findOneBy(['id'=>$idSaison])->getInscriptions();
+
+        // Vérifier qu'il y ait des inscriptions dans la Saison pour pouvoir les afficher
+        if ($saisonRepository->find($idSaison)->getInscriptions()) {
+            $inscriptions = $saisonRepository->find($idSaison)->getInscriptions();
+            $vars = ['saisons' => $saisons, 'inscriptions' => $inscriptions];
+        }
+        else{
+            $vars = ['saisons' => $saisons];
+        }
         return $this->render('admin/inscritsSaison.html.twig', $vars);
+        
     }
 
     // ! Listing de tous les Users Editables ! WEBDEV -> Gestion Roles

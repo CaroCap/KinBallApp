@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Inscription;
 use App\Entity\Saison;
 use App\Form\SaisonType;
+use App\Repository\CategorieRepository;
+use App\Repository\InscriptionRepository;
 use App\Repository\SaisonRepository;
+use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +28,7 @@ class SaisonController extends AbstractController
     }
 
     #[Route('/new', name: 'app_saison_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SaisonRepository $saisonRepository): Response
+    public function new(Request $request, CategorieRepository $categorieRepository, SaisonRepository $saisonRepository, InscriptionRepository $inscriptionRepository, UserRepository $userRepository): Response
     {
         $yearNow = (int)date("Y");
         $yearPlus1 = $yearNow + 1 ;
@@ -37,8 +41,19 @@ class SaisonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $saisonRepository->add($saison);
-            // ! Renvoyer vers app_seance_new
-            return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
+
+            // Créer une Inscription pour Admin
+            $inscription = new Inscription([
+                'jourEntrainement'=> 'Mercredi & Dimanche',
+                'dateInscription'=> new DateTime(),
+                'paiement'=>0,
+                'categorie'=> $categorieRepository->find(1),
+                'player'=> $userRepository->find(1),
+                'saison'=>$saison
+            ]);
+            $inscriptionRepository->add($inscription);
+
+            return $this->redirectToRoute('app_seance_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('saison/newSaison.html.twig', [

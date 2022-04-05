@@ -27,4 +27,18 @@ class AccueilController extends AbstractController
         
         return $this->redirectToRoute('app_login');
     }
+
+     // ! TROUVER ID Profil Joueur
+    //  #[Route('/joueur/{id?}', name: 'app_joueur', methods: ['GET'])]
+    //  public function joueur(User $user): Response
+    //  {
+    //      // Afficher la page Joueur uniquement si connecté !!! -> getUser = true >< sinon redirect vers login
+    //      if ($this->getUser()) {
+    //          return $this->render('accueil/joueur.html.twig', [
+    //              'user' => $user,
+    //          ]);
+    //      }
+         
+    //      return $this->redirectToRoute('app_login');
+    //  }
 }
