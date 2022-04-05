@@ -25,23 +25,40 @@ class SeanceController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_seance_new', methods: ['GET', 'POST'])]
+    #[Route('/new/{salle?}', name: 'app_seance_new', methods: ['GET', 'POST'])]
     public function new(ParticipationRepository $participationRepository, Request $request, SeanceRepository $seanceRepository, InscriptionRepository $inscriptionRepository): Response
     {
         // Créer une nouvelle séance avec des infos de bases
-        $yearNow = (int)date("Y");
-        $yearPlus1 = $yearNow + 1 ;
-
+        $now = date("Y-m-d");
         $seance = new Seance([
-            'title' => "Entrainement VUB",
-            'description' => "Entrainement hebdomadaire toutes catégories",
-            'start' => new DateTime($yearNow.'-08-01 18:00:00'),
-            'end' => new DateTime($yearPlus1.'-07-31 20:00:00'),
-            'numero' => '2',
-            'rue' => 'Boulevard de la Plaine',
-            'codePostal' => '1050',
-            'ville' => 'Ixelles',
+            'start' => new DateTime($now.' 18:00:00'),
+            'end' => new DateTime($now.' 20:00:00'),
         ]);
+
+        if ($request->get('salle') === 'VUB') {
+            $seance = new Seance([
+                'title' => "Entrainement VUB",
+                'description' => "Entrainement hebdomadaire toutes catégories",
+                'start' => new DateTime($now.' 18:00:00'),
+                'end' => new DateTime($now.' 20:00:00'),
+                'numero' => '2',
+                'rue' => 'Boulevard de la Plaine',
+                'codePostal' => '1050',
+                'ville' => 'Ixelles',
+            ]);
+        }
+        elseif ($request->get('salle')==="ULB") {
+            $seance = new Seance([
+                'title' => "Entrainement ULB",
+                'description' => "Entrainement hebdomadaire toutes catégories",
+                'start' => new DateTime($now.' 18:00:00'),
+                'end' => new DateTime($now.' 20:30:00'),
+                'numero' => '87A',
+                'rue' => 'Avenue Buyl',
+                'codePostal' => '1050',
+                'ville' => 'Ixelles',
+            ]);
+        }
         
         $form = $this->createForm(SeanceType::class, $seance);
         $form->handleRequest($request);
@@ -60,7 +77,7 @@ class SeanceController extends AbstractController
                 $participationRepository->add($participation);
             }
 
-            return $this->redirectToRoute('app_seance_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_seance_new', ['salle'=>$request->get('salle'), 'seance' => $seance], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('seance/new.html.twig', [

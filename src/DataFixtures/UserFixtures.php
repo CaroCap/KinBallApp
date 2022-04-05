@@ -20,30 +20,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $user = new User();
         
-        $user->setNom("Cap");
-        $user->setPrenom("Caroline");
-        $user->setGenre(1);
-        $user->setEmail ("carolinecap.event@gmail.com");
-        $user->setPassword($this->passwordHasher->hashPassword($user,'test1234'));
-        $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
-        $user->setRue("Rue du Mont Blanc");
-        $user->setNumero("18");
-        $user->setCodePostal("1060");
-        $user->setVille("Bruxelles");
-        
-        $user->setDateNaissance(new DateTime('1990-01-16'));
-        $user->setTelephone("0473300830");
-        $user->setPhoto("Caro.png");
-        $user->setAccordPhoto(1);
-        $user->setDateUpdate(new DateTime());   
-
-        $user->setPersContactNom("Christine Deletaille");
-        $user->setPersContactTel("0478926613");
-        $user->setPersContactMail("christinedeletaille@hotmail.com");
-        $manager->persist ($user);
-
         // ADMIN
         $user = new User();
         $user->setNom("Admin");
@@ -55,6 +32,28 @@ class UserFixtures extends Fixture
         $user->setPhoto("kinball.png");
         $user->setAccordPhoto(1);
         $user->setDateUpdate(new DateTime());   
+        $manager->persist ($user);
+
+        // WEB DEV
+        $user = new User();
+        $user->setNom("Cap");
+        $user->setPrenom("Caroline");
+        $user->setGenre(1);
+        $user->setEmail ("carolinecap.event@gmail.com");
+        $user->setPassword($this->passwordHasher->hashPassword($user,'test1234'));
+        $user->setRoles(['ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV']);
+        $user->setRue("Rue du Mont Blanc");
+        $user->setNumero("18");
+        $user->setCodePostal("1060");
+        $user->setVille("Bruxelles");
+        $user->setDateNaissance(new DateTime('1990-01-16'));
+        $user->setTelephone("0473300830");
+        $user->setPhoto("Caro.png");
+        $user->setAccordPhoto(1);
+        $user->setDateUpdate(new DateTime());   
+        $user->setPersContactNom("Christine Deletaille");
+        $user->setPersContactTel("0478926613");
+        $user->setPersContactMail("christinedeletaille@hotmail.com");
         $manager->persist ($user);
 
          // Pour créer des faux joueurs

@@ -51,7 +51,7 @@ class SeanceType extends AbstractType
                 // Pour trier mes choix par ordre
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.fin', 'ASC');
+                        ->orderBy('u.titre', 'DESC');
                 },
                 'choice_label'=>'titre'
             ])   
