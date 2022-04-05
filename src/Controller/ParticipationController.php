@@ -5,30 +5,71 @@ namespace App\Controller;
 use App\Entity\Participation;
 use App\Form\ParticipationType;
 use App\Repository\UserRepository;
+use App\Repository\SaisonRepository;
 use App\Repository\SeanceRepository;
 use App\Repository\ParticipationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Persistence\ManagerRegistry; //LEQUEL EST LE BON ? Celui ci vient de UserController
 
 #[Route('/participation')]
 class ParticipationController extends AbstractController
 {
 
-    // SELECT ALL BY USER
-    // ! PAR SAISON !!! 
-    #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]
-    public function participationsJoueur(UserRepository $userRepository, ParticipationRepository $participationRepository): Response
+    // SELECT ALL PARTICIPATIONS BY USER PAR SAISON
+    #[Route('/joueur/{idJoueur}/{idSaison}', name: 'app_participations_joueur', methods: ['GET'])]
+    public function participationsJoueurSaison(SaisonRepository $saisonRepository, SeanceRepository $seanceRepository, Request $objetRequest, UserRepository $userRepository, ParticipationRepository $participationRepository): Response
     {
-        // getParticipations est souligné car il ne comprend pas que $this->getUser est un User qui possède cette méthode
-        $participations = $this->getUser()->getParticipations();
+        // Trouver la saison qu'on recherche
+        $idSaison = (int)$objetRequest->get('idSaison');
+        $saison = $saisonRepository->find($idSaison);
+        // Trouver toutes les séances liées à la saison
+        $seances = $seanceRepository->findBy(['saison' => $saison]);
+        // Trouver le Joueur concerné
+        $idJoueur = $objetRequest->get('idJoueur');
+        $user = $userRepository->findOneBy(['id'=>$idJoueur]);
+        // Trouver les participations du joueur
+        $participations = $user->getParticipations();
 
-        $vars = ['participations' => $participations];
+            //dd($participations[0]);
+
+        $participationsSaison = [];
+
+        foreach ($participations as $participation) {
+            if ($participation->getSeance()->getSaison()->getId() === $idSaison) {
+                $participationsSaison[]=$participation;
+            }
+            // $participationsSaison[]='nop';
+        }
+        // dd($participationsSaison);
+
+        // foreach ($seances as $seance) {
+        //     dd($seance->getParticipations()[0]);
+        //     if($seance->getParticipations()->getUser()->getId()===){
+        //         $participationArray[] = $seance->getParticipations();
+
+        //     }
+        // }
+        
+        $vars = ['participations' => $participationsSaison, 'user'=>$user, 'saison'=>$saison];
 
         return $this->render('participation/joueur.html.twig', $vars);
     }
+
+    // ! Prob lors de création participation... Id Seance ok mais reste = null
+
+    // SELECT ALL BY USER
+    // #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]
+    // public function participationsJoueur(UserRepository $userRepository, ParticipationRepository $participationRepository): Response
+    // {
+    //     // getParticipations est souligné car il ne comprend pas que $this->getUser est un User qui possède cette méthode
+    //     $participations = $this->getUser()->getParticipations();
+
+    //     $vars = ['participations' => $participations];
+
+    //     return $this->render('participation/joueur.html.twig', $vars);
+    // }
 
     // SELECT ALL BY USER + Edit participation
     // #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]

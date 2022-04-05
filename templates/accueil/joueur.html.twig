@@ -87,6 +87,7 @@
                     <th>Paiement</th>
                     <th>Fiche Médical</th>
                     <th>Certificat Médical</th>
+                    <th></th> {# Actions #}
                 </tr>
             </thead>
             <tbody>
@@ -110,14 +111,17 @@
                     {% else %}
                         <td>OK</td>
                     {% endif %}
+                    <td>
+                    {# PARTICIPATIONS #}
+                        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_participations_joueur', {'idJoueur': inscr.player.id, 'idSaison': inscr.saison.id} ) }}">Voir mes présences</a></div>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 
-    {# PARTICIPATIONS #}
-    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_participations_joueur') }}">Voir mes présences</a></div>
+    
 
     {% else %}
         <div>Tu n'es pas encore inscrit à une saison de Kin-Ball au K-ribou...</div>
