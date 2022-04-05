@@ -55,11 +55,11 @@
                 <td>{{p.max}}</td>
                 {% endif %}
                 
-                {# <td> #}
+                <td>
+                    <a href="{{ path('app_seance_show', {'id': p.participation.seance.id}) }}">show</a>
                     {# <a href="{{ path('app_participation_show', {'id': p.participation.id}) }}">show</a> #}
                     {# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">Modifier</a></div> #}
-                    {# <div><label for="inscription_jourEntrainement" class="required">Jour entrainement</label><select id="inscription_jourEntrainement" name="inscription[jourEntrainement]"><option value="Mercredi">Mercredi</option><option value="Dimanche">Dimanche</option><option value="Mercredi &amp; Dimanche">Mercredi &amp; Dimanche</option></select></div> #}
-                {# </td> #}
+                </td>
             </tr>
         {% else %}
             <tr>

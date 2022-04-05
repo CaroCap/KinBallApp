@@ -81,7 +81,7 @@ class ParticipationController extends AbstractController
         return $this->render('participation/joueur.html.twig', $vars);
     }
 
-    // TODO Prob lors de création participation... Id Seance ok mais reste = null
+    // TODO Prob lors de création participation... Id Seance ok mais reste = null ?
 
     // SELECT ALL BY USER
     // #[Route('/joueur', name: 'app_participations_joueur', methods: ['GET'])]

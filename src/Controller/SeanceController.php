@@ -39,6 +39,7 @@ class SeanceController extends AbstractController
         ]);
     }
 
+    
     #[Route('/{id}', name: 'app_seance_show', methods: ['GET'])]
     public function show(Seance $seance): Response
     {
