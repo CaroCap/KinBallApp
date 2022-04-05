@@ -158,7 +158,6 @@ class RegistrationController extends AbstractController
             
         // CRÉER Toutes les participations de la saison
             $seances = $seanceRepository->findAll();
-            $dateAJD = new DateTime();
 
             foreach ($seances as $seance) {
                     $participation = new Participation([
@@ -171,7 +170,7 @@ class RegistrationController extends AbstractController
                     $participationRepository->add($participation);
             }
             
-            return $this->redirectToRoute('app_participations_joueur', ['idJoueur' => $participation->getUser()->getId(), 'idSaison'=> $participation->getSeance()->getSaison()->getId()]);
+            return $this->redirectToRoute('app_participations_joueur', ['idJoueur' => $participation->getUser()->getId(), 'idSaison'=> $inscription->getSaison()->getId()]);
         }
 
         return $this->render('registration/inscription.html.twig', [

@@ -49,6 +49,9 @@
                 <td>
                     <a  href="{{ path('app_participation_edit', {'id': p.participation.id}) }}"><div class="inputParticipation">{{ p.participation.commentaire }}</div></a>
                 </td>
+
+            {# POUR ENTRAINEUR #}
+            {% if is_granted('ROLE_ENTRAINEUR') %}
                 {% if p.min != p.max %}
                 <td>{{p.min}} - {{p.max}}</td>
                 {% else %}
@@ -60,6 +63,8 @@
                     {# <a href="{{ path('app_participation_show', {'id': p.participation.id}) }}">show</a> #}
                     {# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">Modifier</a></div> #}
                 </td>
+            {% endif %}
+
             </tr>
         {% else %}
             <tr>
