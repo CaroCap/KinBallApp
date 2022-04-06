@@ -241,22 +241,20 @@ nav{
     transition:.3s;
 }
 
-main{
-    /* margin-top: 15vh; */
-}
-
 #container1 {
     height: 80%;
-    width: 60%;
+    width: 45%;
     float: left;
     padding:10px;
     vertical-align: middle;
 }
 #container2 {
     height: 80%;
-    width: 40%;
+    width: 45%;
     float: right;
     padding:10px;
+    vertical-align: middle;
+
 }
 
 /* css Profil user */
@@ -276,10 +274,11 @@ label{font-weight:bold;}
 
 /* BOUTONS & INPUTS */
 .styleBtn{
-    border: solid 1px black;
+    border: solid 1px #280105;
     border-radius: 15px;
-    background-color: blue;
+    background-color: #9C2F3C;
     color: white;
+    padding: 5px;
 }
 
 .btnParticipation{
@@ -305,4 +304,26 @@ label{font-weight:bold;}
     width: 250px;
     min-height: 30px;
     word-wrap: break-word;
+}
+
+
+/* TABLEAU */
+.table{
+    border: #707070 1px solid;
+    word-wrap: break-word;
+}
+
+.table caption{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.table th{
+    padding: 5px 10px 5px 10px;
+}
+
+.table td{
+    word-wrap: break-word;
+    padding: 5px 10px 5px 10px;
 }
