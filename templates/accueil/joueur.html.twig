@@ -101,7 +101,7 @@
 
     {# INSCRIPTION #}
     {# Faire apparaitre bouton Inscription que si pas encore inscrit à la last Saison #}
-        {% set inscrit = 0 %}
+        {% set inscrit = 1 %}
     {% for inscr in app.user.inscriptions %}
         {% if inscr.saison != lastSaison %}
             {% set inscrit = inscrit + 1 %}  
@@ -115,9 +115,10 @@
                 <p class="lead mb-4">Tu n'es pas encore inscrit à une saison de Kin-Ball au K-ribou...</p>
             {% endif %}
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            {% if inscrit > 0 %}
+            {% if inscrit == 1 %}
                 <p class=""><a class="btn btn-outline-secondary btn-lg px-4" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></p>
             {% endif %}  
+            
             </div>
         </div>
 

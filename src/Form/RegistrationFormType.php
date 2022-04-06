@@ -24,17 +24,23 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
+                'attr' => ['class' => 'form-control'],
                 'required' => true
             ])
-            ->add('prenom', TextType::class)
+            ->add('prenom', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('genre', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'choices'  => [
                     'X' => null,
                     'Femme' => true,
                     'Homme' => false,
                 ],
             ])
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
             // ->add('agreeTerms', CheckboxType::class, [
             //     'mapped' => false,
             //     'constraints' => [
@@ -47,7 +53,7 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'new-password', 'class' =>'form-control'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -61,27 +67,44 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
-            ->add('telephone', TelType::class)
-            ->add('dateNaissance', BirthdayType::class, ['format' => 'dd MM yyyy'])
+            ->add('telephone', TelType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('dateNaissance', BirthdayType::class, [
+                'format' => 'dd MM yyyy'])
             ->add('photo', FileType::class, [
+                'label' => false,
                 'required' => false
             ])
             ->add('accordPhoto', CheckboxType::class, [
-                'required' => false
+                'label' => 'J\'autorise le club à utiliser mes photos à des fins de communication',
+                'required' => false,
+                'attr' => ['class' => 'form-check-input']
             ])
-            ->add('rue', TextType::class)
-            ->add('numero', TextType::class)
-            ->add('codePostal', TextType::class)
-            ->add('ville', TextType::class)
+            ->add('rue', TextType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('numero', TextType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('codePostal', TextType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('ville', TextType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
 
             ->add('persContactNom', TextType::class, [
-                'required' => false
+                'required' => false,
+                'attr' => ['class' => 'form-control']
             ])
             ->add('persContactTel', TelType::class, [
-                'required' => false
+                'required' => false,
+                'attr' => ['class' => 'form-control']
             ])
             ->add('persContactMail', EmailType::class, [
-                'required' => false
+                'required' => false,
+                'attr' => ['class' => 'form-control']
             ])
         ;
     }

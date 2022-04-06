@@ -15,8 +15,15 @@
   margin-bottom: 20px;
 }
 
+.formDiv{
+  width: 70%;
+  margin: auto;
+  padding-top: 100px;
+}
+
 
 /* CSS CAROUSSEL https://getbootstrap.com/docs/5.0/examples/carousel/ */
+
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
@@ -109,4 +116,41 @@ body {
   .featurette-heading {
     margin-top: 7rem;
   }
+}
+
+/* CSS LOGIN */
+
+.bodyLogin {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #ffffff;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
