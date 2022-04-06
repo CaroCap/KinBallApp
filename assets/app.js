@@ -9,4 +9,9 @@
 import './styles/app.css';
 
 // start the Stimulus application
+import $ from 'jquery';
 import './bootstrap';
+
+jQuery(document).ready(function( $ ) {
+  
+});

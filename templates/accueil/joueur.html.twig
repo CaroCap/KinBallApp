@@ -3,21 +3,37 @@
 {% block title %}Bienvenue{% endblock %}
 
 {% block body %}
-<div class="container colonne">
-    <h2 class="">Bonjour {{app.user.prenom}} {{app.user.nom}}</h2>
-    <div class="container">
+
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{ asset ('images/slider/slider3.JPG') }}" alt="photo">
+            <div class="container">
+                <div class="carousel-caption text-start">
+                <h2>Bonjour {{app.user.prenom}} {{app.user.nom}}</h2>
+                <p>Bienvenue sur ta page perso. Tu peux y modifier tes informations et t'inscrire à la Nouvelle Saison du Club.</p>
+                <p><a class="btn btn-lg btn-outline-light" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Éditer mon profil</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container marketing">
+
+<!-- Three columns of text below the carousel -->
+    <div class="row">
+
         {# PHOTO #}
-        {# {% if app.user.photo is same as (null) %}
-            <img class="photoPlayer" src="{{ asset ('upload/photoUser/joueur.png') }}" alt="photo">
-        {% else %}
+        <div class="col-lg-4">
             <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
-        {% endif %} #}
-        <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
+            <p><a class="btn btn-outline-secondary" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Modifier mes infos</a></p>
+        </div><!-- /.col-lg-4 -->
 
         {# INFOS #}
-        <div class="infoUser container colonne">
+        <div class="col-lg-4">
+            <h2>Infos</h2>
             <table class="table">
-            <caption>Infos</caption>
                 <tbody>
                     <tr>
                         <th>Email</th>
@@ -37,13 +53,13 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        {# Personne Contact #}
+            
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <h2>Personne de Contact</h2>
+            {# Personne Contact #}
         {% if app.user.persContactNom or app.user.persContactTel or app.user.persContactMail %}
-            <div class="infoPersContact container colonne">
                 <table class="table">
-                    <caption>Personne de Contact</caption>
                     <tbody>
                         <tr>
                             <th>Nom</th>
@@ -59,22 +75,29 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
         {% endif %}
-        
-    </div>
-    
-    {# ACCORD PHOTO #}
-    <div>
         {% if app.user.accordPhoto == true %}
-            <span>Oui, j'autorise le Kin-Ball K-ribou à utiliser des photos de moi prises lors d’entrainements ou de matchs dans le cadre de diverses publications.</span>
+            <p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+            <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+            <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+            </svg>
+            <em>Oui, j'autorise le Kin-Ball K-ribou à utiliser des photos de moi prises lors d’entrainements ou de matchs dans le cadre de diverses publications.</em>
+            </p>
         {% else %}
-            <span>Non, je n'autorise pas le Kin-Ball K-ribou à utiliser des photos de moi prises lors d’entrainements ou de matchs dans le cadre de diverses publications.</span>
-        {% endif %}
-    </div>
+            <p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+            <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+            <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+            </svg>
+            <em>Non, je n'autorise pas le Kin-Ball K-ribou à utiliser des photos de moi prises lors d’entrainements ou de matchs dans le cadre de diverses publications.</em>
+            </p>
+        {% endif %}   
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
 
-    {# EDITER #}
-    <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Éditer</a></div>
+    <hr class="featurette-divider">
 
     {# INSCRIPTION #}
     {# Faire apparaitre bouton Inscription que si pas encore inscrit à la last Saison #}
@@ -84,64 +107,69 @@
             {% set inscrit = inscrit + 1 %}  
         {% endif %}      
     {% endfor %}
-    {% if inscrit == 0 %}
-        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></div>
-    {% endif %}      
 
-    {# Si il y a au moins 1 inscription #}
-    {% if app.user.inscriptions|length > 0 %}
-    <div class="infoInscription container colonne">
-        <table class="table">
-            <caption>Inscriptions</caption>
-            <thead>
-                <tr>
-                    <th>Saison</th>
-                    <th>Jour Entrainement</th>
-                    <th>Catégorie Championnat</th>
-                    <th>Paiement</th>
-                    <th>Fiche Médical</th>
-                    <th>Certificat Médical</th>
-                    <th></th> {# Actions #}
-                </tr>
-            </thead>
-            <tbody>
-            {% for inscr in app.user.inscriptions %}
-                <tr>
-                    <td>{{ inscr.saison.titre }}</td>
-                    <td>{{ inscr.jourEntrainement }}</td>
-                    <td>{{ inscr.categorie.typeCategorie }}</td>
-                    {% if inscr.paiement %}
-                        <td>OK</td>
-                    {% else %}
-                        <td>en attente</td>
-                    {% endif %}
-                    {% if inscr.ficheMedicale is same as(null) %}
-                        <td>en attente</td>
-                    {% else %}
-                        <td>OK</td>
-                    {% endif %}
-                    {% if inscr.certifMedical is same as(null) %}
-                        <td>en attente</td>
-                    {% else %}
-                        <td>OK</td>
-                    {% endif %}
-                    <td>
-                    {# PARTICIPATIONS #}
-                        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_participations_joueur', {'idJoueur': inscr.player.id, 'idSaison': inscr.saison.id} ) }}">Voir mes présences</a></div>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold">Inscriptions</h1>
+        <div class="col-lg-6 mx-auto">
+            {% if app.user.inscriptions|length is same as(0) %}
+                <p class="lead mb-4">Tu n'es pas encore inscrit à une saison de Kin-Ball au K-ribou...</p>
+            {% endif %}
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if inscrit > 0 %}
+                <p class=""><a class="btn btn-outline-secondary btn-lg px-4" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></p>
+            {% endif %}  
+            </div>
+        </div>
+
+        {# TODO Modifier ordre apparition inscriptions #}
+        {# Si il y a au moins 1 inscription #}
+        {% if app.user.inscriptions|length > 0 %}
+        <div class="infoInscription container colonne">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Saison</th>
+                        <th>Jour Entrainement</th>
+                        <th>Catégorie Championnat</th>
+                        <th>Paiement</th>
+                        <th>Fiche Médical</th>
+                        <th>Certificat Médical</th>
+                        <th></th> {# Actions #}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for inscr in app.user.inscriptions %}
+                    <tr>
+                        <td>{{ inscr.saison.titre }}</td>
+                        <td>{{ inscr.jourEntrainement }}</td>
+                        <td>{{ inscr.categorie.typeCategorie }}</td>
+                        {% if inscr.paiement %}
+                            <td>OK</td>
+                        {% else %}
+                            <td>en attente</td>
+                        {% endif %}
+                        {% if inscr.ficheMedicale is same as(null) %}
+                            <td>en attente</td>
+                        {% else %}
+                            <td>OK</td>
+                        {% endif %}
+                        {% if inscr.certifMedical is same as(null) %}
+                            <td>en attente</td>
+                        {% else %}
+                            <td>OK</td>
+                        {% endif %}
+                        <td>
+                        {# PARTICIPATIONS #}
+                            <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_participations_joueur', {'idJoueur': inscr.player.id, 'idSaison': inscr.saison.id} ) }}">Voir mes présences</a></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% endif %}
     </div>
 
-    
-
-    {% else %}
-        <div>Tu n'es pas encore inscrit à une saison de Kin-Ball au K-ribou...</div>
-    {% endif %}
-        {# <pre>
-            {{ dump(app.user.inscriptions) }}
-        </pre> #}
 </div>
 {% endblock %}

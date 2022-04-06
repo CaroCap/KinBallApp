@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="images/logo-kribou.png">
+        {# <link rel="stylesheet" href={{asset("assets/style.css")}}> #}
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+        <link href="images/logo-kribou-NB.png" rel="icon">
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            {# {{ encore_entry_link_tags('calendrier') }} #}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            {# {{ encore_entry_script_tags('calendrier') }} #}
+        {% endblock %}
+    </head>
+
+    <body>
+
+    <header>
+        {# NAVIGATION #}
+        {% block navig %}
+        <nav>
+            <div class="barre-navigation container">
+                <!-- Logo -->
+                <div class="logo-container">    
+                    <a href="{{ path ('app_accueil') }}"><img class="nav-logo" src={{asset("images/logo-kribou.png")}} alt="Logo K-ribou" title="home"/></a>
+                </div>
+                <ul class="nav-list container upper taille100">
+                {% if app.user %}
+                    <!-- Menus -->
+                    {# <li class="nav-item">
+                        <a class="nav-link beige-color font-titre" href="{{ path ('liste_users') }}">Joueurs</a>
+                    </li> #}
+                    <li class="nav-item">
+                        <a class="nav-link beige-color font-titre" href="{{ path ('app_joueur') }}">Profil</a>
+                    </li>
+                {% endif %}
+
+            {# ROLE_ENTRAINEUR', 'ROLE_ADMIN', 'ROLE_WEBDEV' #}
+                    {# {% if is_granted('ROLE_ENTRAINEUR') %}
+                    <li class="nav-item">
+                        <a class="nav-link beige-color font-titre" href="{{ path ('app_entraineur') }}">Entraineur</a>
+                    </li>
+                    {% endif %} #}
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link beige-color font-titre" href="{{ path ('app_admin') }}">Admin</a>
+                    </li>
+                    {% endif %}
+                    
+                    <li>
+                        {% if app.user %}
+                            <div class="nav-link beige-color font-titre">
+                                Bonjour {{ app.user.prenom }} <a class="nav-link beige-color font-titre" href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% else %}
+                            <a class="nav-link beige-color font-titre" href="{{ path ('app_login') }}">Se Connecter</a>
+                        {% endif %}
+                    </li>
+                </ul>
+                {# Ondulation blanche #}
+                {# <div class="ondulBlanc"></div> #}
+            </div>
+        </nav>
+        {% endblock %}
+
+        {# FILTRES #}
+        {% block filtre %}
+        {% endblock %}
+
+    </header>
+
+    {# MAIN #}
+    <main>
+
+        {# CALENDRIER #}
+        {% block calendrier %}
+            {# <div id="calendrier" data-calendrier="{{ evenementsJSON }}">
+                {{ dump(evenementsJSON) }}
+            </div> #}
+        {% endblock %}
+
+        {# BODY #}
+        {% block body %}
+        {% endblock %}
+    </main>
+
+    {# FOOTER #}
+    
+    </body>
+</html>
