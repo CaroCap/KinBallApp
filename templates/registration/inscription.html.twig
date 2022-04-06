@@ -3,12 +3,33 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Inscription {{inscr.saison.titre}} </h1>
+<div class="text-center bodyLogin mt-5">
 
+    <div class="form-signin">
     {{ form_start(inscription) }}
-        {{form_widget (inscription) }}
+        <h1 class="h3 mb-3 fw-normal">Inscription {{inscr.saison.titre}}</h1>
 
-        <a href="{{ path('app_accueil') }}">Accueil</a>
-        <button type="submit" class="btn">S'inscrire</button>
+        <div class="form-floating">            
+            {{ form_row(inscription.jourEntrainement) }}
+        </div>
+        <div class="form-floating mt-3">
+            {{ form_row(inscription.categorie) }}
+        </div>
+        <div class="form-floating mt-3">
+            {{ form_row(inscription.ficheMedicale) }}
+        </div>
+        <div class="form-floating mt-3">
+            {{ form_row(inscription.certifMedical) }}
+        </div>
+
+        {# TOKEN Caché mais important pour validation #}
+        {{ form_row(inscription._token) }}
+
+        <div class="col-12">
+            <button type="submit" class="mt-5 btn btn-primary">Enregistrer</button>
+        </div>    
+
     {{ form_end(inscription) }}
+    </div>
+</div>
 {% endblock %}

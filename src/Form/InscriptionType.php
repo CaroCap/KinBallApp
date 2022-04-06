@@ -21,20 +21,23 @@ class InscriptionType extends AbstractType
                 'choices'  => [
                     'Mercredi' => 'Mercredi',
                     'Dimanche' => 'Dimanche',
-                    'Mercredi & Dimanche' => 'Mercredi & Dimanche',
-                ],
+                    'Mercredi & Dimanche' => 'Mercredi & Dimanche'],
+                'attr' => ['class' => 'form-select'],
             ])
             ->add('categorie', EntityType::class, [
                 'class'=>Categorie::class, 
-                'choice_label'=>'typeCategorie'
+                'choice_label'=>'typeCategorie',
+                'attr' => ['class' => 'form-select'],
             ])    
             // ->add('dateInscription')
             // ->add('paiement')
             // ->add('datePaiement')
             ->add('ficheMedicale', FileType::class, [
+                'attr' => ['class' => 'form-control'],
                 'required' => false
             ])
             ->add('certifMedical', FileType::class, [
+                'attr' => ['class' => 'form-control'],
                 'required' => false
             ])
         ;
