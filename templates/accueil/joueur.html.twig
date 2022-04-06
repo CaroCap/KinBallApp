@@ -17,6 +17,7 @@
         {# INFOS #}
         <div class="infoUser container colonne">
             <table class="table">
+            <caption>Infos</caption>
                 <tbody>
                     <tr>
                         <th>Email</th>
@@ -77,14 +78,17 @@
 
     {# INSCRIPTION #}
     {# Faire apparaitre bouton Inscription que si pas encore inscrit à la last Saison #}
+        {% set inscrit = 0 %}
     {% for inscr in app.user.inscriptions %}
-        {% if inscr.saison is same as(lastSaison) %}
-            {# <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">Dernière Saison</a></div> #}
-        {% else %}
-            <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></div>
-        {% endif %}
+        {% if inscr.saison != lastSaison %}
+            {% set inscrit = inscrit + 1 %}  
+        {% endif %}      
     {% endfor %}
+    {% if inscrit == 0 %}
+        <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></div>
+    {% endif %}      
 
+    {# Si il y a au moins 1 inscription #}
     {% if app.user.inscriptions|length > 0 %}
     <div class="infoInscription container colonne">
         <table class="table">
