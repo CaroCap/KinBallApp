@@ -136,7 +136,7 @@ body {
 }
 
 .nav-logo{
-  max-height: 100px;
+  max-height: 7vw;
   margin-right: 25px;
 }
 
@@ -167,6 +167,10 @@ body {
 #participation_commentaire{
   width: 60%;
   height: 10vh;
+}
+#saison_titre{
+  width: 100%;
+
 }
 /* Présences Color */
 .btnParticipation{

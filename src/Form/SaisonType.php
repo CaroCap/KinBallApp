@@ -14,7 +14,9 @@ class SaisonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre', TextareaType::class)
+            ->add('titre', TextareaType::class,[                
+                'label' => false,
+            ])
             ->add('debut', DateType::class, ['format' => 'dd MM yyyy'],)
             ->add('fin', DateType::class, ['format' => 'dd MM yyyy'])
         ;

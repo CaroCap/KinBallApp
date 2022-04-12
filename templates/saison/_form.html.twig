@@ -1,4 +1,32 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+{{ form_start(form) }}
+    <div class="row">
+        
+        <div class="col-6">
+            {{ form_label(form.titre, 'Titre Saison') }}
+            {{ form_row(form.titre) }}
+        </div>
+        <div class="col-6">
+            <div class="formTextArea">
+                {{ form_row(form.debut) }}
+            </div>
+            <div class="formTextArea">
+                {{ form_row(form.fin) }}
+            </div>
+        </div>
+
+        <div class="col-12"></div>
+        
+        <button class=" mt-5 mb-2 col-md-2 mx-auto btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
+        
+        <a class="link-secondary" href="{{ path('app_saison_index') }}">back to list</a>
+
+        {# TOKEN Caché mais important pour validation #}
+        {{ form_row(form._token) }}
+
+    </div>
 {{ form_end(form) }}

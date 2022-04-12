@@ -3,9 +3,10 @@
 {% block title %}New Saison{% endblock %}
 
 {% block body %}
+<div class="text-center container-sm marginTop10 width50">
     <h1>Create new Saison</h1>
 
     {{ include('saison/_form.html.twig') }}
 
-    <a href="{{ path('app_saison_index') }}">back to list</a>
+</div>
 {% endblock %}
