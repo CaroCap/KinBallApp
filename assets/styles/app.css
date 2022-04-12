@@ -180,7 +180,6 @@ body {
 }
 .btnParticipation a:hover{
   color: #ffde38;
-  font-weight: bolder;
 }
 .presentColor, .indecisColor, .absentColor{
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
@@ -211,4 +210,16 @@ body {
 /* Tableau */
 td{
   vertical-align: middle;
+}
+.rowTotal{
+  background-color: #5a5a5ad4;
+  color: white;
+}
+
+/* Général */
+.marginTop10{
+  margin-top: 10%;
+}
+.width50{
+  width: 50%;
 }

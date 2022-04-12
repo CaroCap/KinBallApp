@@ -3,6 +3,7 @@
 {% block title %}Seance{% endblock %}
 
 {% block body %}
+<div class="marginTop10 container">
     <h1>{{ seance.title }} {{ seance.start ? seance.start|date('d-m-Y H:i') : '' }} - <td>{{ seance.end ? seance.end|date('H:i') : '' }}</h1>
 
     <table class="table">
@@ -18,110 +19,115 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_seance_index') }}">back to list</a>
+    <a class="link-success" href="{{ path('app_seance_edit', {'id': seance.id}) }}">Modifier les infos de la séance</a>
+<br>
+    <a class="link-secondary" href="{{ path('app_seance_index') }}">Retour à la liste des séances</a>
 
-    <a href="{{ path('app_seance_edit', {'id': seance.id}) }}">edit</a>
+<div class="mt-5">
+    <h5>Participants</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Catégorie</th>
+                    <th>Présence</th>
+                    <th>Commentaire</th>
+                    {# TODO <th>Entraineur</th> #}
+                    <th></th> {#actions#}
+                </tr>
+            </thead>
+            <tbody>
+    {% set countMin = 0 %}
+    {% set countMax = 0 %}
+    {% set countMixte = 0 %}
+    {% set countDame = 0 %}
+    {% set countHomme = 0 %}
+    {% set countHorsChampio = 0 %}
+            {% for participation in seance.participations %}
+                <tr>
+                    <td>{{ participation.user.nom }} {{ participation.user.prenom }}</td>
+                    
+                    {# CATEGORIE #}
+                    <td>
+                        {% for inscription in participation.user.inscriptions %}
+                            {% if inscription.saison is same as(seance.saison) %}
+                                <div>{{inscription.categorie.typeCategorie}}</div>
+                                {% if inscription.categorie.typeCategorie == 'Homme' and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis')%}{% set countHomme = countHomme + 1 %}{% endif %}
+                                {% if inscription.categorie.typeCategorie is same as('Dame') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countDame = countDame + 1 %}{% endif %}
+                                {% if inscription.categorie.typeCategorie is same as('Mixte') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countMixte = countMixte + 1 %}{% endif %}
+                                {% if inscription.categorie.typeCategorie is same as('Hors Championnat') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countHorsChampio = countHorsChampio + 1 %}{% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
 
-<h5>Participants</h5>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Catégorie</th>
-                <th>Présence</th>
-                <th>Commentaire</th>
-                {# TODO <th>Entraineur</th> #}
-                <th></th> {#actions#}
-            </tr>
-        </thead>
-        <tbody>
-{% set countMin = 0 %}
-{% set countMax = 0 %}
-{% set countMixte = 0 %}
-{% set countDame = 0 %}
-{% set countHomme = 0 %}
-{% set countHorsChampio = 0 %}
-        {% for participation in seance.participations %}
-            <tr>
-                <td>{{ participation.user.nom }} {{ participation.user.prenom }}</td>
-                
-                {# CATEGORIE #}
-                <td>
-                    {% for inscription in participation.user.inscriptions %}
-                        {% if inscription.saison is same as(seance.saison) %}
-                            <div>{{inscription.categorie.typeCategorie}}</div>
-                            {% if inscription.categorie.typeCategorie == 'Homme' and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis')%}{% set countHomme = countHomme + 1 %}{% endif %}
-                            {% if inscription.categorie.typeCategorie is same as('Dame') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countDame = countDame + 1 %}{% endif %}
-                            {% if inscription.categorie.typeCategorie is same as('Mixte') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countMixte = countMixte + 1 %}{% endif %}
-                            {% if inscription.categorie.typeCategorie is same as('Hors Championnat') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countHorsChampio = countHorsChampio + 1 %}{% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </td>
+                    {# PARTICIPATION #}
+                    <td>
+                    {% if participation.typePresence == 'Présent'  %}
+                        <div class="btnParticipation presentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
+                        {% set countMin = countMin + 1 %}
+                        {% set countMax = countMax + 1 %}
+                    {% endif %}
+                    {% if participation.typePresence == 'Absent' %}
+                        <div class="btnParticipation absentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
+                    {% endif %}
+                    {% if participation.typePresence == 'Indécis'  %}
+                        {% set countMax = countMax + 1 %}
+                        <div class="btnParticipation indecisColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
+                    {% endif %}
+                    </td>
 
-                {# PARTICIPATION #}
-                <td>
-                {% if participation.typePresence == 'Présent'  %}
-                    <div class="btnParticipation presentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
-                    {% set countMin = countMin + 1 %}
-                    {% set countMax = countMax + 1 %}
-                {% endif %}
-                {% if participation.typePresence == 'Absent' %}
-                    <div class="btnParticipation absentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
-                {% endif %}
-                {% if participation.typePresence == 'Indécis'  %}
-                    {% set countMax = countMax + 1 %}
-                    <div class="btnParticipation indecisColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">{{ participation.typePresence }}</a></div>
-                {% endif %}
-                </td>
+                    
+                    {# COMMENTAIRE #}
+                    <td>
+                        <a class="inputParticipation" href="{{ path('app_participation_edit', {'id': participation.id}) }}"><div>{{ participation.commentaire }}</div></a>
+                    </td>
+                    
+                    
+                    <td>
+                    {# TODO Show amène sur le app.user et non le user choisi... #}
+                        {# <a href="{{ path('app_joueur', {'id': participation.user.id}) }}">show</a> #}
+                        {# <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a> #}
+                        {# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">Modifier</a></div> #}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>#}
 
-                
-                {# COMMENTAIRE #}
-                <td>
-                    <a  href="{{ path('app_participation_edit', {'id': participation.id}) }}"><div class="inputParticipation">{{ participation.commentaire }}</div></a>
-                </td>
-                
-                
-                <td>
-                {# TODO Show amène sur le app.user et non le user choisi... #}
-                    {# <a href="{{ path('app_joueur', {'id': participation.user.id}) }}">show</a> #}
-                    {# <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a> #}
-                    {# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': participation.id}) }}">Modifier</a></div> #}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>#}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Hommes :</th>
-                <td>{{ countHomme }}</td>
-            </tr>
-            <tr>
-                <th>Dames :</th>
-                <td>{{ countDame }}</td>
-            </tr>
-            <tr>
-                <th>Mixtes :</th>
-                <td>{{ countMixte }}</td>
-            </tr>
-            <tr>
-                <th>Hors Championnat :</th>
-                <td>{{countHorsChampio}}</td>
-            </tr>
-            <tr>
-                <th>Total :</th>
-                <td>{{countMin}} - {{countMax}} participants</td>
-            </tr>
-        </tbody>
-    </table>
-    
+    <div class="mt-5">
+    <h5>Nombre de Participants</h5>
+        <table class="table width50">
+            <tbody>
+                <tr>
+                    <th>Hommes :</th>
+                    <td>{{ countHomme }}</td>
+                </tr>
+                <tr>
+                    <th>Dames :</th>
+                    <td>{{ countDame }}</td>
+                </tr>
+                <tr>
+                    <th>Mixtes :</th>
+                    <td>{{ countMixte }}</td>
+                </tr>
+                <tr>
+                    <th>Hors Championnat :</th>
+                    <td>{{countHorsChampio}}</td>
+                </tr>
+                <tr class="rowTotal">
+                    <th>Total :</th>
+                    <td>{{countMin}} - {{countMax}} participants</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {# DELETE NE FONCTIONNE PAS #}
     {# {{ include('seance/_delete_form.html.twig') }} #}
+</div>
 {% endblock %}
