@@ -15,6 +15,7 @@ class ParticipationType extends AbstractType
     {
         $builder
             ->add('typePresence', ChoiceType::class, [
+                'label' => false,
                 'choices'  => [
                     'Présent' => 'Présent',
                     'Absent' => 'Absent',
@@ -22,6 +23,7 @@ class ParticipationType extends AbstractType
                 ],
             ])
             ->add('commentaire', TextareaType::class, [
+                'label' => false,
                 'required' => false])
             // ->add('inscription')
             // ->add('seance')

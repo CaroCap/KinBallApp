@@ -3,11 +3,30 @@
 {% block title %}Edit Participation{% endblock %}
 
 {% block body %}
-    <h1>Edit Participation</h1>
+<div class="text-center container">
 
-    {{ include('participation/_form.html.twig', {'button_label': 'Envoyer'}) }}
+{{ form_start(form) }}
+    <div class="formDiv">
+        <h1 class="h3 mb-3 fw-normal">Modifier ma participation du {{ participation.seance.start|date("d/m/Y") }} <br>pour {{ participation.seance.title }}</h1>
+        
+        <div class="col-md-12">
+            {{ form_label(form.typePresence, 'Participation') }}
+            {{ form_row(form.typePresence) }}
+        </div>
+        <div class="formTextArea col-md-12">
+            {{ form_label(form.commentaire, 'Commentaire') }}
+            {{ form_row(form.commentaire) }}
+        </div>
+                <button class="col-md-2 btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
 
-    <a href="{{ path('app_participations_joueur', {'idJoueur': participation.user.id, 'idSaison': participation.seance.saison.id}) }}">back to list</a>
+    <a class="link-secondary ms-3" href="{{ path('app_participations_joueur', {'idJoueur': participation.user.id, 'idSaison': participation.seance.saison.id}) }}">back to list</a>
+    {# TOKEN Caché mais important pour validation #}
+        {{ form_row(form._token) }}
+
+    </div>
+{{ form_end(form) }}
+
+  </div>
 
     {# {{ include('participation/_delete_form.html.twig') }} #}
 {% endblock %}

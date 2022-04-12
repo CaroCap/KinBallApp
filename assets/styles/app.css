@@ -155,7 +155,16 @@ body {
   margin: auto;
   padding-top: 100px;
 }
-
+.formDiv div{
+  margin-bottom: 10px;
+}
+#participation_typePresence{
+  padding: 5px;
+}
+#participation_commentaire{
+  width: 60%;
+  height: 10vh;
+}
 /* Présences Color */
 .btnParticipation{
   color: white;
