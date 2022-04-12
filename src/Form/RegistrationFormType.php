@@ -79,7 +79,10 @@ class RegistrationFormType extends AbstractType
             ->add('accordPhoto', CheckboxType::class, [
                 'label' => 'J\'autorise le club à utiliser mes photos à des fins de communication',
                 'required' => false,
-                'attr' => ['class' => 'form-check-input']
+                'attr' => ['class' => 'form-check-input'],
+                // Pour mettre checkbox coché par défaut
+                'data' => true,
+                // OU 'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
             ])
             ->add('rue', TextType::class, [
                 'attr' => ['class' => 'form-control']

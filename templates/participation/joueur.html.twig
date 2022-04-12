@@ -1,78 +1,113 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Participations {% endblock %}
+{% block title %}Participations
+{% endblock %}
 
 {% block body %}
 
-    <h1>Participations de {{user.prenom}} à la {{ saison.titre }}</h1>
+	<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="{{ asset ('images/slider/slider3.JPG') }}" alt="photo">
+				<div class="container">
+					<div class="carousel-caption text-start">
+						<h2>Participations de
+							{{user.prenom}}
+							à la
+							{{ saison.titre }}</h2>
+						<p>Préviens les entraîneurs de tes futurs absences.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Catégorie</th>
-                <th>Participation</th>
-                <th>Commentaire</th>
-            {% if is_granted('ROLE_ENTRAINEUR') %}
-                <th>Total Participants</th>
-                    {# TODO <th>Entraineur</th> #}
-                <th></th> {#actions#}
-            {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-        {% for p in participations %}
+	<div class="px-4 text-center">
+		<h1 class="display-5 fw-bold">Participations</h1>
+		{# Si il y a au moins 1 participation #}
+		{% if participations|length > 0 %}
+			<div class="container colonne">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Description</th>
+							<th>Catégorie</th>
+							<th>Participation</th>
+							<th>Commentaire</th>
+							{% if is_granted('ROLE_ENTRAINEUR') %}
+								<th>Total Participants</th>
+								{# TODO <th>Entraineur</th> #}
+								<th></th>
+								{#actions#}
+							{% endif %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for p in participations %}
+							<tr>
+								<td>{{ p.participation.seance.start|date("d/m/Y") }}</td>
+								<td>{{ p.participation.seance.title }}<br>{{ p.participation.seance.description }}</td>
+								<td>{{ p.participation.seance.categorie.typeCategorie }}</td>
+								{# <td>
+                                    {% for categ in p.participation.seance.categories %}
+                                        <div>{{categ.typeCategorie}}</div>
+                                    {% endfor %}
+                                </td> #}
+								<td>
+									{% if p.participation.typePresence == 'Présent'  %}
+										<div class="btnParticipation presentColor">
+											<a class="" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">{{ p.participation.typePresence }}</a>
+										</div>
+									{% endif %}
+									{% if p.participation.typePresence == 'Absent' %}
+										<div class="btnParticipation absentColor">
+											<a class="" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">{{ p.participation.typePresence }}</a>
+										</div>
+									{% endif %}
+									{% if p.participation.typePresence == 'Indécis'  %}
+										<div class="btnParticipation indecisColor">
+											<a class="" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">{{ p.participation.typePresence }}</a>
+										</div>
+									{% endif %}
+								</td>
+								<td>
+									<a class="inputParticipation" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">
+									{% if p.participation.commentaire  %}
+										<div >{{ p.participation.commentaire }}</div>
+                                    {% else %}
+										<div >...</div>
+                                    {% endif %}
+									</a> 
+								</td>
 
-            <tr>
-                <td>{{ p.participation.seance.start|date("d / m / Y") }}</td>
-                <td>{{ p.participation.seance.title }}</td>
-                <td>{{ p.participation.seance.description }}</td>
-                <td>{{ p.participation.seance.categorie.typeCategorie }}</td>
-                {# <td>
-                    {% for categ in p.participation.seance.categories %}
-                        <div>{{categ.typeCategorie}}</div>
-                    {% endfor %}
-                </td> #}
-                <td>
-                {% if p.participation.typePresence == 'Présent'  %}
-                    <div class="btnParticipation presentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">{{ p.participation.typePresence }}</a></div>
-                {% endif %}
-                {% if p.participation.typePresence == 'Absent' %}
-                    <div class="btnParticipation absentColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">{{ p.participation.typePresence }}</a></div>
-                {% endif %}
-                {% if p.participation.typePresence == 'Indécis'  %}
-                    <div class="btnParticipation indecisColor"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">{{ p.participation.typePresence }}</a></div>
-                {% endif %}
-                </td>
-                <td>
-                    <a  href="{{ path('app_participation_edit', {'id': p.participation.id}) }}"><div class="inputParticipation">{{ p.participation.commentaire }}</div></a>
-                </td>
+								{# POUR ENTRAINEUR #}
+								{% if is_granted('ROLE_ENTRAINEUR') %}
+									{% if p.min != p.max %}
+										<td>{{p.min}}
+											-
+											{{p.max}}</td>
+									{% else %}
+										<td>{{p.max}}</td>
+									{% endif %}
 
-            {# POUR ENTRAINEUR #}
-            {% if is_granted('ROLE_ENTRAINEUR') %}
-                {% if p.min != p.max %}
-                <td>{{p.min}} - {{p.max}}</td>
-                {% else %}
-                <td>{{p.max}}</td>
-                {% endif %}
-                
-                <td>
-                    <a href="{{ path('app_seance_show', {'id': p.participation.seance.id}) }}">show</a>
-                    {# <a href="{{ path('app_participation_show', {'id': p.participation.id}) }}">show</a> #}
-                    {# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">Modifier</a></div> #}
-                </td>
-            {% endif %}
+									<td>
+										<a class="link-secondary" href="{{ path('app_seance_show', {'id': p.participation.seance.id}) }}">show</a>
+										{# <a href="{{ path('app_participation_show', {'id': p.participation.id}) }}">show</a> #}
+										{# <div class="styleBtn btnParticipation"><a class="nav-link beige-color font-titre" href="{{ path('app_participation_edit', {'id': p.participation.id}) }}">Modifier</a></div> #}
+									</td>
+								{% endif %}
 
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="3">no records found</td>
+							</tr>
 
-        {% endfor %}
-        </tbody>
-    </table>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 
-{% endblock %}
+		{% endif %}
+	{% endblock %}

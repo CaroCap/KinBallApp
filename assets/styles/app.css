@@ -1,27 +1,5 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 
-.nav-logo{
-  max-height: 100px;
-  margin-right: 25px;
-}
-
-.nav-bonjour{
-  color: white;
-  /* margin-right: 25px; */
-}
-
-.photoPlayer{
-  max-height: 250px;
-  margin-bottom: 20px;
-}
-
-.formDiv{
-  width: 70%;
-  margin: auto;
-  padding-top: 100px;
-}
-
-
 /* CSS CAROUSSEL https://getbootstrap.com/docs/5.0/examples/carousel/ */
 
 /* GLOBAL STYLES
@@ -118,8 +96,10 @@ body {
   }
 }
 
-/* CSS LOGIN */
 
+/* CSS PERSO */
+
+/* CSS LOGIN */
 .bodyLogin {
   display: flex;
   align-items: center;
@@ -153,4 +133,73 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.nav-logo{
+  max-height: 100px;
+  margin-right: 25px;
+}
+
+.nav-bonjour{
+  color: white;
+  /* margin-right: 25px; */
+}
+
+.photoPlayer{
+  max-height: 250px;
+  margin-bottom: 20px;
+}
+
+.formDiv{
+  width: 70%;
+  margin: auto;
+  padding-top: 100px;
+}
+
+/* Présences Color */
+.btnParticipation{
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+.btnParticipation a{
+  display: block;
+  padding: 0.5rem 1rem;
+  color: white;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, font-weight 0.15s ease-in-out;
+}
+.btnParticipation a:hover{
+  color: #ffde38;
+  font-weight: bolder;
+}
+.presentColor, .indecisColor, .absentColor{
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+.presentColor{
+  background-color: green;
+}
+.presentColor:hover{
+  background-color: rgb(1, 67, 1);
+}
+.indecisColor{
+  background-color: rgb(243, 117, 71);
+}
+.indecisColor:hover{
+  background-color: rgb(148, 65, 35);
+}
+.absentColor{
+  background-color: red;
+}
+.absentColor:hover{
+  background-color: rgb(110, 1, 1);
+}
+.inputParticipation{
+  color: black;
+  text-decoration: none !important;
+}
+
+/* Tableau */
+td{
+  vertical-align: middle;
 }
