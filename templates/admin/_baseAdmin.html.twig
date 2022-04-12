@@ -1,18 +1,17 @@
-
-    {# Bouton de navigation #}
-    <div class="container">
-        <ul>
+{# Bouton de navigation #}
+    <div>
+        <ul class="btnAdmin mb-5">
             <li>
-                <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_saison_new') }}">New Saison</a></div>
+                <div class="btn btn-outline-danger"><a class="" href="{{ path ('app_saison_new') }}">New Saison</a></div>
             </li>
             <li>
-                <div class="styleBtn"><a class="nav-link beige-color font-titre" href="{{ path ('app_seance_new') }}">New Séance</a></div>
+                <div class="btn btn-outline-danger"><a class="" href="{{ path ('app_seance_new') }}">New Séance</a></div>
             </li>
         </ul>
     </div>
 
     {# Filtres Saison #}
-    <div class="container">
+    <div class="container mb-4">
         <ul>
             <li class="menuFiltre"><a href="{{ path ('app_admin') }}">Tous les inscrits</a></li>
         {% for saison in saisons %}

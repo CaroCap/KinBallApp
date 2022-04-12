@@ -149,7 +149,10 @@ body {
   max-height: 250px;
   margin-bottom: 20px;
 }
-
+.photoListing{
+  max-width: 100px; 
+  max-height: 100px;
+}
 .formDiv{
   width: 70%;
   margin: auto;
@@ -216,10 +219,49 @@ td{
   color: white;
 }
 
-/* Général */
+/* Filtres Admin */
+.menuFiltre{ 
+  text-decoration: none; 
+  display: inline; 
+  border: solid 1px black; 
+  padding: 5px; 
+  margin-bottom:10px
+}
+.menuFiltre a { 
+  text-decoration: none; 
+  display: inline; 
+  padding: 5px; 
+  color:black
+}
+.menuFiltre a:hover { color:red}
+
+.btnAdmin{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.btnAdmin li{
+  align-items: stretch;
+  padding: 5px;
+  list-style: none;
+}
+.btnAdmin a{
+  text-decoration: none;
+  color: black;
+}
+.styleBtnBase{
+  border: solid 1px #280105;
+  border-radius: 15px;
+  background-color: #9C2F3C;
+  padding: 5px;
+}
+  /* Général */
 .marginTop10{
   margin-top: 10%;
 }
 .width50{
   width: 50%;
+}
+label{
+  padding-right: 10px;
 }

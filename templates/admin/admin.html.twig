@@ -2,15 +2,19 @@
 
 {% block title %}Admin{% endblock %}
 
-{% block filtre %}
+{# {% block filtre %}
     {{ include('admin/_baseAdmin.html.twig') }}
-{% endblock %}
+{% endblock %} #}
 
 {% block body %}
 
 {# Liste Users #}
-<div>
-    <h3>Liste de tous les membres</h3>
+<div class="marginTop10">
+
+    {# Filtres et bouton Admin #}
+    {{ include('admin/_baseAdmin.html.twig') }}
+    
+    <h3 class="ms-5">Liste de tous les membres</h3>
     
     <div>
         <table class="table">
@@ -37,8 +41,8 @@
                 <td><img class="photoListing" src="{{ asset ('upload/photoUser/' ~ user.photo ) }}" alt="photo"></td>
                 <td>{{ user.nom }}</td>
                 <td>{{ user.prenom }}</td>
-                <td>{{ user.genre is same as(null) ? 'X' : user.genre ? 'F' : 'H' }}</td>
-                <td>{{ user.dateNaissance|date("d / m / Y") }}</td>
+                <td class="text-center">{{ user.genre is same as(null) ? 'X' : user.genre ? 'F' : 'H' }}</td>
+                <td>{{ user.dateNaissance|date("d/m/Y") }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.telephone }}</td>
                 <td>{{ user.numero }} {{ user.rue }} {{ user.codePostal }} {{ user.ville }}</td>

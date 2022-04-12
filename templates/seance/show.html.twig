@@ -79,7 +79,13 @@
                     
                     {# COMMENTAIRE #}
                     <td>
-                        <a class="inputParticipation" href="{{ path('app_participation_edit', {'id': participation.id}) }}"><div>{{ participation.commentaire }}</div></a>
+                        <a class="inputParticipation" href="{{ path('app_participation_edit', {'id': participation.id}) }}">
+                        {% if participation.commentaire  %}
+                            <div >{{ participation.commentaire }}</div>
+                        {% else %}
+                            <div >...</div>
+                        {% endif %}
+                        </a> 
                     </td>
                     
                     
