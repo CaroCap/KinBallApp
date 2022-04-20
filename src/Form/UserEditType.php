@@ -20,47 +20,68 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('nom', TextType::class, [
-            'required' => true
-        ])
-        ->add('prenom', TextType::class)
-        ->add('genre', ChoiceType::class, [
-            'choices'  => [
-                'X' => null,
-                'Femme' => true,
-                'Homme' => false,
-            ],
-        ])
-        ->add('telephone', TelType::class)
-        ->add('dateNaissance', BirthdayType::class, ['format' => 'dd MM yyyy'])
+            ->add('nom', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+                'required' => true
+            ])
+            ->add('prenom', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('genre', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
+                'choices'  => [
+                    'X' => null,
+                    'Femme' => true,
+                    'Homme' => false,
+                ],
+            ])
+            ->add('telephone', TelType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('dateNaissance', BirthdayType::class, [
+                'format' => 'dd MM yyyy'])
         // Pour éviter prob fichier stocké sous format string ---> array('data_class' => null) 
         ->add('photo', FileType::class, [
-            'required' => false, 'data_class' => null
+            'label' => false,
+            'required' => false, 
+            'data_class' => null
         ])
         ->add('accordPhoto', CheckboxType::class, [
-            'required' => false
+            'label' => 'J\'autorise le club à utiliser mes photos à des fins de communication',
+            'required' => false,
+            'attr' => ['class' => 'form-check-input']
         ])
         ->add('rue', TextType::class, [
+            'attr' => ['class' => 'form-control'],
             'required' => false
         ])
         ->add('numero', TextType::class, [
+            'attr' => ['class' => 'form-control'],
             'required' => false
         ])
         ->add('codePostal', TextType::class, [
+            'attr' => ['class' => 'form-control'],
             'required' => false
         ])
         ->add('ville', TextType::class, [
+            'attr' => ['class' => 'form-control'],
             'required' => false
         ])
 
         ->add('persContactNom', TextType::class, [
-            'required' => false
+            'label' => 'Personne de contact',
+            'required' => false,
+            'attr' => ['class' => 'form-control']
         ])
         ->add('persContactTel', TelType::class, [
-            'required' => false
+            'label' => 'Téléphone de contact',
+            'required' => false,
+            'attr' => ['class' => 'form-control']
         ])
         ->add('persContactMail', EmailType::class, [
-            'required' => false
+            'label' => 'E-mail de contact',
+            'required' => false,
+            'attr' => ['class' => 'form-control']
         ])
     ;
     }

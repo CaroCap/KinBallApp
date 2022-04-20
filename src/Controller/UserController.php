@@ -87,6 +87,8 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
     $idUser = $objetRequest->get('id');
     $em = $doctrine->getManager();
     $user = $em->getRepository(User::class)->findOneBy(array("id" => $idUser));
+    // On stocke l'ancienne photo pour la remettre s'il n'édite pas la photo pour éviter le null
+    $photo = $user->getPhoto();
     
     // 2. Création du formulaire du type souhaité (pas 'affichage'!)
     // pour héberger les données de l'entité
@@ -97,11 +99,13 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
     // 3. Analyse de l'objet Request du navigateur, remplissage de l'entité
     $form->handleRequest($objetRequest);
     
-    // 4. Vérification: handleRequest indique qu'on vient d'un submit ou pas? Si on vient d'un submit, handleRequest remplira les données de l'entité avec les données du $_POST (ou $_GET, selon le type de form). Cet état sera enregistré dans l'objet formulaire, et isSubmitted renverra TRUE
+    // 4. Vérification: handleRequest indique qu'on vient d'un submit ou pas? 
+    // Si on vient d'un submit, handleRequest remplira les données de l'entité avec les données du $_POST (ou $_GET, selon le type de form). Cet état sera enregistré dans l'objet formulaire, et isSubmitted renverra TRUE
     // dd($form->getErrors());
     if ($form->isSubmitted() && $form->isValid()) 
     {
         // ENREGISTRER LA PHOTO
+        // Si l'utilisateur charge une nouvelle photo
         if($user->getPhoto()!= null){
             // obtenir le fichier (pas un "string" mais un objet de la class UploadedFile)
         $fichier = $user->getPhoto();
@@ -113,16 +117,9 @@ public function edit(Request $objetRequest, ManagerRegistry $doctrine, UserRepos
         // aura dans la BD (un string, pas un objet UploadedFile cette fois)
         $user->setPhoto($nomFichierServeur);
         }
+        // Sinon on remet l'ancienne photo
         else{
-            if ($user->getGenre()==1) {
-                $user->setPhoto('joueuse.png');
-            }
-            elseif ($user->getGenre()==0){
-                $user->setPhoto('joueur.png');
-            }
-            else{
-                $user->setPhoto('kinball.png');
-            }
+                $user->setPhoto($photo);
         }
 
         $user->setDateUpdate(new DateTime());

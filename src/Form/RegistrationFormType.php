@@ -98,14 +98,17 @@ class RegistrationFormType extends AbstractType
             ])
 
             ->add('persContactNom', TextType::class, [
+                'label' => 'Personne de contact',
                 'required' => false,
                 'attr' => ['class' => 'form-control']
             ])
             ->add('persContactTel', TelType::class, [
+                'label' => 'Téléphone de contact',
                 'required' => false,
                 'attr' => ['class' => 'form-control']
             ])
             ->add('persContactMail', EmailType::class, [
+                'label' => 'E-mail de contact',
                 'required' => false,
                 'attr' => ['class' => 'form-control']
             ])

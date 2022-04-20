@@ -27,7 +27,7 @@
         {# PHOTO #}
         <div class="col-lg-4">
             <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
-            <p><a class="btn btn-outline-secondary" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Modifier mes infos</a></p>
+            <p><a class="btn btn-outline-primary" href="{{ path ('app_user_edit', {'id': app.user.id}) }}">Modifier mes infos</a></p>
         </div><!-- /.col-lg-4 -->
 
         {# INFOS #}
@@ -103,7 +103,7 @@
     {# Faire apparaitre bouton Inscription que si pas encore inscrit à la last Saison #}
         {% set inscrit = 1 %}
     {% for inscr in app.user.inscriptions %}
-        {% if inscr.saison != lastSaison %}
+        {% if inscr.saison == lastSaison %}
             {% set inscrit = inscrit + 1 %}  
         {% endif %}      
     {% endfor %}
@@ -116,7 +116,7 @@
             {% endif %}
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             {% if inscrit == 1 %}
-                <p class=""><a class="btn btn-outline-secondary btn-lg px-4" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></p>
+                <p class=""><a class="btn btn-success btn-lg px-4" href="{{ path ('app_inscription') }}">S'inscrire à la nouvelle Saison</a></p>
             {% endif %}  
             
             </div>
