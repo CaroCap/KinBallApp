@@ -20,58 +20,62 @@
     
 <body>
 
-    <header>
+<header>
     {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-        <a class="navbar-brand" href="{{ path ('app_accueil') }}"><img class="nav-logo" src={{asset("images/logo-kribou.png")}} alt="Logo K-ribou" title="home"/>K-ribou</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ path ('app_accueil') }}">Home</a>
-            </li>
-        {% if app.user %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path ('app_joueur') }}">Profil</a>
-            </li>
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path ('app_admin') }}" tabindex="-1" >Admin</a>
-            </li>
-        {% endif %}
-            </ul>
+            <a class="navbar-brand" href="{{ path ('app_accueil') }}"><img class="nav-logo" src={{asset("images/logo-kribou.png")}} alt="Logo K-ribou" title="home"/>K-ribou</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ path ('app_accueil') }}">Home</a>
+                    </li>
+                    {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path ('app_joueur') }}">Profil</a>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path ('app_admin') }}" tabindex="-1" >Admin</a>
+                    </li>
+                    {% endif %}
+                </ul>
 
-            <div class="d-flex">
-        {% if app.user %}
-            <div class="nav-bonjour">
-                <span class="nav-bonjour me-2">Bonjour {{ app.user.prenom }}</span>
-                <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Logout</a>
+                <div class="d-flex">
+                    {# Si un User est connecté #}
+                    {% if app.user %}
+                    <div class="nav-bonjour">
+                        <span class="nav-bonjour me-2">Bonjour {{ app.user.prenom }}</span>
+                        <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                    
+                    {# Si pas connecté, faire apparaitre boutons de connexion SAUF si route de registration #}
+                    {% else %}
+                        <a class="btn btn-light me-2" href="{{ path ('app_login') }}">Se Connecter</a>
+                        {% if app.request.get('_route') != 'app_register' %}
+                        <a class="btn btn-outline-light" href="{{ path ('app_register') }}">Inscription</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
-        {% else %}
-                <a class="btn btn-outline-success me-2" href="{{ path ('app_login') }}">Se Connecter</a>
-                <a class="btn btn-outline-primary" href="{{ path ('app_register') }}">Inscription</a>
-        {% endif %}
-            </div>
-        </div>
         </div>
     </nav>
     {% endblock %}
-    </header>
+</header>
 
 {# FILTRES #}
-        {% block filtre %}
-        {% endblock %}
+    {% block filtre %}
+    {% endblock %}
         
 <main>
     {% block body %}{% endblock %}
-
 </main>
 
-    <!-- FOOTER -->
+    {# FOOTER #}
     {% block footer %}
         <hr class="featurette-divider">
     <footer class="container">
