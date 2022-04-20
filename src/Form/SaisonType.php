@@ -17,7 +17,7 @@ class SaisonType extends AbstractType
             ->add('titre', TextareaType::class,[                
                 'label' => false,
             ])
-            ->add('debut', DateType::class, ['format' => 'dd MM yyyy'],)
+            ->add('debut', DateType::class, ['format' => 'dd MM yyyy'])
             ->add('fin', DateType::class, ['format' => 'dd MM yyyy'])
         ;
     }

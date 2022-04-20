@@ -145,9 +145,12 @@ body {
   /* margin-right: 25px; */
 }
 
-.photoPlayer{
+.photoPlayer, .photoPlayer-pti{
   max-height: 250px;
   margin-bottom: 20px;
+}
+.photoPlayer-pti{
+  max-height: 150px;
 }
 .photoListing{
   max-width: 100px; 
@@ -260,6 +263,9 @@ td{
   padding: 5px;
 }
   /* Général */
+.marginTop5{
+  margin-top: 5%;
+}
 .marginTop10{
   margin-top: 10%;
 }

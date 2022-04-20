@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-md-5">
-            <img class="photoPlayer" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
+            <img class="photoPlayer-pti" src="{{ asset ('upload/photoUser/' ~ app.user.photo ) }}" alt="photo">
           {{ form_row(registrationForm.photo, {label: ' '}) }}
         </div>
         <div class="col-md-7">
@@ -73,15 +73,17 @@
         {# TOKEN Caché mais important pour validation #}
         {{ form_row(registrationForm._token) }}
 
+{# DELETE si admin #}
+  <div class="col-12">
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('user/_delete_form.html.twig') }}
+    {% endif %}
+  </div>
+
   </div>
       {{ form_end(registrationForm) }}
+
+
 </div>
-
-    
-
-{% if is_granted('ROLE_ADMIN') %}
-
-    {{ include('user/_delete_form.html.twig') }}
-{% endif %}
 
 {% endblock %}

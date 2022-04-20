@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\InscriptionRepository;
 use App\Repository\SaisonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +20,17 @@ class AccueilController extends AbstractController
 
     // Profil Joueur
     #[Route('/joueur', name: 'app_joueur')]
-    public function joueur(SaisonRepository $saisonRepository): Response
+    public function joueur(SaisonRepository $saisonRepository, InscriptionRepository $inscriptionRepository): Response
     {
         $lastSaison = $saisonRepository->findLast();
-        // dd($lastSaison);
+        $user = $this->getUser();
+
         // Afficher la page Joueur uniquement si connecté !!! -> getUser = true >< sinon redirect vers login
-        if ($this->getUser()) {
-            return $this->render('accueil/joueur.html.twig', ['lastSaison' => $lastSaison ]);
+        if ($user) {
+            // getInscription est ok juste il ne sait pas que c'est un user
+            $inscriptions = $inscriptionRepository->findAllByUserOrder($user);
+            $vars = ['lastSaison' => $lastSaison, 'inscriptions' => $inscriptions];
+            return $this->render('accueil/joueur.html.twig', $vars);
         }
         
         return $this->redirectToRoute('app_login');
@@ -41,7 +46,7 @@ class AccueilController extends AbstractController
     //              'user' => $user,
     //          ]);
     //      }
-         
+
     //      return $this->redirectToRoute('app_login');
     //  }
 }

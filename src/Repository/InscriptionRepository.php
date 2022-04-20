@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Inscription;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -43,6 +44,13 @@ class InscriptionRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    // Trouver toutes les inscriptions liées à un user et les triée par ordre décroissant
+    public function findAllByUserOrder(User $entity)
+    {
+        $inscriptions = $this->findBy(['player' => $entity], array('saison' => 'DESC'));
+        return $inscriptions;    
     }
 
     // /**

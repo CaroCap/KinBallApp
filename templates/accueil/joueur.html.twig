@@ -122,7 +122,6 @@
             </div>
         </div>
 
-        {# TODO Modifier ordre apparition inscriptions #}
         {# Si il y a au moins 1 inscription #}
         {% if app.user.inscriptions|length > 0 %}
         <div class="infoInscription container colonne">
@@ -139,7 +138,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for inscr in app.user.inscriptions %}
+                {% for inscr in inscriptions %}
                     <tr>
                         <td>{{ inscr.saison.titre }}</td>
                         <td>{{ inscr.jourEntrainement }}</td>

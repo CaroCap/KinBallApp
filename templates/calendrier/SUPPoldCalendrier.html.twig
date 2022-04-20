@@ -1,0 +1,51 @@
+{# {% extends 'base.html.twig' %} #}
+
+{% block stylesheets %}
+    {# {{parent()}} #}
+    {{ encore_entry_link_tags('calendrier') }}
+{% endblock %}
+
+{% block javascripts %}
+    {# {{parent()}} #}
+    {{ encore_entry_script_tags('calendrier') }}
+{% endblock %}
+
+{% block title %}Calendrier{% endblock %}
+
+{% block body %}
+    {# <h1>Calendrier Entrainements</h1> #}
+
+    <div id="calendrier" data-calendrier="{{ evenementsJSON }}" class="calendar"></div>
+
+    {# <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Start</th>
+                <th>Description</th>
+                <th>HeureDebut</th>
+                <th>HeureFin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for seance_entrainement in seance_entrainements %}
+            <tr>
+                <td>{{ seance_entrainement.id }}</td>
+                <td>{{ seance_entrainement.start ? seance_entrainement.start|date('Y-m-d') : '' }}</td>
+                <td>{{ seance_entrainement.title }}</td>
+                <td>
+                    <a href="{{ path('app_entrainement_show', {'id': seance_entrainement.id}) }}">show</a>
+                    <a href="{{ path('app_entrainement_edit', {'id': seance_entrainement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+
+    {# <a href="{{ path('app_entrainement_new') }}">Create new</a> #}
+{% endblock %}

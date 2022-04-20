@@ -1,4 +1,61 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+{{ form_start(form) }}
+    <div class="row">
+        
+        <div class="col-4 mt-2">
+            {{ form_label(form.title, 'Type séance') }}
+            {{ form_row(form.title) }}
+        </div>
+        <div class="col-8 mt-2">
+            {# {{ form_label(form.description, 'Type séance') }} #}
+            {{ form_row(form.description) }}
+        </div>
+        <div class="col-6 mt-2">
+            <div class="formTextArea">
+                {{ form_row(form.start) }}
+            </div>
+        </div>
+        <div class="col-6 mt-2">
+            <div class="formTextArea">
+                {{ form_row(form.end) }}
+            </div>
+        </div>
+
+        <div class="col-2 mt-3">
+            {{ form_row(form.numero) }}
+        </div>
+        <div class="col-5 mt-3">
+            {{ form_row(form.rue) }}
+        </div>
+        <div class="col-md-2 mt-3">
+            {{ form_row(form.codePostal) }}
+        </div>
+        <div class="col-md-3 mt-3">
+            {{ form_row(form.ville) }}
+        </div>
+
+        <div class="col-6 mt-3">
+            <div class="formTextArea">
+                {{ form_row(form.saison) }}
+            </div>
+        </div>
+        <div class="col-6 mt-3">
+            <div class="formTextArea">
+                {{ form_row(form.categorie) }}
+            </div>
+        </div>
+        <div class="col-12"></div>
+        
+        <button class=" mt-5 mb-2 col-md-4 mx-auto btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
+        
+        <a class="link-secondary" href="{{ path('app_seance_index') }}">back to list</a>
+
+        {# TOKEN Caché mais important pour validation #}
+        {{ form_row(form._token) }}
+
+    </div>
 {{ form_end(form) }}

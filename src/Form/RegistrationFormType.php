@@ -84,10 +84,10 @@ class RegistrationFormType extends AbstractType
                 'data' => true,
                 // OU 'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
             ])
-            ->add('rue', TextType::class, [
+            ->add('numero', TextType::class, [
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('numero', TextType::class, [
+            ->add('rue', TextType::class, [
                 'attr' => ['class' => 'form-control']
             ])
             ->add('codePostal', TextType::class, [

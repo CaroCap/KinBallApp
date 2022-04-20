@@ -3,14 +3,50 @@
 {% block title %}New Seance{% endblock %}
 
 {% block filtre %}
-    {{ include('seance/_baseNewSeance.html.twig') }}
+    {# {{ include('seance/_baseNewSeance.html.twig') }} #}
 {% endblock %}
 
 {% block body %}
-    <h1>Create new Seance</h1>
+<div class="marginTop5">
+{# Ajout rapide #}
+    <div class="position-absolute">
+        <ul class="btnAdmin mb-5">
+            <li>
+                <div class="btn btn-outline-primary"><a class="" href="{{ path ('app_seance_new', {'salle':'ULB'}) }}">New ULB</a></div>
+            </li>
+            <li>
+                <div class="btn btn-outline-primary"><a class="" href="{{ path ('app_seance_new', {'salle':'VUB'}) }}">New VUB</a></div>
+            </li>
+        </ul>
+    </div>
 
-    {{ include('seance/_form.html.twig') }}
 
-    {# <a href="{{ path('app_seance_index') }}">back to list</a> #}
-    <a href="{{ path('app_seance_index') }}">back to list</a>
+<div class="text-center container pt-5">
+
+    <div class="container marketing ">
+
+        {# Form et Calendrier #}
+        <div class="row">
+
+            {# Formulaire New Séance #}
+            <div class="content w-50 pt-5 pe-5">
+                <h1>Créer une nouvelle Séance</h1>
+                {{ include('seance/_form.html.twig') }}
+            </div>
+
+            {# Calendrier #}
+            <div class="content w-50">
+                <div>
+                    {#on incruste l'action du controller ici#}
+                    {{ render (controller ('App\\Controller\\CalendrierController::calendrier')) }}  
+                </div>
+            </div>    
+            
+        </div>  
+    </div>    
+</div>    
+
+
+
+
 {% endblock %}
