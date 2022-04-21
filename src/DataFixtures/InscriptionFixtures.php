@@ -32,7 +32,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
             $inscription = new Inscription();
             $inscription->setJourEntrainement($jourSeance[array_rand($jourSeance)]);
             $inscription->setDateInscription(new DateTime($faker->date()));
-            $inscription->setPaiement(rand(0));
+            $inscription->setPaiement(0);
             
             $inscription->setCategorie($categories[0]);
             $inscription->setPlayer($players[0]);
@@ -40,7 +40,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist($inscription);   
         }
-        
+
         for ($i = 1; $i <= 10 ; $i++){
             $inscription = new Inscription();
             $inscription->setJourEntrainement($jourSeance[array_rand($jourSeance)]);
