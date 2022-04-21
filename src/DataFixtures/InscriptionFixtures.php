@@ -27,6 +27,20 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $categories = $manager->getRepository(Categorie::class)->findAll();
         $saisons = $manager->getRepository(Saison::class)->findAll();
         
+        // Inscrire l'admin pour chaque saison
+        foreach ($saisons as $saison) {
+            $inscription = new Inscription();
+            $inscription->setJourEntrainement($jourSeance[array_rand($jourSeance)]);
+            $inscription->setDateInscription(new DateTime($faker->date()));
+            $inscription->setPaiement(rand(0));
+            
+            $inscription->setCategorie($categories[0]);
+            $inscription->setPlayer($players[0]);
+            $inscription->setSaison($saison);
+
+            $manager->persist($inscription);   
+        }
+        
         for ($i = 1; $i <= 10 ; $i++){
             $inscription = new Inscription();
             $inscription->setJourEntrainement($jourSeance[array_rand($jourSeance)]);

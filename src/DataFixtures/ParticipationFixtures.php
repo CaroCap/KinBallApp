@@ -19,6 +19,16 @@ class ParticipationFixtures extends Fixture implements DependentFixtureInterface
         $users = $manager->getRepository(User::class)->findAll();
         $seances = $manager->getRepository(Seance::class)->findAll();
 
+        // Inscrire l'admin pour chaque séance
+        foreach ($seances as $seance) {
+            $participation = new Participation();
+            $participation->setTypePresence($typePresence[array_rand($typePresence)]);
+            $participation->setUser($users[0]);
+            $participation->setSeance($seance);
+            $manager->persist($participation);
+
+            // $seance->addParticipation(new Participation(['typePresence'=>$typePresence[array_rand($typePresence)], 'user'=>$users[0]]));
+        }
         for ($i = 1; $i <= 10 ; $i++){
             $participation = new Participation();
             $participation->setTypePresence($typePresence[array_rand($typePresence)]);
