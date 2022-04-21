@@ -157,7 +157,7 @@ class RegistrationController extends AbstractController
 
             
         // CRÉER Toutes les participations de la saison
-            $seances = $seanceRepository->findAll();
+            $seances = $seanceRepository->findBy(['saison'=>$saisonRepository->findLast()]);
 
             foreach ($seances as $seance) {
                     $participation = new Participation([

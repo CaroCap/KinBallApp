@@ -49,9 +49,18 @@
                     
                     {# CATEGORIE #}
                     <td>
+                    {# ! Prob avec l'inscription -> pas liée à la bonne saison ? #}
+                        {# <pre>
+                        saison
+                            {{ dump(seance.saison) }}
+                        </pre> #}
                         {% for inscription in participation.user.inscriptions %}
+                                {# <pre>
+                                    {{ dump(inscription) }}
+                                </pre> #}
                             {% if inscription.saison is same as(seance.saison) %}
                                 <div>{{inscription.categorie.typeCategorie}}</div>
+                                {# Compter le nombre de joueur dans chaque catégorie #}
                                 {% if inscription.categorie.typeCategorie == 'Homme' and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis')%}{% set countHomme = countHomme + 1 %}{% endif %}
                                 {% if inscription.categorie.typeCategorie is same as('Dame') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countDame = countDame + 1 %}{% endif %}
                                 {% if inscription.categorie.typeCategorie is same as('Mixte') and (participation.typePresence == 'Présent' or participation.typePresence == 'Indécis') %}{% set countMixte = countMixte + 1 %}{% endif %}
